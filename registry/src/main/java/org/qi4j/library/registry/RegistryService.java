@@ -15,18 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.qi4j.library.framework.registry;
+package org.qi4j.library.registry;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.service.ServiceComposite;
+import org.qi4j.composite.Mixins;
 
-public class RegistryAssembler
-    implements Assembler
+@Mixins( RegistryMixin.class )
+public interface RegistryService extends Registry, ServiceComposite
 {
-    public void assemble( ModuleAssembly module )
-        throws AssemblyException
-    {
-        module.addServices( RegistryService.class );
-    }
 }

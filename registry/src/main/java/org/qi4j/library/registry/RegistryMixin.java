@@ -15,12 +15,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.qi4j.library.framework.registry;
+package org.qi4j.library.registry;
 
 import java.util.HashMap;
 import java.util.LinkedList;
 import org.qi4j.injection.scope.Service;
-import org.qi4j.library.framework.exception.ExceptionHandling;
+import org.qi4j.library.exception.ExceptionHandling;
 
 public class RegistryMixin<K, V>
     implements Registry<K, V>

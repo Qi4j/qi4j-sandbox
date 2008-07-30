@@ -15,12 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License. 
  */
-package org.qi4j.library.framework.registry;
+package org.qi4j.library.registry;
 
-
-public interface RegistryObserver<K, V>
+public interface Registry<K, V>
 {
-    void registration( Registry<K, V> source, K key, V value );
+    V lookup( K key );
 
-    void deregistration( Registry<K, V> source, K key, V value );
+    void register( K key, V value );
+
+    void unregister( K key );
+
+    void addRegistryObserver( RegistryObserver<K, V> observer );
+
+    void removeRegistryObserver( RegistryObserver<K, V> observer );
 }
