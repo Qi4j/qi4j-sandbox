@@ -1,4 +1,4 @@
-package org.qi4j.library.framework.validation;
+package org.qi4j.library.validation;
 
 import java.util.Collection;
 import java.util.HashMap;

@@ -10,7 +10,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.qi4j.library.framework.validation;
+package org.qi4j.library.validation;
 
 import org.qi4j.composite.ConcernOf;
 import org.qi4j.entity.Lifecycle;
