@@ -10,11 +10,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package org.qi4j.library.framework;
+package org.qi4j.library.transaction;
 
 import java.lang.reflect.Method;
 import static org.junit.Assert.assertEquals;
 import org.junit.Test;
+import org.qi4j.library.transaction.Transactional;
 
 public class TransactionalTest
 {

@@ -11,7 +11,7 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License.
 */
-package org.qi4j.library.framework;
+package org.qi4j.library.transaction;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -30,7 +30,7 @@ import org.qi4j.injection.scope.Service;
  * and commit transactions.
  *
  * @see Transactional
- * @see org.qi4j.library.framework.Transactional.Propagation
+ * @see Transactional.Propagation
  */
 @AppliesTo( Transactional.class )
 public class TransactionalConcern extends ConcernOf<InvocationHandler>
