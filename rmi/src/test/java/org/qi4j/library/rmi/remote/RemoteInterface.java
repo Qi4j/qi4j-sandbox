@@ -9,21 +9,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
 */
-package org.qi4j.library.framework.remote;
+package org.qi4j.library.rmi.remote;
 
-import org.qi4j.composite.Composite;
-import org.qi4j.composite.Mixins;
-import org.qi4j.library.framework.RMIMixin;
-import org.qi4j.library.framework.caching.InvocationCacheAbstractComposite;
+import java.io.IOException;
+import java.rmi.Remote;
+import org.qi4j.library.cache.Cached;
 
 /**
- * Implement the RemoteInterface by using RMI.
- * Results of RMI calls are cached, so if an
- * IOException occurs we can reuse a previous result
- * if possible.
+ * TODO
  */
-@Mixins( RMIMixin.class )
-public interface RemoteInterfaceComposite
-    extends RemoteInterface, InvocationCacheAbstractComposite, Composite
+@Cached
+public interface RemoteInterface
+    extends Remote
 {
+    String foo( String aBar )
+        throws IOException;
 }

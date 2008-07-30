@@ -9,7 +9,7 @@
  * See the License for the specific language governing permissions and 
  * limitations under the License.
 */
-package org.qi4j.library.framework;
+package org.qi4j.library.rmi;
 
 import java.io.IOException;
 import java.rmi.registry.LocateRegistry;
@@ -19,9 +19,9 @@ import junit.framework.Assert;
 import org.junit.Test;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.library.framework.remote.RemoteInterface;
-import org.qi4j.library.framework.remote.RemoteInterfaceComposite;
-import org.qi4j.library.framework.remote.RemoteInterfaceImpl;
+import org.qi4j.library.rmi.remote.RemoteInterface;
+import org.qi4j.library.rmi.remote.RemoteInterfaceComposite;
+import org.qi4j.library.rmi.remote.RemoteInterfaceImpl;
 import org.qi4j.test.AbstractQi4jTest;
 
 /**
