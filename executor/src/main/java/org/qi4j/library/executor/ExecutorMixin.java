@@ -12,7 +12,7 @@
  *
  */
 
-package org.qi4j.library.framework.executor;
+package org.qi4j.library.executor;
 
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;

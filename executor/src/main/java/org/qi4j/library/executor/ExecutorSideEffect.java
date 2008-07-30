@@ -12,7 +12,7 @@
  *
  */
 
-package org.qi4j.library.framework.executor;
+package org.qi4j.library.executor;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;

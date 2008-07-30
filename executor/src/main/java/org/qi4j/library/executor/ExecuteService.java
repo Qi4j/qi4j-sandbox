@@ -12,19 +12,18 @@
  *
  */
 
-package org.qi4j.library.framework.executor;
+package org.qi4j.library.executor;
 
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
+import java.util.concurrent.Executor;
+import org.qi4j.composite.Mixins;
+import org.qi4j.service.Activatable;
+import org.qi4j.service.ServiceComposite;
 
 /**
  * TODO
  */
-@Retention( RetentionPolicy.RUNTIME )
-@Target( { ElementType.METHOD } )
-public @interface ExecuteSideEffect
+@Mixins( ExecutorMixin.class )
+public interface ExecuteService
+    extends Executor, Activatable, ServiceComposite
 {
-    Class value();
 }
