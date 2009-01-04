@@ -14,28 +14,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.qi4j.entity.javaspaces;
+package org.qi4j.entitystore.javaspaces;
 
+import java.io.File;
+import java.security.AllPermission;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.Policy;
+import net.jini.security.policy.DynamicPolicyProvider;
+import org.junit.After;
 import org.junit.Test;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.api.entity.EntityBuilder;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entity.memory.MemoryEntityStoreService;
-import org.qi4j.test.entity.AbstractEntityStoreTest;
-import org.qi4j.library.spaces.javaspaces.JavaSpacesClientAssembler;
+import org.qi4j.library.http.JettyServiceAssembler;
 import org.qi4j.library.jini.javaspaces.JiniJavaSpacesServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
-import org.qi4j.library.http.JettyServiceAssembler;
+import org.qi4j.library.spaces.javaspaces.JavaSpacesClientAssembler;
 import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
-import java.security.Policy;
-import java.security.PermissionCollection;
-import java.security.CodeSource;
-import java.security.Permissions;
-import java.security.AllPermission;
-import net.jini.security.policy.DynamicPolicyProvider;
+import org.qi4j.test.entity.AbstractEntityStoreTest;
 
 /**
  * JavaSpaces EntityStore test
@@ -83,6 +85,26 @@ public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
         instance.setAssociation().add( instance );
         instance.setAssociation().add( instance );
         return instance;
+    }
+
+    @Override @After public void tearDown()
+        throws Exception
+    {
+        super.tearDown();
+        delete( new File( "qi4jtemp" ) );
+    }
+
+    private void delete( File dir )
+    {
+        for( File file : dir.listFiles() )
+        {
+            if( file.isDirectory() )
+            {
+                delete( file );
+            }
+            file.delete();
+        }
+        dir.delete();
     }
 
     @Test

@@ -1,4 +1,4 @@
-/*  Copyright 2008 Jan Kronquist.
+/*  Copyright 2008 Rickard Öberg.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,17 +14,22 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.qi4j.entity.javaspaces;
+
+package org.qi4j.entitystore.jgroups;
 
 import org.qi4j.api.mixin.Mixins;
+import org.qi4j.library.locking.LockingAbstractComposite;
+import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.spi.entity.EntityStore;
 
 /**
- * EntityStore service backed by a Java Space
+ * EntityStore service backed by JGroups store.
  */
-@Mixins(JavaSpacesEntityStoreMixin.class)
-public interface JavaSpacesEntityStoreService extends EntityStore, ServiceComposite
-{
 
+@Mixins( { JGroupsSerializationEntityStoreMixin.class } )
+public interface JGroupsEntityStoreService
+    extends EntityStore, ServiceComposite, Activatable, LockingAbstractComposite
+
+{
 }

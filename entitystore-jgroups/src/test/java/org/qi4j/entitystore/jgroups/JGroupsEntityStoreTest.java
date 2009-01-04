@@ -16,7 +16,7 @@
  */
 
 
-package org.qi4j.entity.jgroups;
+package org.qi4j.entitystore.jgroups;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -47,6 +47,7 @@ import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.property.Property;
 import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
+import org.qi4j.entitystore.jgroups.JGroupsEntityStoreService;
 
 /**
  * Test of JGroups EntityStore backend.

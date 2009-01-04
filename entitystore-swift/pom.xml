@@ -6,37 +6,24 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.qi4j.extension</groupId>
-  <artifactId>qi4j-entitystore-jgroups</artifactId>
-  <name>Qi4j Extension - JGroups Store</name>
+  <artifactId>qi4j-entitystore-swift</artifactId>
+  <name>Qi4j Extension - Entity Store - Swift</name>
   <version>0.5-SNAPSHOT</version>
   <packaging>bundle</packaging>
-  
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-surefire-plugin</artifactId>
-        <configuration>
-          <argLine>-Djava.net.preferIPv4Stack=true</argLine>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
   <dependencies>
     <dependency>
       <groupId>org.qi4j.core</groupId>
       <artifactId>qi4j-core-spi</artifactId>
       <version>0.5-SNAPSHOT</version>
     </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>qi4j-core-bootstrap</artifactId>
+        <version>0.5-SNAPSHOT</version>
+      </dependency>
     <dependency>
       <groupId>org.qi4j.core</groupId>
       <artifactId>qi4j-core-testsupport</artifactId>
-      <version>0.5-SNAPSHOT</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.qi4j.core</groupId>
-      <artifactId>qi4j-core-runtime</artifactId>
       <version>0.5-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
@@ -46,20 +33,10 @@
       <version>0.5-SNAPSHOT</version>
     </dependency>
     <dependency>
-      <groupId>jgroups</groupId>
-      <artifactId>jgroups</artifactId>
-      <version>2.6.2</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-logging</groupId>
-      <artifactId>commons-logging</artifactId>
-      <version>1.1</version>
+      <groupId>org.qi4j.core</groupId>
+      <artifactId>qi4j-core-runtime</artifactId>
+      <version>0.5-SNAPSHOT</version>
+      <scope>test</scope>
     </dependency>
   </dependencies>
-  <repositories>
-    <repository>
-      <id>jboss-repository</id>
-      <url>http://repository.jboss.org/maven2</url>
-    </repository>
-  </repositories>
 </project>

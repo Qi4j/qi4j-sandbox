@@ -15,7 +15,7 @@
  * limitations under the License.
  */
 
-package org.qi4j.entity.jgroups;
+package org.qi4j.entitystore.jgroups;
 
 import java.util.Iterator;
 import java.util.concurrent.locks.ReadWriteLock;
