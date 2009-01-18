@@ -18,6 +18,7 @@
     <orderEntry type="module" module-name="qi4j-lib-spaces-api" exported="" />
     <orderEntry type="module" module-name="qi4j-lib-general" exported="" />
     <orderEntry type="module" module-name="qi4j-lib-validation" exported="" />
+    <orderEntry type="module" module-name="qi4j-lib-constraints" exported="" />
   </component>
 </module>
 
