@@ -26,7 +26,7 @@ import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.entitystore.swift.QuickConfiguration;
 import org.qi4j.entitystore.swift.QuickEntityStoreService;
 
-public class QuickEntityStoreTest extends AbstractEntityStoreTest
+public class SwiftEntityStoreTest extends AbstractEntityStoreTest
 {
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
