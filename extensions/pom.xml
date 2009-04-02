@@ -11,4 +11,10 @@
   <artifactId>extensions</artifactId>
   <version>0.7-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>entitystore-javaspaces</module>
+    <module>entitystore-jgroups</module>
+    <module>entitystore-swift</module>
+  </modules>
 </project>
