@@ -1,0 +1,14 @@
+libraries/beans/target/
+libraries/executor/target/
+libraries/jini/importer/target/
+libraries/jini/javaspaces/qi4jtemp/
+libraries/jini/javaspaces/target/
+libraries/jini/lookup/qi4jtemp/
+libraries/jini/lookup/target/
+libraries/jini/transaction/qi4jtemp/
+libraries/jini/transaction/target/
+libraries/registry/target/
+libraries/rmi/target/
+libraries/thread/target/
+libraries/transaction/target/
+libraries/validation/target/

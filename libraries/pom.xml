@@ -11,4 +11,15 @@
   <artifactId>libraries</artifactId>
   <version>0.7-SNAPSHOT</version>
   <packaging>pom</packaging>
+
+  <modules>
+    <module>beans</module>
+    <module>executor</module>
+    <module>jini</module>
+    <module>registry</module>
+    <module>rmi</module>
+    <module>thread</module>
+    <module>transaction</module>
+    <module>validation</module>
+  </modules>
 </project>
