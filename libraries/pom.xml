@@ -18,6 +18,7 @@
     <module>jini</module>
     <module>registry</module>
     <module>rmi</module>
+    <module>spaces</module>
     <module>thread</module>
     <module>transaction</module>
     <module>validation</module>
