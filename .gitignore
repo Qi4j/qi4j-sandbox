@@ -12,3 +12,11 @@ libraries/rmi/target/
 libraries/thread/target/
 libraries/transaction/target/
 libraries/validation/target/
+extensions/entitystore-javaspaces/target/
+extensions/entitystore-jgroups/target/
+extensions/entitystore-swift/target/
+libraries/spaces/api/target/
+libraries/spaces/bootstrap/target/
+libraries/spaces/javaspaces/target/
+libraries/spaces/tests/target/
+

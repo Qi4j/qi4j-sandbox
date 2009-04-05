@@ -16,6 +16,7 @@
     <module>beans</module>
     <module>executor</module>
     <module>jini</module>
+    <module>ldap</module>
     <module>registry</module>
     <module>rmi</module>
     <module>spaces</module>
