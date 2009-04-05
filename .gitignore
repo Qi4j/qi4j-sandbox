@@ -19,4 +19,7 @@ libraries/spaces/api/target/
 libraries/spaces/bootstrap/target/
 libraries/spaces/javaspaces/target/
 libraries/spaces/tests/target/
-
+libraries/exception/target/
+libraries/ldap/client/target/
+libraries/ldap/server/target/
+libraries/observations/target/

@@ -14,9 +14,11 @@
 
   <modules>
     <module>beans</module>
+    <module>exception</module>
     <module>executor</module>
     <module>jini</module>
     <module>ldap</module>
+    <module>observations</module>
     <module>registry</module>
     <module>rmi</module>
     <module>spaces</module>

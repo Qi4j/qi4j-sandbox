@@ -1,0 +1,71 @@
+8
+
+dir
+14719
+https://scm.ops4j.org/repos/ops4j/projects/qi4j/libraries/exception
+https://scm.ops4j.org/repos/ops4j
+
+
+
+2009-02-23T06:39:31.980014Z
+14222
+niclas@hedhman.org
+has-props
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+9b982a3c-3ae5-0310-a4bc-d9a3335569bd
+
+licenses
+dir
+
+src
+dir
+
+qi4j-lib-exception.iml
+file
+
+
+
+
+2009-04-05T04:16:42.000000Z
+c430d287ee8998ab79e033d9ae2cbf33
+2008-12-16T11:13:26.017490Z
+13742
+niclas@hedhman.org
+
+pom.xml
+file
+
+
+
+
+2009-04-05T04:16:42.000000Z
+88458a0d69cee828dea317c7919a7c98
+2009-02-23T06:39:31.980014Z
+14222
+niclas@hedhman.org
+
+dev-status.xml
+file
+
+
+
+
+2009-04-05T04:16:42.000000Z
+2eec34da03ed4f222787f545a33eb989
+2008-12-04T09:52:36.118057Z
+13500
+niclas@hedhman.org
+has-props
+

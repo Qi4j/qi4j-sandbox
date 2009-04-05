@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/repos/ops4j/!svn/ver/13742/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception
+END
+ExceptionHandlingNotificationConcern.java
+K 25
+svn:wc:ra_dav:version-url
+V 144
+/repos/ops4j/!svn/ver/13742/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionHandlingNotificationConcern.java
+END
+ExceptionHandling.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionHandling.java
+END
+ExceptionObservable.java
+K 25
+svn:wc:ra_dav:version-url
+V 127
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionObservable.java
+END
+ExceptionObserver.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionObserver.java
+END
+SystemErrExceptionHandlingMixin.java
+K 25
+svn:wc:ra_dav:version-url
+V 139
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/SystemErrExceptionHandlingMixin.java
+END
+ExceptionObservableMixin.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/repos/ops4j/!svn/ver/13742/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionObservableMixin.java
+END
+ObservableExceptionHandlingService.java
+K 25
+svn:wc:ra_dav:version-url
+V 142
+/repos/ops4j/!svn/ver/13742/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/ObservableExceptionHandlingService.java
+END
+DelegatingExceptionObserver.java
+K 25
+svn:wc:ra_dav:version-url
+V 135
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/DelegatingExceptionObserver.java
+END
+NullExceptionHandling.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/repos/ops4j/!svn/ver/12464/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/NullExceptionHandling.java
+END
+SimpleExceptionHandlingService.java
+K 25
+svn:wc:ra_dav:version-url
+V 138
+/repos/ops4j/!svn/ver/13742/projects/qi4j/libraries/exception/src/main/java/org/qi4j/library/exception/SimpleExceptionHandlingService.java
+END
