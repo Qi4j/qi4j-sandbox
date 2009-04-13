@@ -2,8 +2,39 @@
 <project relativePaths="false" version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/extensions/extensions.iml" filepath="$PROJECT_DIR$/extensions/extensions.iml" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/extensions.iml" filepath="$PROJECT_DIR$/extensions/extensions.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" filepath="$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" filepath="$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" filepath="$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" filepath="$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-preferences/qi4j-entitystore-preferences.iml" filepath="$PROJECT_DIR$/extensions/entitystore-preferences/qi4j-entitystore-preferences.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-rmi/qi4j-entitystore-rmi.iml" filepath="$PROJECT_DIR$/extensions/entitystore-rmi/qi4j-entitystore-rmi.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-s3/qi4j-entitystore-s3.iml" filepath="$PROJECT_DIR$/extensions/entitystore-s3/qi4j-entitystore-s3.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-swift/qi4j-entitystore-swift.iml" filepath="$PROJECT_DIR$/extensions/entitystore-swift/qi4j-entitystore-swift.iml" group="extensions and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/beans/qi4j-lib-beans.iml" filepath="$PROJECT_DIR$/libraries/beans/qi4j-lib-beans.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/exception/qi4j-lib-exception.iml" filepath="$PROJECT_DIR$/libraries/exception/qi4j-lib-exception.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/executor/qi4j-lib-executor.iml" filepath="$PROJECT_DIR$/libraries/executor/qi4j-lib-executor.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/jini/qi4j-lib-jini.iml" filepath="$PROJECT_DIR$/libraries/jini/qi4j-lib-jini.iml" group="libraries and modules/qi4j-lib-jini and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/jini/importer/qi4j-lib-jini-importer.iml" filepath="$PROJECT_DIR$/libraries/jini/importer/qi4j-lib-jini-importer.iml" group="libraries and modules/qi4j-lib-jini and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/jini/javaspaces/qi4j-lib-jini-javaspaces.iml" filepath="$PROJECT_DIR$/libraries/jini/javaspaces/qi4j-lib-jini-javaspaces.iml" group="libraries and modules/qi4j-lib-jini and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/jini/lookup/qi4j-lib-jini-lookup.iml" filepath="$PROJECT_DIR$/libraries/jini/lookup/qi4j-lib-jini-lookup.iml" group="libraries and modules/qi4j-lib-jini and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/jini/transaction/qi4j-lib-jini-transaction.iml" filepath="$PROJECT_DIR$/libraries/jini/transaction/qi4j-lib-jini-transaction.iml" group="libraries and modules/qi4j-lib-jini and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ldap/qi4j-lib-ldap.iml" filepath="$PROJECT_DIR$/libraries/ldap/qi4j-lib-ldap.iml" group="libraries and modules/qi4j-lib-ldap and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ldap/client/qi4j-lib-ldap-client.iml" filepath="$PROJECT_DIR$/libraries/ldap/client/qi4j-lib-ldap-client.iml" group="libraries and modules/qi4j-lib-ldap and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/ldap/server/qi4j-lib-ldap-server.iml" filepath="$PROJECT_DIR$/libraries/ldap/server/qi4j-lib-ldap-server.iml" group="libraries and modules/qi4j-lib-ldap and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/observations/qi4j-lib-observations.iml" filepath="$PROJECT_DIR$/libraries/observations/qi4j-lib-observations.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/registry/qi4j-lib-registry.iml" filepath="$PROJECT_DIR$/libraries/registry/qi4j-lib-registry.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/rmi/qi4j-lib-rmi.iml" filepath="$PROJECT_DIR$/libraries/rmi/qi4j-lib-rmi.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/qi4j-lib-spaces.iml" filepath="$PROJECT_DIR$/libraries/spaces/qi4j-lib-spaces.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/api/qi4j-lib-spaces-api.iml" filepath="$PROJECT_DIR$/libraries/spaces/api/qi4j-lib-spaces-api.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/bootstrap/qi4j-lib-spaces-bootstrap.iml" filepath="$PROJECT_DIR$/libraries/spaces/bootstrap/qi4j-lib-spaces-bootstrap.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/javaspaces/qi4j-lib-spaces-javaspaces.iml" filepath="$PROJECT_DIR$/libraries/spaces/javaspaces/qi4j-lib-spaces-javaspaces.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" filepath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" filepath="$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" filepath="$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" filepath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" filepath="$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" group="libraries and modules" />
       <module fileurl="file://$PROJECT_DIR$/qi4j-sandbox.iml" filepath="$PROJECT_DIR$/qi4j-sandbox.iml" />
     </modules>
   </component>
