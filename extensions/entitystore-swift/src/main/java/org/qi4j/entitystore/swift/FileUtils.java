@@ -21,10 +21,10 @@ import java.io.File;
 
 public class FileUtils
 {
-    
+
     public static void delete( File file )
     {
-        if( ! file.exists() )
+        if( !file.exists() )
         {
             return;
         }

@@ -19,9 +19,8 @@ package org.qi4j.entitystore.jndi;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.UseDefaults;
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
 import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
 /**
  * Configuration for the JNDI EntityStore.
@@ -41,7 +40,8 @@ public interface JndiConfiguration extends ConfigurationComposite
      */
     @UseDefaults Property<Boolean> readOnly();
 
-    /** Instance version property.
+    /**
+     * Instance version property.
      *
      * If the EntityStore is NOT readonly, each entry must have an attribute to store the instance version. This
      * Property names that attribute available in all entries.
@@ -52,7 +52,8 @@ public interface JndiConfiguration extends ConfigurationComposite
      */
     @Optional Property<String> versionAttribute();
 
-    /** Last modified property.
+    /**
+     * Last modified property.
      * If the EntityStore is NOT readonly, each entry must have an attribute to store the last modified date.
      * This property names that attributes in all entries.
      *
@@ -62,10 +63,11 @@ public interface JndiConfiguration extends ConfigurationComposite
      */
     @Optional Property<String> lastModifiedDateAttribute();
 
-    /** QualifiedType attribute.
+    /**
+     * QualifiedType attribute.
      *
      * If the EntityStore is going to support the Iterable interface, it must store the qualifiedType in an
-     * attribute in the entry. This is also required for non-readOnly stores. 
+     * attribute in the entry. This is also required for non-readOnly stores.
      *
      * @return The name of the attribute where to store the qualifiedType.
      */
@@ -78,7 +80,8 @@ public interface JndiConfiguration extends ConfigurationComposite
      */
     @UseDefaults Property<Boolean> turboMode();
 
-    /** The Distinguished Name of the base.
+    /**
+     * The Distinguished Name of the base.
      * All creation and retrieval will occur in this directory.
      *
      * @return The property of the DN to the directory of operation.

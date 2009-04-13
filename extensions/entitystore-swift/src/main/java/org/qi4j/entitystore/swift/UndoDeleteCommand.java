@@ -20,7 +20,8 @@ package org.qi4j.entitystore.swift;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 
-/** Record has been deleted and we want to restore it.
+/**
+ * Record has been deleted and we want to restore it.
  *
  * Block Structure
  * [blockSize]     4 bytes
@@ -50,7 +51,7 @@ public class UndoDeleteCommand
     public void undo( RandomAccessFile dataFile, IdentityFile idFile )
         throws IOException
     {
-        dataFile.seek(  position );
+        dataFile.seek( position );
         dataFile.skipBytes( 4 );
         dataFile.writeByte( usage );
     }

@@ -16,36 +16,25 @@
  */
 package org.qi4j.entitystore.rmi;
 
-import java.io.IOException;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.locks.ReadWriteLock;
+import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
-import org.qi4j.library.locking.WriteLock;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.service.ServiceDescriptor;
 import org.qi4j.api.service.ServiceReference;
-import org.qi4j.spi.Qi4jSPI;
-import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.entity.StateCommitter;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStore;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.entity.UnknownEntityTypeException;
 import org.qi4j.api.structure.Module;
-import org.qi4j.api.common.QualifiedName;
+import org.qi4j.library.locking.WriteLock;
+import org.qi4j.spi.Qi4jSPI;
+import org.qi4j.spi.entity.*;
+import org.qi4j.spi.entity.helpers.DefaultEntityState;
+import org.qi4j.spi.service.ServiceDescriptor;
+
+import java.io.IOException;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
+import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  * RMI server implementation of EntityStore

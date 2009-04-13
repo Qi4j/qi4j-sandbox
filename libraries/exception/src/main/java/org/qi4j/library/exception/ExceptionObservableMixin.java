@@ -24,7 +24,7 @@ public class ExceptionObservableMixin
     implements ExceptionObservable
 {
     @This private Property<ExceptionObserver> observer;
-    
+
     public void addExceptionObserver( ExceptionObserver observer )
     {
         synchronized( this )
@@ -56,7 +56,7 @@ public class ExceptionObservableMixin
             if( current instanceof DelegatingExceptionObserver )
             {
                 DelegatingExceptionObserver delegator = (DelegatingExceptionObserver) this.observer;
-                this.observer.set( delegator.removeExceptionObserver( observer ));
+                this.observer.set( delegator.removeExceptionObserver( observer ) );
             }
         }
     }

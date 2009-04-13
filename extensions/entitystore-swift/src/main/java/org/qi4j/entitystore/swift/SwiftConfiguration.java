@@ -19,17 +19,14 @@ package org.qi4j.entitystore.swift;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.UseDefaults;
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
 import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
-public interface QuickConfiguration extends ConfigurationComposite
+public interface SwiftConfiguration extends ConfigurationComposite
 {
     Property<String> storageDirectory();
 
-    @Optional @UseDefaults
-    Property<Boolean> turboMode();
+    @Optional @UseDefaults Property<Boolean> turboMode();
 
-    @Optional @UseDefaults
-    Property<Boolean> recover();
+    @Optional @UseDefaults Property<Boolean> recover();
 }

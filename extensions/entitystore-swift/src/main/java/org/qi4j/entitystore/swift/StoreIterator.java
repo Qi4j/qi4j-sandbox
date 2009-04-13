@@ -18,9 +18,10 @@
 package org.qi4j.entitystore.swift;
 
 import org.qi4j.spi.entity.QualifiedIdentity;
-import java.util.Iterator;
-import java.io.RandomAccessFile;
+
 import java.io.IOException;
+import java.io.RandomAccessFile;
+import java.util.Iterator;
 
 class StoreIterator
     implements Iterator<QualifiedIdentity>
@@ -59,7 +60,7 @@ class StoreIterator
             {
                 store.seek( position );
                 int blockSize = store.readInt();
-                if (blockSize == 0)
+                if( blockSize == 0 )
                 {
                     // TODO This is a bug. Why does it occur??
                     isAvailable = false;

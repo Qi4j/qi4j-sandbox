@@ -16,9 +16,10 @@
  */
 package org.qi4j.library.validation;
 
+import org.qi4j.api.injection.scope.This;
+
 import java.util.ArrayList;
 import java.util.List;
-import org.qi4j.api.injection.scope.This;
 
 public class ValidatableMixin
     implements Validatable

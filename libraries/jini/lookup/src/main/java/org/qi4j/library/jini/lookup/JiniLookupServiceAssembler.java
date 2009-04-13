@@ -17,11 +17,10 @@
  */
 package org.qi4j.library.jini.lookup;
 
-import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.library.http.ServletInfo;
-import java.io.Serializable;
 
 public class JiniLookupServiceAssembler
     implements Assembler

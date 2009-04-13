@@ -17,11 +17,12 @@
  */
 package org.qi4j.library.registry;
 
-import java.util.HashMap;
-import java.util.LinkedList;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.library.exception.ExceptionHandling;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 public class RegistryMixin<K, V>
     implements Registry<K, V>

@@ -13,8 +13,8 @@ package org.qi4j.library.rmi.remote;
 
 import org.qi4j.api.composite.Composite;
 import org.qi4j.api.mixin.Mixins;
-import org.qi4j.library.rmi.RMIMixin;
 import org.qi4j.library.cache.InvocationCacheAbstractComposite;
+import org.qi4j.library.rmi.RMIMixin;
 
 /**
  * Implement the RemoteInterface by using RMI.

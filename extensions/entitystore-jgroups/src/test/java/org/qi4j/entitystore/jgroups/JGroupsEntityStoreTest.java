@@ -18,8 +18,6 @@
 
 package org.qi4j.entitystore.jgroups;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
@@ -47,6 +45,9 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.bootstrap.SingletonAssembler;
 import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * Test of JGroups EntityStore backend.

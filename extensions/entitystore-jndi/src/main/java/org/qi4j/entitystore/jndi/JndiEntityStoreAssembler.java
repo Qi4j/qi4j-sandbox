@@ -17,12 +17,12 @@
  */
 package org.qi4j.entitystore.jndi;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.api.common.Visibility;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
+import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 
 public class JndiEntityStoreAssembler
     implements Assembler

@@ -1,3 +1,4 @@
+target/
 libraries/beans/target/
 libraries/executor/target/
 libraries/jini/importer/target/

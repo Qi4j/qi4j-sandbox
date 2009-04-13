@@ -17,9 +17,10 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.io.RandomAccessFile;
-import java.io.IOException;
 import org.qi4j.spi.entity.QualifiedIdentity;
+
+import java.io.IOException;
+import java.io.RandomAccessFile;
 
 public class UndoNewIdentityCommand
     implements UndoCommand
@@ -33,7 +34,7 @@ public class UndoNewIdentityCommand
 
     public void undo( RandomAccessFile dataFile, IdentityFile idFile ) throws IOException
     {
-        idFile.drop( identity );   
+        idFile.drop( identity );
     }
 
     public void save( RandomAccessFile undoJournal ) throws IOException

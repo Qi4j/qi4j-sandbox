@@ -17,11 +17,9 @@
  */
 package org.qi4j.library.ldap.server;
 
-import org.qi4j.api.configuration.Configuration;
-import org.qi4j.api.configuration.ConfigurationComposite;
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
 import org.qi4j.api.common.Optional;
+import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
 public interface LdapConfiguration extends ConfigurationComposite
 {
@@ -30,5 +28,5 @@ public interface LdapConfiguration extends ConfigurationComposite
     Property<String> partitionDn();
 
     @Optional Property<String> indexAttributes();
-    
+
 }

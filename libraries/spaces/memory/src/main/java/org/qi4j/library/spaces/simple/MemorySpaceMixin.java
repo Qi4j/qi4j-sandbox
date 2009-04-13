@@ -17,11 +17,12 @@
  */
 package org.qi4j.library.spaces.simple;
 
+import org.qi4j.library.spaces.Space;
+import org.qi4j.library.spaces.SpaceTransaction;
+
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.Stack;
-import org.qi4j.library.spaces.Space;
-import org.qi4j.library.spaces.SpaceTransaction;
 
 public class MemorySpaceMixin
     implements Space

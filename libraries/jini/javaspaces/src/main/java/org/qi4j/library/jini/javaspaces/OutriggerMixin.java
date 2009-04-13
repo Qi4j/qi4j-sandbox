@@ -18,15 +18,6 @@
 package org.qi4j.library.jini.javaspaces;
 
 import com.sun.jini.start.NonActivatableServiceDescriptor;
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.UnknownHostException;
-import java.security.Policy;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 import net.jini.config.Configuration;
 import net.jini.config.EmptyConfiguration;
 import org.qi4j.api.common.Optional;
@@ -36,6 +27,12 @@ import org.qi4j.api.service.Activatable;
 import org.qi4j.api.util.Streams;
 import org.qi4j.library.http.HttpService;
 import org.qi4j.library.http.Interface;
+
+import java.io.*;
+import java.net.UnknownHostException;
+import java.security.Policy;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 public class OutriggerMixin
     implements Activatable
@@ -101,26 +98,26 @@ public class OutriggerMixin
         {
             System.out.println( "Using JRMP..." );
             configuration.append( "import net.jini.jrmp.JrmpExporter;\n" +
-                          "import net.jini.core.discovery.LookupLocator;\n" +
-                          "\n" +
-                          "com.sun.jini.outrigger\n" +
-                          "{\n" +
-                          "    serverExporter = new JrmpExporter();\n" );
+                                  "import net.jini.core.discovery.LookupLocator;\n" +
+                                  "\n" +
+                                  "com.sun.jini.outrigger\n" +
+                                  "{\n" +
+                                  "    serverExporter = new JrmpExporter();\n" );
         }
         else
         {
             System.out.println( "Using JERI..." );
             configuration.append( "import net.jini.jeri.BasicILFactory;\n" +
-                            "import net.jini.jeri.BasicJeriExporter;\n" +
-                            "import net.jini.jeri.tcp.TcpServerEndpoint;\n" +
-                            "import net.jini.core.discovery.LookupLocator;\n" +
-                            "com.sun.jini.outrigger\n" +
-                            "{" +
-                            "    private invocationLayerFactory = new BasicILFactory();\n" +
-                            "    serverExporter = new BasicJeriExporter(TcpServerEndpoint.getInstance(0),\n" +
-                            "                                           invocationLayerFactory,\n" +
-                            "                                           false,\n" +
-                            "                                           true);\n" );
+                                  "import net.jini.jeri.BasicJeriExporter;\n" +
+                                  "import net.jini.jeri.tcp.TcpServerEndpoint;\n" +
+                                  "import net.jini.core.discovery.LookupLocator;\n" +
+                                  "com.sun.jini.outrigger\n" +
+                                  "{" +
+                                  "    private invocationLayerFactory = new BasicILFactory();\n" +
+                                  "    serverExporter = new BasicJeriExporter(TcpServerEndpoint.getInstance(0),\n" +
+                                  "                                           invocationLayerFactory,\n" +
+                                  "                                           false,\n" +
+                                  "                                           true);\n" );
         }
         configuration.append( "    initialLookupGroups = new String[] {" );
         String groupData = my.configuration().groups().get();
@@ -131,7 +128,7 @@ public class OutriggerMixin
         }
         else
         {
-            groups = new String[] { "qi4j" };
+            groups = new String[]{ "qi4j" };
         }
         boolean first = true;
         for( String group : groups )
@@ -170,7 +167,7 @@ public class OutriggerMixin
             String token = st.nextToken();
             result.add( token );
         }
-        String[] retVal = new String[result.size() ];
+        String[] retVal = new String[result.size()];
         return result.toArray( retVal );
     }
 

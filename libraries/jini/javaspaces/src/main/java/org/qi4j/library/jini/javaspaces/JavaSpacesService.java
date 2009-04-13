@@ -17,11 +17,11 @@
  */
 package org.qi4j.library.jini.javaspaces;
 
+import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
-import org.qi4j.api.mixin.Mixins;
 
-@Mixins( OutriggerMixin.class)
+@Mixins( OutriggerMixin.class )
 public interface JavaSpacesService extends Activatable, ServiceComposite
 {
 }

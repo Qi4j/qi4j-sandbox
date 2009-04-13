@@ -1,11 +1,12 @@
 package org.qi4j.library.validation;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.common.AppliesToFilter;
 import org.qi4j.api.concern.ConcernOf;
 import org.qi4j.api.injection.scope.This;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 /**
  * After invocation, ensure that the validation rules pass.

@@ -17,13 +17,14 @@
  */
 package org.qi4j.library.jini.importer;
 
-import java.io.IOException;
-import java.lang.reflect.Proxy;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.service.ImportedServiceDescriptor;
 import org.qi4j.api.service.ServiceImporter;
 import org.qi4j.api.service.ServiceImporterException;
+
+import java.io.IOException;
+import java.lang.reflect.Proxy;
 
 public class JiniImporter
     implements ServiceImporter
@@ -51,7 +52,7 @@ public class JiniImporter
         {
             throw new ServiceImporterException( "Unable to establish network.", e );
         }
-        Class[] type = new Class[] { serviceType };
+        Class[] type = new Class[]{ serviceType };
         return Proxy.newProxyInstance( JiniImporter.class.getClassLoader(), type, handler );
     }
 

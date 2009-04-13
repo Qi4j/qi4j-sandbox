@@ -17,6 +17,11 @@
  */
 package org.qi4j.library.beans.support;
 
+import org.qi4j.api.common.MetaInfo;
+import org.qi4j.api.common.QualifiedName;
+import org.qi4j.api.entity.association.GenericAssociationInfo;
+import org.qi4j.api.entity.association.SetAssociation;
+
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Type;
@@ -24,10 +29,6 @@ import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
-import org.qi4j.api.common.MetaInfo;
-import org.qi4j.api.common.QualifiedName;
-import org.qi4j.api.entity.association.GenericAssociationInfo;
-import org.qi4j.api.entity.association.SetAssociation;
 
 public class JavabeanSetAssociation
     implements SetAssociation

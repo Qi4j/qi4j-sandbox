@@ -18,12 +18,8 @@
 package org.qi4j.library.spaces.javaspaces;
 
 import net.jini.core.entry.Entry;
-import java.io.Serializable;
-import java.io.ByteArrayOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
+
+import java.io.*;
 
 public final class StorageEntry
     implements Entry
@@ -58,7 +54,8 @@ public final class StorageEntry
             try
             {
                 out.close();
-            } catch( IOException e )
+            }
+            catch( IOException e )
             {
                 // ignore.
             }

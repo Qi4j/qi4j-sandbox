@@ -17,8 +17,6 @@
  */
 package org.qi4j.library.jini.importer;
 
-import java.io.IOException;
-import java.util.Iterator;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import org.junit.Ignore;
@@ -30,6 +28,9 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.bootstrap.SingletonAssembler;
 import org.qi4j.library.jini.importer.org.qi4j.library.jini.tests.InterpreterService;
 
+import java.io.IOException;
+import java.util.Iterator;
+
 /**
  * This testcase starts an external non-Qi4j, Jini application and then makes sure that such Jini service will appear
  * as a Qi4j service via the ServiceImporter mechanism.
@@ -38,7 +39,7 @@ public class ImportExternalJiniServiceTest
 {
     private Process process;
 
-    @Ignore("Doesn't seem to work right now")
+    @Ignore( "Doesn't seem to work right now" )
     @Test
     public void givenExternalJiniServicePresentInitiallyWhenQi4jApplicationStartsExpectServiceToBeImported()
         throws IOException, InterruptedException

@@ -17,16 +17,8 @@
  */
 package org.qi4j.library.spaces.javaspaces;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.Reader;
-import java.io.InputStreamReader;
-import java.io.InputStream;
-import java.rmi.RemoteException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Stack;
-import java.util.StringTokenizer;
+import net.jini.config.ConfigurationException;
+import net.jini.config.ConfigurationFile;
 import net.jini.core.entry.UnusableEntryException;
 import net.jini.core.lease.LeaseDeniedException;
 import net.jini.core.lookup.ServiceTemplate;
@@ -44,14 +36,19 @@ import net.jini.lookup.ServiceDiscoveryListener;
 import net.jini.lookup.ServiceDiscoveryManager;
 import net.jini.space.JavaSpace05;
 import net.jini.space.MatchSet;
-import net.jini.config.ConfigurationFile;
-import net.jini.config.ConfigurationException;
+import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.service.Activatable;
 import org.qi4j.library.spaces.Space;
 import org.qi4j.library.spaces.SpaceException;
 import org.qi4j.library.spaces.SpaceTransaction;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.configuration.Configuration;
+
+import java.io.*;
+import java.rmi.RemoteException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class JavaSpacesClientMixin
     implements Space, Activatable
@@ -283,14 +280,14 @@ public class JavaSpacesClientMixin
         {
             return new String[0];
         }
-        StringTokenizer st = new StringTokenizer( data, ",", false);
+        StringTokenizer st = new StringTokenizer( data, ",", false );
         ArrayList<String> result = new ArrayList<String>();
         while( st.hasMoreTokens() )
         {
             String item = st.nextToken().trim();
             result.add( item );
         }
-        String[] retVal = new String[ result.size() ];
+        String[] retVal = new String[result.size()];
         return result.toArray( retVal );
     }
 
@@ -311,7 +308,7 @@ public class JavaSpacesClientMixin
         DiscoveryManagement dm = null;
         try
         {
-            net.jini.config.Configuration config = new ConfigurationFile( reader, options, classloader);
+            net.jini.config.Configuration config = new ConfigurationFile( reader, options, classloader );
             dm = new LookupDiscoveryManager( groups, null, null, config );
         }
         catch( ConfigurationException e )

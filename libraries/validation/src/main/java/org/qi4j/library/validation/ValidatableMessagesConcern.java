@@ -1,9 +1,10 @@
 package org.qi4j.library.validation;
 
-import java.util.List;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
 import org.qi4j.api.injection.scope.This;
+
+import java.util.List;
 
 /**
  * JAVADOC

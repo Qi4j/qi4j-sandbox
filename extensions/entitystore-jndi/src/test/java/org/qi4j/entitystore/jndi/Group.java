@@ -22,5 +22,5 @@ import org.qi4j.api.property.Property;
 public interface Group
 {
     Property<String> uid();
-    
+
 }

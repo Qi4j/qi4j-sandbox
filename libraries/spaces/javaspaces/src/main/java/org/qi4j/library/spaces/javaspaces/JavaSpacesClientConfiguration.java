@@ -17,9 +17,8 @@
  */
 package org.qi4j.library.spaces.javaspaces;
 
-import org.qi4j.api.property.Property;
-import org.qi4j.api.entity.EntityComposite;
 import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
 public interface JavaSpacesClientConfiguration extends ConfigurationComposite
 {

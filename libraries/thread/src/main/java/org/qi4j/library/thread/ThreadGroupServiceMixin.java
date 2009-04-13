@@ -17,10 +17,11 @@
  */
 package org.qi4j.library.thread;
 
-import java.util.HashMap;
-import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.configuration.Configuration;
+import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.property.Property;
+
+import java.util.HashMap;
 
 public class ThreadGroupServiceMixin
     implements ThreadGroupService

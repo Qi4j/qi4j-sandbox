@@ -17,15 +17,13 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.test.entity.AbstractEntityStoreTest;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
-import org.qi4j.api.common.Visibility;
-import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.entitystore.swift.QuickConfiguration;
-import org.qi4j.entitystore.swift.QuickEntityStoreService;
 import org.junit.Ignore;
+import org.qi4j.api.common.Visibility;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.entitystore.memory.MemoryEntityStoreService;
+import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.test.entity.AbstractEntityStoreTest;
 
 @Ignore
 public class SwiftEntityStoreTest extends AbstractEntityStoreTest
@@ -33,10 +31,10 @@ public class SwiftEntityStoreTest extends AbstractEntityStoreTest
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
         super.assemble( module );
-        module.addServices( QuickEntityStoreService.class, UuidIdentityGeneratorService.class );
+        module.addServices( SwiftEntityStoreService.class, UuidIdentityGeneratorService.class );
 
         ModuleAssembly config = module.layerAssembly().newModuleAssembly( "config" );
-        config.addEntities( QuickConfiguration.class ).visibleIn( Visibility.layer );
+        config.addEntities( SwiftConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }
 

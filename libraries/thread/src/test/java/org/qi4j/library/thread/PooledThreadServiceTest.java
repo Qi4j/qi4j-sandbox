@@ -17,18 +17,19 @@
  */
 package org.qi4j.library.thread;
 
+import org.junit.Assert;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Test;
-import org.junit.Assert;
+import org.qi4j.api.composite.Composite;
+import org.qi4j.api.injection.scope.Service;
+import org.qi4j.api.mixin.Mixins;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.api.composite.Composite;
-import org.qi4j.api.mixin.Mixins;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.api.injection.scope.Service;
 import org.qi4j.library.thread.assembly.PooledThreadServiceAssembler;
 import org.qi4j.test.AbstractQi4jTest;
+
 import java.util.ArrayList;
 
 public class PooledThreadServiceTest extends AbstractQi4jTest
@@ -50,7 +51,7 @@ public class PooledThreadServiceTest extends AbstractQi4jTest
         int poolsize = underTest.maxThreads();
         TestRunnable r1 = new TestRunnable();
         threads.add( underTest.fetchThread( r1 ) );
-        for( int i=1 ; i < poolsize; i++ )
+        for( int i = 1; i < poolsize; i++ )
         {
             TestRunnable r2 = new TestRunnable();
             threads.add( underTest.fetchThread( r2 ) );
@@ -59,23 +60,24 @@ public class PooledThreadServiceTest extends AbstractQi4jTest
         {
             TestRunnable r2 = new TestRunnable();
             underTest.fetchThread( r2 );
-            Assert.fail( "Should have thrown a MaxixmumThreadsException.");
-        } catch( MaximumThreadsException e )
+            Assert.fail( "Should have thrown a MaxixmumThreadsException." );
+        }
+        catch( MaximumThreadsException e )
         { // ignore
         }
-        for( int i=0; i < poolsize; i++ )
+        for( int i = 0; i < poolsize; i++ )
         {
-            Thread t1 = threads.get(i);
+            Thread t1 = threads.get( i );
 
-            for( int j=0; j < poolsize; j++ )
+            for( int j = 0; j < poolsize; j++ )
             {
-                Thread t2 = threads.get(j);
-                assertFalse( (i != j ) && t1.equals( t2 ) );
+                Thread t2 = threads.get( j );
+                assertFalse( ( i != j ) && t1.equals( t2 ) );
             }
             t1.start();
         }
         Thread.sleep( 100 );
-        Thread t1 = threads.get(0);
+        Thread t1 = threads.get( 0 );
         r1.stop();
         Thread.sleep( 100 );
         TestRunnable r3 = new TestRunnable();
@@ -86,6 +88,7 @@ public class PooledThreadServiceTest extends AbstractQi4jTest
     public interface UnderTest
     {
         Thread fetchThread( Runnable runnable );
+
         int maxThreads();
     }
 

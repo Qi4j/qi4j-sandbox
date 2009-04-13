@@ -17,7 +17,6 @@
  */
 package org.qi4j.library.thread;
 
-import org.qi4j.api.entity.Queryable;
 import org.qi4j.api.property.Property;
 
 /**

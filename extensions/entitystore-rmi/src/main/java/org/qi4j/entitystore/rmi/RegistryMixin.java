@@ -1,15 +1,16 @@
 package org.qi4j.entitystore.rmi;
 
+import org.qi4j.api.common.AppliesTo;
+import org.qi4j.api.configuration.Configuration;
+import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.service.Activatable;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
-import org.qi4j.api.common.AppliesTo;
-import org.qi4j.api.injection.scope.This;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.configuration.Configuration;
 
 /**
  * Create and delegate to a RMI registry.

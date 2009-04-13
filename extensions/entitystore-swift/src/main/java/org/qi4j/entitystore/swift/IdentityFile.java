@@ -17,10 +17,11 @@
  */
 package org.qi4j.entitystore.swift;
 
+import org.qi4j.spi.entity.QualifiedIdentity;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import org.qi4j.spi.entity.QualifiedIdentity;
 
 /**
  * For Slot 0

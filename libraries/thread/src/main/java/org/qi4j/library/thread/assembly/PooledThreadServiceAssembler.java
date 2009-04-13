@@ -20,11 +20,10 @@ package org.qi4j.library.thread.assembly;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.library.thread.NewThreadServiceComposite;
-import org.qi4j.library.thread.ThreadServiceConfigurationEntity;
-import org.qi4j.library.thread.ThreadGroupServiceComposite;
 import org.qi4j.library.thread.PooledThreadServiceComposite;
 import org.qi4j.library.thread.ThreadGroupConfigurationEntity;
+import org.qi4j.library.thread.ThreadGroupServiceComposite;
+import org.qi4j.library.thread.ThreadServiceConfigurationEntity;
 import org.qi4j.library.uid.sequence.assembly.TransientSequencingAssembler;
 
 public class PooledThreadServiceAssembler

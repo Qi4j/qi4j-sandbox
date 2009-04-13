@@ -17,28 +17,28 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.api.common.Visibility;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
+import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 
-public class QuickEntityStoreAssembler
+public class SwiftEntityStoreAssembler
     implements Assembler
 {
     private String configurationModuleName;
 
-    public QuickEntityStoreAssembler( String configurationModule )
+    public SwiftEntityStoreAssembler( String configurationModule )
     {
         this.configurationModuleName = configurationModule;
     }
 
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
-        module.addServices( QuickEntityStoreService.class, UuidIdentityGeneratorService.class );
+        module.addServices( SwiftEntityStoreService.class, UuidIdentityGeneratorService.class );
         ModuleAssembly config = module.layerAssembly().newModuleAssembly( configurationModuleName );
-        config.addEntities( QuickConfiguration.class ).visibleIn( Visibility.layer );
+        config.addEntities( SwiftConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }
 }

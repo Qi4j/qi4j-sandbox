@@ -11,10 +11,6 @@
 */
 package org.qi4j.library.rmi;
 
-import java.io.IOException;
-import java.rmi.registry.LocateRegistry;
-import java.rmi.registry.Registry;
-import java.rmi.server.UnicastRemoteObject;
 import junit.framework.Assert;
 import org.junit.Test;
 import org.qi4j.bootstrap.AssemblyException;
@@ -23,6 +19,11 @@ import org.qi4j.library.rmi.remote.RemoteInterface;
 import org.qi4j.library.rmi.remote.RemoteInterfaceComposite;
 import org.qi4j.library.rmi.remote.RemoteInterfaceImpl;
 import org.qi4j.test.AbstractQi4jTest;
+
+import java.io.IOException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
+import java.rmi.server.UnicastRemoteObject;
 
 /**
  * JAVADOC

@@ -17,9 +17,10 @@
  */
 package org.qi4j.library.beans.support;
 
-import java.util.ListIterator;
 import org.qi4j.api.composite.CompositeBuilderFactory;
 import org.qi4j.api.entity.association.AssociationInfo;
+
+import java.util.ListIterator;
 
 public class DelegatingListIterator
     implements ListIterator

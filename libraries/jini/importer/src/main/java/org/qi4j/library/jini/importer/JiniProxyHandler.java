@@ -17,21 +17,18 @@
  */
 package org.qi4j.library.jini.importer;
 
-import java.io.IOException;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
 import net.jini.core.entry.Entry;
 import net.jini.core.lookup.ServiceID;
 import net.jini.core.lookup.ServiceItem;
 import net.jini.core.lookup.ServiceTemplate;
 import net.jini.discovery.DiscoveryManagement;
 import net.jini.lease.LeaseRenewalManager;
-import net.jini.lookup.LookupCache;
-import net.jini.lookup.ServiceDiscoveryEvent;
-import net.jini.lookup.ServiceDiscoveryListener;
-import net.jini.lookup.ServiceDiscoveryManager;
-import net.jini.lookup.ServiceItemFilter;
+import net.jini.lookup.*;
 import org.qi4j.api.service.ServiceImporterException;
+
+import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 public class JiniProxyHandler
     implements InvocationHandler, ServiceDiscoveryListener
@@ -64,14 +61,16 @@ public class JiniProxyHandler
             if( jiniService == null )
             {
                 ServiceItem item = lookupCache.lookup( null );
-                if (item == null)
+                if( item == null )
                 {
-                    throw new ServiceImporterException("Jini service currently not available");
+                    throw new ServiceImporterException( "Jini service currently not available" );
                 }
                 jiniService = item.service;
 
-                if (jiniService == null)
-                    throw new ServiceImporterException("Jini service currently not available");
+                if( jiniService == null )
+                {
+                    throw new ServiceImporterException( "Jini service currently not available" );
+                }
             }
 
             return method.invoke( jiniService, args );

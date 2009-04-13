@@ -11,9 +11,10 @@
 */
 package org.qi4j.library.rmi.remote;
 
+import org.qi4j.library.cache.Cached;
+
 import java.io.IOException;
 import java.rmi.Remote;
-import org.qi4j.library.cache.Cached;
 
 /**
  * JAVADOC

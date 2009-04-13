@@ -17,15 +17,16 @@
  */
 package org.qi4j.library.beans.support;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Type;
-import java.lang.reflect.UndeclaredThrowableException;
 import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.composite.CompositeBuilder;
 import org.qi4j.api.entity.association.Association;
 import org.qi4j.api.entity.association.GenericAssociationInfo;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Type;
+import java.lang.reflect.UndeclaredThrowableException;
 
 public class JavabeanAssociation
     implements Association

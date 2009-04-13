@@ -11,13 +11,14 @@
 */
 package org.qi4j.library.rmi;
 
+import org.qi4j.api.common.AppliesTo;
+
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.rmi.Remote;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import org.qi4j.api.common.AppliesTo;
 
 /**
  * Generic mixin that looks up and invokes an object through RMI

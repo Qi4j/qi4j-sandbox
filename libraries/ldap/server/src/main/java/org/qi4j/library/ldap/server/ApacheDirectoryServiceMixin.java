@@ -17,18 +17,19 @@
  */
 package org.qi4j.library.ldap.server;
 
-import org.apache.directory.server.core.DirectoryService;
 import org.apache.directory.server.core.DefaultDirectoryService;
+import org.apache.directory.server.core.DirectoryService;
 import org.apache.directory.server.core.entry.ServerEntry;
 import org.apache.directory.server.core.partition.Partition;
-import org.apache.directory.server.core.partition.impl.btree.jdbm.JdbmPartition;
 import org.apache.directory.server.core.partition.impl.btree.jdbm.JdbmIndex;
+import org.apache.directory.server.core.partition.impl.btree.jdbm.JdbmPartition;
 import org.apache.directory.server.xdbm.Index;
 import org.apache.directory.shared.ldap.exception.LdapNameNotFoundException;
 import org.apache.directory.shared.ldap.name.LdapDN;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.configuration.Configuration;
+import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.service.Activatable;
+
 import java.util.HashSet;
 import java.util.Set;
 
@@ -37,7 +38,9 @@ public class ApacheDirectoryServiceMixin
 {
     @This Configuration<LdapConfiguration> configuration;
 
-    /** The directory service */
+    /**
+     * The directory service
+     */
     private DirectoryService service;
 
     public void activate()
@@ -45,7 +48,7 @@ public class ApacheDirectoryServiceMixin
     {
         try
         {
-            String[] attrs = { "objectClass", "ou", "uid"  };
+            String[] attrs = { "objectClass", "ou", "uid" };
             // Initialize the LDAP service
             service = new DefaultDirectoryService();
 
@@ -70,10 +73,10 @@ public class ApacheDirectoryServiceMixin
 
             // Inject the apache root entry if it does not already exist
             try
-        {
-            service.getAdminSession().lookup( apachePartition.getSuffixDn() );
+            {
+                service.getAdminSession().lookup( apachePartition.getSuffixDn() );
             }
-            catch ( LdapNameNotFoundException lnnfe )
+            catch( LdapNameNotFoundException lnnfe )
             {
                 LdapDN dnApache = new LdapDN( "dc=Apache,dc=Org" );
                 ServerEntry entryApache = service.newEntry( dnApache );
@@ -119,16 +122,16 @@ public class ApacheDirectoryServiceMixin
      * Add a new set of index on the given attributes
      *
      * @param partition The partition on which we want to add index
-     * @param attrs The list of attributes to index
+     * @param attrs     The list of attributes to index
      */
     private void addIndex( Partition partition, String... attrs )
     {
         // Index some attributes on the apache partition
         Set<Index<?, ServerEntry>> indexedAttributes = new HashSet<Index<?, ServerEntry>>();
 
-        for ( String attribute:attrs )
+        for( String attribute : attrs )
         {
-            indexedAttributes.add( new JdbmIndex<String,ServerEntry>( attribute ) );
+            indexedAttributes.add( new JdbmIndex<String, ServerEntry>( attribute ) );
         }
 
 //        ((JdbmPartition)partition).setIndexedAttributes( indexedAttributes );

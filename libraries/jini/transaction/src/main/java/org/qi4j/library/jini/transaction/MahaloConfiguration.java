@@ -19,24 +19,18 @@ package org.qi4j.library.jini.transaction;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.UseDefaults;
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
 import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
 public interface MahaloConfiguration extends ConfigurationComposite
 {
-    @Optional @UseDefaults
-    Property<Boolean> useJrmp();
+    @Optional @UseDefaults Property<Boolean> useJrmp();
 
-    @Optional
-    Property<String> hostInterface();
+    @Optional Property<String> hostInterface();
 
-    @Optional
-    Property<String> securityPolicy();
+    @Optional Property<String> securityPolicy();
 
-    @Optional
-    Property<String> mahaloDlJarLocation();
+    @Optional Property<String> mahaloDlJarLocation();
 
-    @Optional
-    Property<String> groups();
+    @Optional Property<String> groups();
 }

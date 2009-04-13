@@ -12,20 +12,19 @@
 */
 package org.qi4j.library.beans.properties;
 
-import java.util.Iterator;
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static junit.framework.Assert.assertFalse;
+import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 import org.qi4j.api.composite.Composite;
-import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.composite.CompositeBuilder;
-import org.qi4j.test.AbstractQi4jTest;
-import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.api.mixin.Mixins;
 import org.qi4j.bootstrap.AssemblyException;
-import static junit.framework.Assert.assertFalse;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.test.AbstractQi4jTest;
+
+import java.util.Iterator;
 
 public class PropertiesMixinTest extends AbstractQi4jTest
 {

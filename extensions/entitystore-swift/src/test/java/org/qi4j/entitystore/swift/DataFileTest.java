@@ -17,14 +17,11 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.io.File;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.entitystore.swift.DataBlock;
-import org.qi4j.entitystore.swift.FileUtils;
-import org.qi4j.entitystore.swift.IdentityTooLongException;
-import org.qi4j.entitystore.swift.RecordManager;
+
+import java.io.File;
 
 public class DataFileTest
 {
@@ -32,7 +29,7 @@ public class DataFileTest
     public void whenPuttingDataThenExpectSameDataBack()
         throws Exception
     {
-        File dir = new File( "quick-store" );
+        File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
@@ -54,7 +51,7 @@ public class DataFileTest
     public void whenPutting100DataWithIndividualCommitsThenExpectSameDataBack()
         throws Exception
     {
-        File dir = new File( "quick-store" );
+        File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
@@ -92,7 +89,7 @@ public class DataFileTest
     public void whenPutting100DataWithSingleCommitThenExpectSameDataBack()
         throws Exception
     {
-        File dir = new File( "quick-store" );
+        File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
@@ -131,7 +128,7 @@ public class DataFileTest
     public void whenIdentityIsAtMaxThenExpectSameDataBack()
         throws Exception
     {
-        File dir = new File( "quick-store" );
+        File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
@@ -155,7 +152,7 @@ public class DataFileTest
     public void whenTooLongIdentityThenExpectException()
         throws Exception
     {
-        File dir = new File( "quick-store" );
+        File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {

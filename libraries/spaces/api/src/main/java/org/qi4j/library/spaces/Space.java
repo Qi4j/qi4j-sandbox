@@ -17,8 +17,9 @@
  */
 package org.qi4j.library.spaces;
 
-import java.io.Serializable;
 import org.qi4j.api.common.Optional;
+
+import java.io.Serializable;
 
 public interface Space extends Iterable<Serializable>
 {

@@ -17,16 +17,16 @@
  */
 package org.qi4j.library.thread;
 
-import org.qi4j.test.AbstractQi4jTest;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.api.composite.Composite;
-import org.qi4j.api.mixin.Mixins;
-import org.qi4j.api.injection.scope.Service;
-import org.qi4j.library.thread.assembly.NewThreadServiceAssembler;
-import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.junit.Test;
 import static org.junit.Assert.assertFalse;
+import org.junit.Test;
+import org.qi4j.api.composite.Composite;
+import org.qi4j.api.injection.scope.Service;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.entitystore.memory.MemoryEntityStoreService;
+import org.qi4j.library.thread.assembly.NewThreadServiceAssembler;
+import org.qi4j.test.AbstractQi4jTest;
 
 public class NewThreadServiceTest extends AbstractQi4jTest
 {
@@ -47,7 +47,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
         UnderTest underTest = compositeBuilderFactory.newComposite( UnderTest.class );
         Thread t1 = underTest.fetchThread( r1 );
         Thread t2 = underTest.fetchThread( r2 );
-        assertFalse( t1.equals(t2) );
+        assertFalse( t1.equals( t2 ) );
         t1.start();
         t2.start();
         Thread.sleep( 20 );
@@ -63,7 +63,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
         Thread fetchThread( Runnable runnable );
     }
 
-    @Mixins( UnderTestMixin.class)
+    @Mixins( UnderTestMixin.class )
     public interface UnderTestComposite extends UnderTest, Composite
     {
     }
@@ -72,7 +72,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
         implements UnderTest
     {
         @Service private ThreadService service;
-        
+
         public Thread fetchThread( Runnable runnable )
         {
             return service.newThread( runnable );
@@ -94,6 +94,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
         {
             run = false;
         }
+
         public void run()
         {
             run = true;
@@ -102,7 +103,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
             {
                 try
                 {
-                    Thread.sleep(10);
+                    Thread.sleep( 10 );
                 }
                 catch( InterruptedException e )
                 {

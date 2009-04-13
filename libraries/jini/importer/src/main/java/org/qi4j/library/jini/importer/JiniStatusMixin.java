@@ -17,15 +17,16 @@
  */
 package org.qi4j.library.jini.importer;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.WeakHashMap;
 import net.jini.core.lookup.ServiceID;
 import net.jini.core.lookup.ServiceItem;
 import net.jini.lookup.ServiceDiscoveryEvent;
 import net.jini.lookup.ServiceDiscoveryListener;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.library.observations.Observable;
+
+import java.util.HashSet;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 public class JiniStatusMixin
     implements JiniStatus, ServiceDiscoveryListener

@@ -17,14 +17,13 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.io.File;
-import java.io.IOException;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.entitystore.swift.IdentityFile;
-import org.qi4j.entitystore.swift.IdentityTooLongException;
+
+import java.io.File;
+import java.io.IOException;
 
 public class IdentityFileTest
 {
@@ -35,7 +34,7 @@ public class IdentityFileTest
     public void whenCreatingNewIdentityFileThenSucceed()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1000 );
     }
@@ -44,7 +43,7 @@ public class IdentityFileTest
     public void whenCreatingAnEntryThenGetTheResultBack()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1000 );
         long value = 9783249823L;
@@ -59,7 +58,7 @@ public class IdentityFileTest
     public void whenCreating50EntriesThenGetTheResultBack()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1000 );
         long[] pos = new long[50];
@@ -82,7 +81,7 @@ public class IdentityFileTest
     public void whenIdentityIsLongerThanAllowedExpectException()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 24, 1000 );
         try
@@ -101,7 +100,7 @@ public class IdentityFileTest
     public void whenNotEnoughSpaceIsAvailableExpectThatCanStillStore()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1 );
         long[] pos = new long[150];
@@ -124,7 +123,7 @@ public class IdentityFileTest
     public void whenDroppingAnIdentityExpectMinusOneWhenLookingUp()
         throws Exception
     {
-        idFile = new File( "quick-store" );
+        idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 5 );
         long[] pos = new long[150];

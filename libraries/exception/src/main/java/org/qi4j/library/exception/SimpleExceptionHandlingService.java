@@ -17,8 +17,8 @@
  */
 package org.qi4j.library.exception;
 
-import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
 
 @Mixins( SystemErrExceptionHandlingMixin.class )
 public interface SimpleExceptionHandlingService extends ExceptionHandling, ServiceComposite

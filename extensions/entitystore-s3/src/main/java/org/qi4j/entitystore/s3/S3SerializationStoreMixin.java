@@ -16,34 +16,23 @@
  */
 package org.qi4j.entitystore.s3;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
-import java.util.concurrent.locks.ReadWriteLock;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.S3ServiceException;
 import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
 import org.jets3t.service.model.S3Object;
 import org.jets3t.service.security.AWSCredentials;
-import org.qi4j.api.injection.scope.This;
-import org.qi4j.library.locking.WriteLock;
-import org.qi4j.api.service.Activatable;
 import org.qi4j.api.configuration.Configuration;
-import org.qi4j.spi.entity.EntityTypeRegistryMixin;
+import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.library.locking.WriteLock;
+import org.qi4j.spi.entity.*;
 import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.entity.StateCommitter;
 import org.qi4j.spi.serialization.SerializableState;
+
+import java.io.*;
+import java.util.Iterator;
+import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  * Amazon S3 implementation of SerializationStore.

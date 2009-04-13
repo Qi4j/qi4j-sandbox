@@ -17,13 +17,11 @@
 package org.qi4j.entitystore.s3;
 
 import org.junit.Test;
+import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.api.common.Visibility;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
-import org.qi4j.entitystore.s3.S3Configuration;
-import org.qi4j.entitystore.s3.S3EntityStoreService;
 
 /**
  * Amazon S3 EntityStore test

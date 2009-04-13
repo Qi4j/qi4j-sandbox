@@ -17,13 +17,19 @@
  */
 package org.qi4j.entitystore.jndi;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
+import org.qi4j.api.common.QualifiedName;
+import org.qi4j.api.configuration.Configuration;
+import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.injection.scope.Uses;
+import org.qi4j.api.property.Property;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.spi.entity.*;
+import org.qi4j.spi.entity.association.AssociationType;
+import org.qi4j.spi.entity.association.ManyAssociationType;
+import org.qi4j.spi.entity.helpers.DefaultEntityState;
+import org.qi4j.spi.property.PropertyType;
+import org.qi4j.spi.service.ServiceDescriptor;
+
 import javax.naming.Context;
 import javax.naming.NamingEnumeration;
 import javax.naming.NamingException;
@@ -32,35 +38,17 @@ import javax.naming.directory.Attributes;
 import javax.naming.directory.InitialDirContext;
 import javax.naming.directory.SearchResult;
 import javax.naming.ldap.LdapName;
-import org.qi4j.api.configuration.Configuration;
-import org.qi4j.api.injection.scope.This;
-import org.qi4j.api.injection.scope.Uses;
-import org.qi4j.api.property.Property;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.service.ServiceDescriptor;
-import org.qi4j.api.common.QualifiedName;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.EntityTypeRegistryMixin;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.entity.ReadOnlyEntityStoreException;
-import org.qi4j.spi.entity.StateCommitter;
-import org.qi4j.spi.entity.EntityAlreadyExistsException;
-import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
-import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.property.PropertyType;
+import java.util.*;
+import java.util.concurrent.locks.ReadWriteLock;
 
 public class JndiEntityStoreMixin extends EntityTypeRegistryMixin
     implements Activatable
 {
-    private static final ArrayList<String> RESTRICTED_PROPERTIES = new ArrayList<String>( );
+    private static final ArrayList<String> RESTRICTED_PROPERTIES = new ArrayList<String>();
 
     static
     {
-        RESTRICTED_PROPERTIES.add( "identity" );    
+        RESTRICTED_PROPERTIES.add( "identity" );
     }
 
 

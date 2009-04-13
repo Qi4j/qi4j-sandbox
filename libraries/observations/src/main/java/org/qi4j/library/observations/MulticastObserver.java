@@ -17,12 +17,13 @@
  */
 package org.qi4j.library.observations;
 
-import java.util.ArrayList;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.composite.Composite;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.library.exception.ExceptionHandling;
+
+import java.util.ArrayList;
 
 class MulticastObserver<T extends Observation>
     implements Observer<T>, Observable<T>
@@ -57,7 +58,7 @@ class MulticastObserver<T extends Observation>
     {
         if( exceptionHandling != null )
         {
-            exceptionHandling.exceptionOccurred( "Exception in observer: " + observer,  meAsComposite, exception);
+            exceptionHandling.exceptionOccurred( "Exception in observer: " + observer, meAsComposite, exception );
         }
         else
         {

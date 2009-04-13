@@ -19,29 +19,24 @@ package org.qi4j.library.jini.lookup;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.UseDefaults;
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
 import org.qi4j.api.configuration.ConfigurationComposite;
+import org.qi4j.api.property.Property;
 
 public interface ReggieConfiguration extends ConfigurationComposite
 {
-    @Optional @UseDefaults
-    Property<Boolean> useJrmp();
+    @Optional @UseDefaults Property<Boolean> useJrmp();
 
-    @Optional
-    Property<String> hostInterface();
+    @Optional Property<String> hostInterface();
 
-    @Optional
-    Property<String> securityPolicy();
+    @Optional Property<String> securityPolicy();
 
-    @Optional
-    Property<String> reggieDlJarLocation();
+    @Optional Property<String> reggieDlJarLocation();
 
-    /** The groups that this Reggie instance should be serving.
+    /**
+     * The groups that this Reggie instance should be serving.
      * This is a comma separated list of strings.
      *
      * @return the groups that Reggie is serving.
      */
-    @Optional
-    Property<String> groups();
+    @Optional Property<String> groups();
 }

@@ -12,9 +12,8 @@
 */
 package org.qi4j.library.transaction;
 
-import org.junit.Test;
 import org.junit.Assert;
-import org.qi4j.library.transaction.Transactional;
+import org.junit.Test;
 
 public class PropagationTest
 {

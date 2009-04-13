@@ -17,10 +17,11 @@
  */
 package org.qi4j.library.jini.importer.org.qi4j.library.jini.tests;
 
-import java.util.Stack;
-import java.io.IOException;
-import org.wonderly.jini2.PersistentJiniService;
 import net.jini.config.ConfigurationException;
+import org.wonderly.jini2.PersistentJiniService;
+
+import java.io.IOException;
+import java.util.Stack;
 
 public class InterpreterServiceImpl extends PersistentJiniService
     implements InterpreterService
@@ -62,14 +63,18 @@ public class InterpreterServiceImpl extends PersistentJiniService
         if( entry1.type == EntryType.llong )
         {
             if( entry2.type != EntryType.llong )
+            {
                 throw new IllegalExpressionException();
+            }
             final long result = entry2.value.longValue() + entry1.value.longValue();
             stack.push( new Entry( result ) );
         }
         else
         {
             if( entry2.type != EntryType.ddouble )
+            {
                 throw new IllegalExpressionException();
+            }
             final double result = entry2.value.doubleValue() + entry1.value.doubleValue();
             stack.push( new Entry( result ) );
         }
@@ -82,14 +87,18 @@ public class InterpreterServiceImpl extends PersistentJiniService
         if( entry1.type == EntryType.llong )
         {
             if( entry2.type != EntryType.llong )
+            {
                 throw new IllegalExpressionException();
+            }
             final long result = entry2.value.longValue() - entry1.value.longValue();
             stack.push( new Entry( result ) );
         }
         else
         {
             if( entry2.type != EntryType.ddouble )
+            {
                 throw new IllegalExpressionException();
+            }
             final double result = entry2.value.doubleValue() - entry1.value.doubleValue();
             stack.push( new Entry( result ) );
         }
@@ -102,14 +111,18 @@ public class InterpreterServiceImpl extends PersistentJiniService
         if( entry1.type == EntryType.llong )
         {
             if( entry2.type != EntryType.llong )
+            {
                 throw new IllegalExpressionException();
+            }
             final long result = entry2.value.longValue() * entry1.value.longValue();
             stack.push( new Entry( result ) );
         }
         else
         {
             if( entry2.type != EntryType.ddouble )
+            {
                 throw new IllegalExpressionException();
+            }
             final double result = entry2.value.doubleValue() * entry1.value.doubleValue();
             stack.push( new Entry( result ) );
         }
@@ -122,14 +135,18 @@ public class InterpreterServiceImpl extends PersistentJiniService
         if( entry1.type == EntryType.llong )
         {
             if( entry2.type != EntryType.llong )
+            {
                 throw new IllegalExpressionException();
+            }
             final long result = entry2.value.longValue() / entry1.value.longValue();
             stack.push( new Entry( result ) );
         }
         else
         {
             if( entry2.type != EntryType.ddouble )
+            {
                 throw new IllegalExpressionException();
+            }
             final double result = entry2.value.doubleValue() / entry1.value.doubleValue();
             stack.push( new Entry( result ) );
         }
@@ -142,7 +159,9 @@ public class InterpreterServiceImpl extends PersistentJiniService
         if( entry1.type == EntryType.llong )
         {
             if( entry2.type != EntryType.llong )
+            {
                 throw new IllegalExpressionException();
+            }
             final long result = entry2.value.longValue() % entry1.value.longValue();
             stack.push( new Entry( result ) );
         }

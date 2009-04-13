@@ -14,12 +14,13 @@
 
 package org.qi4j.entitystore.prefs;
 
-import java.util.prefs.Preferences;
 import org.junit.After;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import static org.qi4j.entitystore.prefs.PreferenceEntityStoreInfo.PreferenceNode.USER_ROOT;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
+
+import java.util.prefs.Preferences;
 
 /**
  * JAVADOC
@@ -37,7 +38,7 @@ public class PreferencesEntityStoreTest extends AbstractEntityStoreTest
     }
 
     @Override
-    @After 
+    @After
     public void tearDown()
         throws Exception
     {

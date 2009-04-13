@@ -13,15 +13,16 @@
 */
 package org.qi4j.library.transaction;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import javax.transaction.Status;
-import javax.transaction.Transaction;
-import javax.transaction.TransactionManager;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
 import org.qi4j.api.injection.scope.Invocation;
 import org.qi4j.api.injection.scope.Service;
+
+import javax.transaction.Status;
+import javax.transaction.Transaction;
+import javax.transaction.TransactionManager;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 
 /**
  * Transactional modifier. Implementation methods

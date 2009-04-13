@@ -17,18 +17,6 @@
  */
 package org.qi4j.library.jini.transaction;
 
-import java.io.IOException;
-import java.security.AllPermission;
-import java.security.CodeSource;
-import java.security.PermissionCollection;
-import java.security.Permissions;
-import java.security.Policy;
-import java.util.Collection;
-import java.util.logging.Formatter;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.logging.SimpleFormatter;
 import net.jini.core.lookup.ServiceTemplate;
 import net.jini.core.transaction.server.TransactionManager;
 import net.jini.discovery.DiscoveryEvent;
@@ -42,13 +30,18 @@ import net.jini.lookup.ServiceDiscoveryManager;
 import net.jini.security.policy.DynamicPolicyProvider;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
+import org.qi4j.api.injection.scope.Service;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.api.injection.scope.Service;
 import org.qi4j.library.http.JettyServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.test.AbstractQi4jTest;
+
+import java.io.IOException;
+import java.security.*;
+import java.util.Collection;
+import java.util.logging.*;
 
 public class MahaloStartTest extends AbstractQi4jTest
 {

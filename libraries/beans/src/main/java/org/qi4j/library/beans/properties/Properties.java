@@ -12,10 +12,10 @@
 */
 package org.qi4j.library.beans.properties;
 
-import java.util.Map;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 class Properties
 {

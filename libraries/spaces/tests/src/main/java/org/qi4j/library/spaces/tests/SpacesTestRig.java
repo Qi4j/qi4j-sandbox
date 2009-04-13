@@ -17,14 +17,15 @@
  */
 package org.qi4j.library.spaces.tests;
 
-import java.io.Serializable;
-import java.util.Iterator;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.qi4j.library.spaces.Space;
 import org.qi4j.library.spaces.SpaceTransaction;
 import org.qi4j.test.AbstractQi4jTest;
+
+import java.io.Serializable;
+import java.util.Iterator;
 
 public abstract class SpacesTestRig extends AbstractQi4jTest
 {

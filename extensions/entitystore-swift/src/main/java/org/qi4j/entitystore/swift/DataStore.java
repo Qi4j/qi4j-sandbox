@@ -17,13 +17,14 @@
  */
 package org.qi4j.entitystore.swift;
 
+import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entity.QualifiedIdentity;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
 
 /**
  * This class handles the Heap Data file.
@@ -195,7 +196,7 @@ public class DataStore
                 UndoModifyCommand undoModifyCommand = new UndoModifyCommand( pos, usage, data.instanceVersion, data.schemaVersion );
                 undoManager.saveUndoCommand( undoModifyCommand );
                 dataFile.seek( usagePointer );
-                dataFile.writeByte(0);
+                dataFile.writeByte( 0 );
                 UndoDropIdentityCommand undoDropIdentityCommand = new UndoDropIdentityCommand( data.identity, pos );
                 undoManager.saveUndoCommand( undoDropIdentityCommand );
                 identityFile.remember( data.identity, newPosition );

@@ -1,10 +1,5 @@
 package org.qi4j.library.framework.executor;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.concurrent.CountDownLatch;
 import static junit.framework.Assert.assertTrue;
 import org.junit.Test;
 import org.qi4j.api.composite.Composite;
@@ -16,6 +11,12 @@ import org.qi4j.library.executor.ExecuteService;
 import org.qi4j.library.executor.ExecuteSideEffect;
 import org.qi4j.library.executor.ExecutorSideEffect;
 import org.qi4j.test.AbstractQi4jTest;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.CountDownLatch;
 
 /**
  * JAVADOC

@@ -17,8 +17,8 @@
  */
 package org.qi4j.library.thread;
 
-import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
 
 @Mixins( NewThreadServiceMixin.class )
 public interface NewThreadServiceComposite extends ThreadService, ServiceComposite

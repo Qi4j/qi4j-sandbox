@@ -18,9 +18,6 @@
 
 package org.qi4j.library.beans.support;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.util.HashMap;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.common.AppliesToFilter;
 import org.qi4j.api.composite.Composite;
@@ -34,6 +31,10 @@ import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.property.Property;
 import org.qi4j.api.util.MethodKeyMap;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.util.HashMap;
 
 @AppliesTo( { JavabeanMixin.JavabeanSupportFilter.class } )
 public class JavabeanMixin

@@ -17,7 +17,6 @@
  */
 package org.qi4j.entitystore.jndi;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.qi4j.api.common.Visibility;
 import org.qi4j.api.unitofwork.UnitOfWork;
@@ -26,9 +25,10 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
+
+import javax.naming.directory.Attributes;
 import javax.naming.directory.DirContext;
 import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.Attributes;
 
 public class JndiReadEntityStoreTest extends AbstractQi4jTest
 {
@@ -52,7 +52,7 @@ public class JndiReadEntityStoreTest extends AbstractQi4jTest
 
         // Read supportedSASLMechanisms from root DSE
         Attributes attrs = ctx.getAttributes(
-            "ldap://srv07.ops4j.org:389", new String[]{"supportedSASLMechanisms"});
+            "ldap://srv07.ops4j.org:389", new String[]{ "supportedSASLMechanisms" } );
 
         System.out.println( attrs );
     }

@@ -17,8 +17,9 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.util.Arrays;
 import org.qi4j.spi.entity.QualifiedIdentity;
+
+import java.util.Arrays;
 
 class DataBlock
 {
@@ -90,7 +91,7 @@ class DataBlock
         boolean first = true;
         for( byte b : data )
         {
-            if (!first)
+            if( !first )
             {
                 buf.append( ',' );
             }
@@ -106,8 +107,10 @@ class DataBlock
     {
         int data = b;
 
-        if(data < 0 )
-        data = data +256;
+        if( data < 0 )
+        {
+            data = data + 256;
+        }
         if( data < 16 )
         {
             return "0" + Integer.toHexString( data );

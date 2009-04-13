@@ -16,12 +16,6 @@
  */
 package org.qi4j.entitystore.javaspaces;
 
-import java.io.File;
-import java.security.AllPermission;
-import java.security.CodeSource;
-import java.security.PermissionCollection;
-import java.security.Permissions;
-import java.security.Policy;
 import net.jini.security.policy.DynamicPolicyProvider;
 import org.junit.After;
 import org.junit.Test;
@@ -36,6 +30,9 @@ import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
 import org.qi4j.library.spaces.javaspaces.JavaSpacesClientAssembler;
 import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
+
+import java.io.File;
+import java.security.*;
 
 /**
  * JavaSpaces EntityStore test

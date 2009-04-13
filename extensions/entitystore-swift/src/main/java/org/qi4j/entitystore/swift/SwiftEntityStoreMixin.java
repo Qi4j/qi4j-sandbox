@@ -17,48 +17,37 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
-import java.util.concurrent.locks.ReadWriteLock;
+import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.api.configuration.Configuration;
-import org.qi4j.spi.service.ServiceDescriptor;
+import org.qi4j.spi.entity.*;
 import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.entity.StateCommitter;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.EntityTypeRegistryMixin;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.serialization.SerializableState;
 import org.qi4j.spi.serialization.FastObjectInputStream;
 import org.qi4j.spi.serialization.FastObjectOutputStream;
+import org.qi4j.spi.serialization.SerializableState;
+import org.qi4j.spi.service.ServiceDescriptor;
 
-public class QuickEntityStoreMixin extends EntityTypeRegistryMixin
+import java.io.*;
+import java.util.Iterator;
+import java.util.concurrent.locks.ReadWriteLock;
+
+public class SwiftEntityStoreMixin extends EntityTypeRegistryMixin
     implements Activatable
 {
     private @This ReadWriteLock lock;
     @Uses private ServiceDescriptor descriptor;
-    @This private Configuration<QuickConfiguration> configuration;
+    @This private Configuration<SwiftConfiguration> configuration;
     private RecordManager recordManager;
 
-    public QuickEntityStoreMixin()
+    public SwiftEntityStoreMixin()
     {
     }
 
     public void activate()
         throws Exception
     {
-        QuickConfiguration conf = configuration.configuration();
+        SwiftConfiguration conf = configuration.configuration();
         String storage = conf.storageDirectory().get();
         File storageDir;
         storageDir = new File( storage );

@@ -14,10 +14,11 @@
 
 package org.qi4j.library.executor;
 
+import org.qi4j.api.service.Activatable;
+
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
-import org.qi4j.api.service.Activatable;
 
 /**
  * Delegate Runnable's to a ScheduledThreadPoolExecutor

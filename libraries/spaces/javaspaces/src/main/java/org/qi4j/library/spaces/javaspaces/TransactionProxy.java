@@ -17,12 +17,13 @@
  */
 package org.qi4j.library.spaces.javaspaces;
 
-import org.qi4j.library.spaces.SpaceTransaction;
-import org.qi4j.library.spaces.SpaceException;
+import net.jini.core.transaction.CannotAbortException;
+import net.jini.core.transaction.CannotCommitException;
 import net.jini.core.transaction.Transaction;
 import net.jini.core.transaction.UnknownTransactionException;
-import net.jini.core.transaction.CannotCommitException;
-import net.jini.core.transaction.CannotAbortException;
+import org.qi4j.library.spaces.SpaceException;
+import org.qi4j.library.spaces.SpaceTransaction;
+
 import java.rmi.RemoteException;
 
 final class TransactionProxy

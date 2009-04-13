@@ -17,6 +17,8 @@
  */
 package org.qi4j.entitystore.swift;
 
+import org.qi4j.spi.entity.EntityStoreException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -24,7 +26,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
-import org.qi4j.spi.entity.EntityStoreException;
 
 public class BucketManager
     implements Runnable
@@ -39,7 +40,7 @@ public class BucketManager
         cache = new HashMap<Integer, LruEntry>();
         this.bucketdir = bucketdir;
         bucketdir.mkdirs();
-        cleanUpThread = new Thread( this, "QuickEntityStore-cleanup" );
+        cleanUpThread = new Thread( this, "SwiftEntityStore-cleanup" );
         cleanUpThread.start();
     }
 

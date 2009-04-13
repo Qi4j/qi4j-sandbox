@@ -17,11 +17,12 @@
  */
 package org.qi4j.library.spaces.simple;
 
-import java.util.Iterator;
 import org.qi4j.library.spaces.ConcurrentEntryModificationException;
 import org.qi4j.library.spaces.InvalidSpaceTransactionException;
 import org.qi4j.library.spaces.SpaceException;
 import org.qi4j.library.spaces.SpaceTransaction;
+
+import java.util.Iterator;
 
 class TransactionImpl
     implements SpaceTransaction, MemoryTransaction

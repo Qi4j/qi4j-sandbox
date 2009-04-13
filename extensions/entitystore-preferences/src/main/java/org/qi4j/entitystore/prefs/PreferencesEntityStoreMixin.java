@@ -14,35 +14,25 @@
 
 package org.qi4j.entitystore.prefs;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.prefs.BackingStoreException;
-import java.util.prefs.Preferences;
 import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.common.TypeName;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.service.ServiceDescriptor;
 import org.qi4j.api.structure.Application;
 import org.qi4j.spi.entity.*;
 import org.qi4j.spi.entity.association.AssociationType;
 import org.qi4j.spi.entity.association.ManyAssociationType;
 import org.qi4j.spi.entity.helpers.DefaultEntityState;
 import org.qi4j.spi.property.PropertyType;
+import org.qi4j.spi.service.ServiceDescriptor;
 import org.qi4j.spi.value.PrimitiveType;
+
+import java.io.*;
+import java.util.*;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 
 /**
  * Implementation of EntityStore that is backed by the Preferences API.
@@ -141,7 +131,7 @@ public class PreferencesEntityStoreMixin
             {
                 String name = propertyType.qualifiedName().name();
                 Object value = null;
-                if (propertyType.type() instanceof PrimitiveType )
+                if( propertyType.type() instanceof PrimitiveType )
                 {
                     final PrimitiveType primitiveType = (PrimitiveType) propertyType.type();
                     TypeName typeName = primitiveType.type();
@@ -153,18 +143,21 @@ public class PreferencesEntityStoreMixin
                     {
                         value = preferences.getLong( name, 0L );
                     }
-                    else if (typeName.isClass(Integer.class))
+                    else if( typeName.isClass( Integer.class ) )
                     {
-                        value = preferences.getInt(name, 0);
-                    } else if (typeName.isClass(Boolean.class))
+                        value = preferences.getInt( name, 0 );
+                    }
+                    else if( typeName.isClass( Boolean.class ) )
                     {
-                        value = preferences.getBoolean(name, false);
-                    } else if (typeName.isClass(Float.class))
+                        value = preferences.getBoolean( name, false );
+                    }
+                    else if( typeName.isClass( Float.class ) )
                     {
-                        value = preferences.getFloat(name, 0F);
-                    } else if (typeName.isClass(Double.class))
+                        value = preferences.getFloat( name, 0F );
+                    }
+                    else if( typeName.isClass( Double.class ) )
                     {
-                        value = preferences.getDouble(name, 0D);
+                        value = preferences.getDouble( name, 0D );
                     }
                 }
                 else

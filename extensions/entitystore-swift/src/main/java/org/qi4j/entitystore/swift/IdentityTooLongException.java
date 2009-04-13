@@ -24,7 +24,7 @@ public class IdentityTooLongException extends EntityStoreException
 {
     public IdentityTooLongException( QualifiedIdentity identity )
     {
-        super( "The identity is too long for the configured store: " + identity.toString().length() + ", " + identity  );
+        super( "The identity is too long for the configured store: " + identity.toString().length() + ", " + identity );
 
     }
 }

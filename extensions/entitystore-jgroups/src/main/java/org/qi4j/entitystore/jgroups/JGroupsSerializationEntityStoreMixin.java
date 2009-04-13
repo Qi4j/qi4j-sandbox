@@ -17,34 +17,23 @@
 
 package org.qi4j.entitystore.jgroups;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.Iterator;
-import java.util.concurrent.locks.ReadWriteLock;
 import org.jgroups.JChannel;
 import org.jgroups.blocks.ReplicatedHashMap;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.service.ServiceDescriptor;
 import org.qi4j.library.locking.ReadLock;
 import org.qi4j.library.locking.WriteLock;
-import org.qi4j.spi.entity.EntityAlreadyExistsException;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.EntityTypeRegistryMixin;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.entity.StateCommitter;
+import org.qi4j.spi.entity.*;
 import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.serialization.SerializableState;
-import org.qi4j.spi.serialization.FastObjectOutputStream;
 import org.qi4j.spi.serialization.FastObjectInputStream;
+import org.qi4j.spi.serialization.FastObjectOutputStream;
+import org.qi4j.spi.serialization.SerializableState;
+import org.qi4j.spi.service.ServiceDescriptor;
+
+import java.io.*;
+import java.util.Iterator;
+import java.util.concurrent.locks.ReadWriteLock;
 
 /**
  * JGroups implementation of EntityStore

@@ -17,11 +17,7 @@
  */
 package org.qi4j.library.jini.importer.org.qi4j.library.jini.tests;
 
-import java.security.Policy;
-import java.security.PermissionCollection;
-import java.security.CodeSource;
-import java.security.AllPermission;
-import java.security.Permissions;
+import java.security.*;
 
 public class Main
 {
@@ -34,7 +30,7 @@ public class Main
         jiniService = new InterpreterServiceImpl( args );
         jiniService.startService();
         System.out.println( "Started 1!" );
-        System.out.println(jiniService.getServiceID() );
+        System.out.println( jiniService.getServiceID() );
         System.out.println( "Started 2!" );
     }
 

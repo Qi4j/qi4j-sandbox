@@ -18,9 +18,9 @@
 package org.qi4j.library.spaces.javaspaces;
 
 import org.qi4j.api.mixin.Mixins;
-import org.qi4j.library.spaces.Space;
-import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.service.Activatable;
+import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.library.spaces.Space;
 
 @Mixins( { JavaSpacesClientMixin.class } )
 public interface JavaSpacesClientService extends Space, Activatable, ServiceComposite

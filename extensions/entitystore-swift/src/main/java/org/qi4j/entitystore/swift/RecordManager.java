@@ -17,13 +17,14 @@
  */
 package org.qi4j.entitystore.swift;
 
+import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entity.QualifiedIdentity;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.Iterator;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
 
 public class RecordManager
     implements UndoManager
@@ -110,42 +111,42 @@ public class RecordManager
     public void saveUndoCommand( UndoCommand command )
     {
         commands.add( command );
-            try
+        try
+        {
+            if( command instanceof UndoDeleteCommand )
             {
-                if( command instanceof UndoDeleteCommand )
-                {
-                    undoJournal.write( UNDO_DELETE );
-                    command.save( undoJournal );
-                }
-                else if( command instanceof UndoModifyCommand )
-                {
-                    undoJournal.write( UNDO_MODIFY );
-                    command.save( undoJournal );
-                }
-                else if( command instanceof UndoDropIdentityCommand )
-                {
-                    undoJournal.write( UNDO_DROP_IDENTITY );
-                    command.save( undoJournal );
-                }
-                else if( command instanceof UndoNewIdentityCommand )
-                {
-                    undoJournal.write( UNDO_NEW_IDENTITY );
-                    command.save( undoJournal );
-                }
-                else if( command instanceof UndoExtendCommand )
-                {
-                    undoJournal.write( UNDO_EXTEND );
-                    command.save( undoJournal );
-                }
-                else
-                {
-                    throw new InternalError();
-                }
+                undoJournal.write( UNDO_DELETE );
+                command.save( undoJournal );
             }
-            catch( IOException e )
+            else if( command instanceof UndoModifyCommand )
             {
-                throw new EntityStoreException( "Undo storage medium is malfunctioning." );
+                undoJournal.write( UNDO_MODIFY );
+                command.save( undoJournal );
             }
+            else if( command instanceof UndoDropIdentityCommand )
+            {
+                undoJournal.write( UNDO_DROP_IDENTITY );
+                command.save( undoJournal );
+            }
+            else if( command instanceof UndoNewIdentityCommand )
+            {
+                undoJournal.write( UNDO_NEW_IDENTITY );
+                command.save( undoJournal );
+            }
+            else if( command instanceof UndoExtendCommand )
+            {
+                undoJournal.write( UNDO_EXTEND );
+                command.save( undoJournal );
+            }
+            else
+            {
+                throw new InternalError();
+            }
+        }
+        catch( IOException e )
+        {
+            throw new EntityStoreException( "Undo storage medium is malfunctioning." );
+        }
     }
 
     private void recover()

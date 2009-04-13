@@ -19,24 +19,17 @@ package org.qi4j.entitystore.coherence;
 
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.NamedCache;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.concurrent.locks.ReadWriteLock;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.EntityTypeRegistryMixin;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.spi.entity.StateCommitter;
-import org.qi4j.spi.entity.UnknownEntityTypeException;
+import org.qi4j.spi.entity.*;
 import org.qi4j.spi.service.ServiceDescriptor;
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.concurrent.locks.ReadWriteLock;
 
 public class CoherenceEntityStoreMixin extends EntityTypeRegistryMixin
     implements Activatable

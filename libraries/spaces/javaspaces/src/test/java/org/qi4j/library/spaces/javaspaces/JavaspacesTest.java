@@ -17,31 +17,23 @@
  */
 package org.qi4j.library.spaces.javaspaces;
 
-import org.qi4j.library.spaces.tests.SpacesTestRig;
-import org.qi4j.library.spaces.Space;
+import net.jini.security.policy.DynamicPolicyProvider;
+import org.junit.Ignore;
+import org.junit.Test;
+import org.qi4j.api.injection.scope.Service;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.entitystore.memory.MemoryEntityStoreService;
+import org.qi4j.library.http.JettyServiceAssembler;
+import org.qi4j.library.jini.javaspaces.JiniJavaSpacesServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
-import org.qi4j.library.jini.javaspaces.JiniJavaSpacesServiceAssembler;
-import org.qi4j.library.http.JettyServiceAssembler;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.api.injection.scope.Service;
-import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.junit.Test;
-import org.junit.Ignore;
-import java.security.Policy;
-import java.security.PermissionCollection;
-import java.security.CodeSource;
-import java.security.AllPermission;
-import java.security.Permissions;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.logging.Handler;
-import java.util.logging.FileHandler;
-import java.util.logging.Formatter;
-import java.util.logging.SimpleFormatter;
+import org.qi4j.library.spaces.Space;
+import org.qi4j.library.spaces.tests.SpacesTestRig;
+
 import java.io.IOException;
-import net.jini.security.policy.DynamicPolicyProvider;
+import java.security.*;
+import java.util.logging.*;
 
 @Ignore( "Implementation is not working yet." )
 public class JavaspacesTest extends SpacesTestRig
@@ -54,7 +46,7 @@ public class JavaspacesTest extends SpacesTestRig
         Handler handler = null;
         try
         {
-            handler = new FileHandler("output.log");
+            handler = new FileHandler( "output.log" );
             Formatter formatter = new SimpleFormatter();
             handler.setFormatter( formatter );
         }
@@ -81,7 +73,7 @@ public class JavaspacesTest extends SpacesTestRig
         if( System.getSecurityManager() == null )
         {
             Policy allPolicy = new TestPolicyAllPermissions();
-            Policy.setPolicy( new DynamicPolicyProvider(allPolicy) );
+            Policy.setPolicy( new DynamicPolicyProvider( allPolicy ) );
             System.setSecurityManager( new SecurityManager() );
         }
         module.addAssembler( new JiniLookupServiceAssembler() );
@@ -111,7 +103,7 @@ public class JavaspacesTest extends SpacesTestRig
                 {
                     try
                     {
-                        wait(5);
+                        wait( 5 );
                         count--;
                     }
                     catch( InterruptedException e )
@@ -121,7 +113,7 @@ public class JavaspacesTest extends SpacesTestRig
                 }
                 if( !space.isReady() )
                 {
-                    throw new RuntimeException("Can not find the JavaSpace.");  
+                    throw new RuntimeException( "Can not find the JavaSpace." );
                 }
             }
             return space;

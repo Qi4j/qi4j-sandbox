@@ -26,7 +26,7 @@ public interface InterpreterService
     long popLong();
 
     double popDouble();
-    
+
     void addition();
 
     void subtraction();

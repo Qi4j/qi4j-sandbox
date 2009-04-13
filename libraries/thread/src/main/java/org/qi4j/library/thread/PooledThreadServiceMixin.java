@@ -17,12 +17,13 @@
  */
 package org.qi4j.library.thread;
 
-import java.util.LinkedList;
+import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.This;
-import org.qi4j.library.uid.sequence.Sequencing;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.api.configuration.Configuration;
+import org.qi4j.library.uid.sequence.Sequencing;
+
+import java.util.LinkedList;
 
 public class PooledThreadServiceMixin
     implements ThreadService, Activatable
