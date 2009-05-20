@@ -33,7 +33,7 @@
       <module fileurl="file://$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" filepath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
       <module fileurl="file://$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" filepath="$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" group="libraries and modules/qi4j-lib-spaces and modules" />
       <module fileurl="file://$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" filepath="$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" group="libraries and modules" />
-      <module fileurl="file://$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" filepath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/libraries/transaction/qi4j-lib-unitofwork.iml" filepath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-unitofwork.iml" group="libraries and modules" />
       <module fileurl="file://$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" filepath="$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" group="libraries and modules" />
       <module fileurl="file://$PROJECT_DIR$/qi4j-sandbox.iml" filepath="$PROJECT_DIR$/qi4j-sandbox.iml" />
     </modules>

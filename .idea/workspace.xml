@@ -2,322 +2,109 @@
 <project relativePaths="false" version="4">
   <component name="ChangeListManager">
     <list default="true" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/exception/pom.xml" afterPath="$PROJECT_DIR$/libraries/exception/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_iteration_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/SwiftEntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/SwiftEntityStoreTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ResourceServletMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ResourceServletMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/pom.xml" afterPath="$PROJECT_DIR$/libraries/transaction/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/test/java/org/qi4j/library/spaces/javaspaces/JavaspacesTest.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/test/java/org/qi4j/library/spaces/javaspaces/JavaspacesTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoNewIdentityCommand.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoNewIdentityCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_sparql_2_2_1.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/QuickConfiguration.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/SwiftConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/ResourceServletMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/ResourceServletMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_cache_0_7.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/RegistryConfiguration.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/libraries/transaction/dev-status.xml" afterPath="$PROJECT_DIR$/libraries/unitofwork/dev-status.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_nativerdf_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/ClientRmiEntityStoreService.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryalgebra_evaluation_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_model_2_2_1.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/TransactionalTest.java" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/test/java/org/qi4j/library/unitofwork/TransactionalTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/META-INF/MANIFEST.MF" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/pom.xml" afterPath="$PROJECT_DIR$/libraries/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoDeleteCommand.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoDeleteCommand.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniProxyHandler.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniProxyHandler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_api_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/libraries.iml" afterPath="$PROJECT_DIR$/libraries/libraries.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/bootstrap/qi4j-lib-spaces-bootstrap.iml" afterPath="$PROJECT_DIR$/libraries/spaces/bootstrap/qi4j-lib-spaces-bootstrap.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/NewThreadServiceMixin.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/NewThreadServiceMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_lang_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/observations/src/main/java/org/qi4j/library/observations/MulticastObserver.java" afterPath="$PROJECT_DIR$/libraries/observations/src/main/java/org/qi4j/library/observations/MulticastObserver.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_jta_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryalgebra_model_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniImporter.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniImporter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/qi4j-entitystore-swift.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/qi4j-entitystore-swift.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/StorageEntry.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/StorageEntry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/DataStore.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/DataStore.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/spaces/memory/spaces-simple.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RemoteEntityStore.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RemoteEntityStore.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Setters.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Setters.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/TransactionImpl.java" afterPath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/TransactionImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecutorSideEffect.java" afterPath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecutorSideEffect.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_sail_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/JavaSpacesService.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/JavaSpacesService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_jini_ext_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-coherence/src/main/java/org/qi4j/entitystore/coherence/CoherenceEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-coherence/src/main/java/org/qi4j/entitystore/coherence/CoherenceEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/PooledThreadServiceMixin.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/PooledThreadServiceMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadServiceConfiguration.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadServiceConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/Main.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/Main.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/registry/qi4j-lib-registry.iml" afterPath="$PROJECT_DIR$/libraries/registry/qi4j-lib-registry.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/User.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/User.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_core_qi4j_core_spi_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/bootstrap/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/bootstrap/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/tests/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/tests/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceAssembler.java" afterPath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloConfiguration.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ServerRemoteEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ServerRemoteEntityStoreMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_start_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-preferences/src/test/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-preferences/src/test/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/InterpreterService.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/InterpreterService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_server_apacheds_all_1_5_4.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_uid_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientAssembler.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientAssembler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/src/test/java/org/qi4j/library/framework/executor/ExecuteSideEffectTest.java" afterPath="$PROJECT_DIR$/libraries/executor/src/test/java/org/qi4j/library/framework/executor/ExecuteSideEffectTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_inferencer_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ClientRmiEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ClientRmiEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/excludeFromValidation.xml" afterPath="$PROJECT_DIR$/.idea/excludeFromValidation.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__jgroups_jgroups_2_6_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/memory/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_sparqlxml_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-preferences/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-preferences/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/exception/qi4j-lib-exception.iml" afterPath="$PROJECT_DIR$/libraries/exception/qi4j-lib-exception.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/QuickEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/SwiftEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/BucketManager.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/BucketManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/importer/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_constraints_0_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_concurrent_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_trig_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/pom.xml" afterPath="$PROJECT_DIR$/libraries/rmi/pom.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/test/java/org/qi4j/library/spaces/tests/MemorySpaceTest.java" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_ldap_constants_0_9_12.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanSupport.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanSupport.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_4_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_jini_core_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecuteService.java" afterPath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecuteService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerConfiguration.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerConfiguration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_jsk_lib_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionObservableMixin.java" afterPath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionObservableMixin.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/resources/org/qi4j/entitystore/swift/QuickEntityStoreService.properties" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/extensions.iml" afterPath="$PROJECT_DIR$/extensions/extensions.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/pom.xml" afterPath="$PROJECT_DIR$/extensions/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/test/java/org/qi4j/library/beans/properties/PropertiesMixinTest.java" afterPath="$PROJECT_DIR$/libraries/beans/src/test/java/org/qi4j/library/beans/properties/PropertiesMixinTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/SimpleExceptionHandlingService.java" afterPath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/SimpleExceptionHandlingService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/registry/pom.xml" afterPath="$PROJECT_DIR$/libraries/registry/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_net_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_ldap_0_9_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_core_qi4j_core_api_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3SerializationStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3SerializationStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/PropertiesMixin.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/PropertiesMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/TransactionProxy.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/TransactionProxy.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupServiceMixin.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupServiceMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/DataBlock.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/DataBlock.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecutorMixin.java" afterPath="$PROJECT_DIR$/libraries/executor/src/main/java/org/qi4j/library/executor/ExecutorMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/test/java/org/qi4j/library/thread/PooledThreadServiceTest.java" afterPath="$PROJECT_DIR$/libraries/thread/src/test/java/org/qi4j/library/thread/PooledThreadServiceTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__logkit_logkit_1_0_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryAssembler.java" afterPath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" afterPath="$PROJECT_DIR$/libraries/validation/qi4j-lib-validation.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_http_client_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanListAssociation.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanListAssociation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ValidatableMixin.java" afterPath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ValidatableMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/observations/pom.xml" afterPath="$PROJECT_DIR$/libraries/observations/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_dataset_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-preferences/qi4j-entitystore-preferences.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-preferences/qi4j-entitystore-preferences.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/test/java/org/qi4j/library/thread/NewThreadServiceTest.java" afterPath="$PROJECT_DIR$/libraries/thread/src/test/java/org/qi4j/library/thread/NewThreadServiceTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/pom.xml" afterPath="$PROJECT_DIR$/libraries/executor/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_memory_2_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_api_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" afterPath="$PROJECT_DIR$/libraries/spaces/tests/qi4j-lib-spaces-tests.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_rdfxml_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/TransactionalTest.java" afterPath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/TransactionalTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_logging_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/test/java/org/qi4j/library/beans/support/JavabeanBackedTest.java" afterPath="$PROJECT_DIR$/libraries/beans/src/test/java/org/qi4j/library/beans/support/JavabeanBackedTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientService.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/tests/src/main/java/org/qi4j/library/spaces/tests/SpacesTestRig.java" afterPath="$PROJECT_DIR$/libraries/spaces/tests/src/main/java/org/qi4j/library/spaces/tests/SpacesTestRig.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_core_qi4j_core_bootstrap_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/main/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/main/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/assembly/PooledThreadServiceAssembler.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/assembly/PooledThreadServiceAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_xml_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/JiniLookupServiceAssembler.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/JiniLookupServiceAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ChangeValidationConcern.java" afterPath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ChangeValidationConcern.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_manager_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/JndiReadEntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/JndiReadEntityStoreTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__log4j_log4j_1_2_12.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" afterPath="$PROJECT_DIR$/libraries/thread/qi4j-lib-thread.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_text_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/test/java/org/qi4j/library/jini/lookup/ReggieStartTest.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/test/java/org/qi4j/library/jini/lookup/ReggieStartTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/qi4j-lib-rmi.iml" afterPath="$PROJECT_DIR$/libraries/rmi/qi4j-lib-rmi.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_http_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/api/qi4j-lib-spaces-api.iml" afterPath="$PROJECT_DIR$/libraries/spaces/api/qi4j-lib-spaces-api.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/StoreIterator.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/StoreIterator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" afterPath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Properties.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Properties.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/server/src/main/java/org/qi4j/library/ldap/server/LdapConfiguration.java" afterPath="$PROJECT_DIR$/libraries/ldap/server/src/main/java/org/qi4j/library/ldap/server/LdapConfiguration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryalgebra_evaluation_2_2_1.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/libraries/observations/qi4j-lib-events.iml" afterPath="$PROJECT_DIR$/libraries/observations/qi4j-lib-observations.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityTooLongException.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityTooLongException.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/assembly/NewThreadServiceAssembler.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/assembly/NewThreadServiceAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/DelegatingListIterator.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/DelegatingListIterator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/qi4j-sandbox.iml" afterPath="$PROJECT_DIR$/qi4j-sandbox.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/Group.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/test/java/org/qi4j/entitystore/jndi/Group.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/qi4j-entitystore-s3.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/qi4j-entitystore-s3.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_5_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/NewThreadServiceComposite.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/NewThreadServiceComposite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/TransactionalConcern.java" afterPath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/TransactionalConcern.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/server/qi4j-lib-ldap-server.iml" afterPath="$PROJECT_DIR$/libraries/ldap/server/qi4j-lib-ldap-server.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/PropagationTest.java" afterPath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/PropagationTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/src/main/java/org/qi4j/library/rmi/RMIMixin.java" afterPath="$PROJECT_DIR$/libraries/rmi/src/main/java/org/qi4j/library/rmi/RMIMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ClientRmiEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ClientRmiEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/MethodPrefixFilter.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/MethodPrefixFilter.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceMixin.java" afterPath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_4.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/test/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/test/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreAssembler.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/FileUtils.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/FileUtils.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_java_dev_jets3t_jets3t_0_6_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerDownloadServletService.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/OutriggerDownloadServletService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientMixin.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/main/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-javaspaces/src/main/java/org/qi4j/entitystore/javaspaces/JavaSpacesEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/ImportExternalJiniServiceTest.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/ImportExternalJiniServiceTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_api_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanSetAssociation.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanSetAssociation.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_trix_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/JiniTransactionServiceAssembler.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/JiniTransactionServiceAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/Transactional.java" afterPath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/Transactional.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jgroups/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-jgroups/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityFile.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityFile.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/client/qi4j-lib-ldap-client.iml" afterPath="$PROJECT_DIR$/libraries/ldap/client/qi4j-lib-ldap-client.iml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-simple.iml" afterPath="" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_asn1_0_9_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_core_qi4j_core_runtime_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanAssociation.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanAssociation.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/api/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/api/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_text_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_http_0_7.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_pool_commons_pool_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_api_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/pom.xml" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_simple_1_4_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_wonderly_startnow_1_1.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/ClientRmiEntityStoreMixin.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_contextaware_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_ldap_0_9_12.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/RegistryService.properties" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkDiscardOn.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_api_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_asn1_0_9_12.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/server/pom.xml" afterPath="$PROJECT_DIR$/libraries/ldap/server/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/server/src/main/java/org/qi4j/library/ldap/server/ApacheDirectoryServiceMixin.java" afterPath="$PROJECT_DIR$/libraries/ldap/server/src/main/java/org/qi4j/library/ldap/server/ApacheDirectoryServiceMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/Validatable.java" afterPath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/Validatable.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_model_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/remote/RemoteInterface.java" afterPath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/remote/RemoteInterface.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_rdf_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/StorageEntry.java" afterPath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/StorageEntry.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/PooledThreadServiceComposite.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/PooledThreadServiceComposite.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_core_qi4j_core_testsupport_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Iterables.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Iterables.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/test/java/org/qi4j/entitystore/jgroups/JGroupsEntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/test/java/org/qi4j/entitystore/jgroups/JGroupsEntityStoreTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_turtle_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/remote/RemoteInterfaceComposite.java" afterPath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/remote/RemoteInterfaceComposite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/pom.xml" afterPath="$PROJECT_DIR$/libraries/validation/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_locking_0_7.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniStatusMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/main/java/org/qi4j/library/jini/importer/JiniStatusMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/pom.xml" afterPath="$PROJECT_DIR$/libraries/ldap/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-preferences/src/main/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-preferences/src/main/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/qi4j-entitystore-rmi.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/qi4j-entitystore-rmi.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/ldap/client/pom.xml" afterPath="$PROJECT_DIR$/libraries/ldap/client/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_io_2_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/DelegatingIterator.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/DelegatingIterator.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/qi4j-lib-jini-javaspaces.iml" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/qi4j-lib-jini-javaspaces.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieConfiguration.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieConfiguration.java" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/spaces/api/spaces-api.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/InterpreterServiceImpl.java" afterPath="$PROJECT_DIR$/libraries/jini/importer/src/test/java/org/qi4j/library/jini/importer/org/qi4j/library/jini/tests/InterpreterServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupServiceComposite.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupServiceComposite.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/common/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/common/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/JiniJavaSpacesServiceAssembler.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/main/java/org/qi4j/library/jini/javaspaces/JiniJavaSpacesServiceAssembler.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__avalon_framework_avalon_framework_4_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryService.java" afterPath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/ResourceServletMixin.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/ResourceServletMixin.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_event_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanProperty.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanProperty.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceService.java" afterPath="$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_servlet_api_2_5_6_1_11.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_query_2_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_serql_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/DataFileTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/DataFileTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/qi4j-lib-beans.iml" afterPath="$PROJECT_DIR$/libraries/beans/qi4j-lib-beans.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_4.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_sparqljson_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_simple_1_4_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_serql_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__antlr_antlr_2_7_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_http_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_transaction_jta_1_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_sail_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_http_protocol_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_text_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_net_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_httpclient_commons_httpclient_3_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_text_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/surefire-reports/org.qi4j.entitystore.rmi.RmiEntityStoreTest.txt" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_query_2_2_1.xml" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/libraries/transaction/pom.xml" afterPath="$PROJECT_DIR$/libraries/unitofwork/pom.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_servlet_api_2_5_6_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl104_over_slf4j_1_5_0.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_pool_commons_pool_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_event_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/qi4j-entitystore-rmi-0.7-SNAPSHOT.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_iteration_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_api_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/Transactional.java" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/templateLanguages.xml" afterPath="$PROJECT_DIR$/.idea/templateLanguages.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/RMIMixinTest.java" afterPath="$PROJECT_DIR$/libraries/rmi/src/test/java/org/qi4j/library/rmi/RMIMixinTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_dbcp_commons_dbcp_1_2_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/lookup/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3EntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3EntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupConfiguration.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadGroupConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/IdentityFileTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/IdentityFileTest.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_n3_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieDownloadServletService.java" afterPath="$PROJECT_DIR$/libraries/jini/lookup/src/main/java/org/qi4j/library/jini/lookup/ReggieDownloadServletService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/main/java/org/qi4j/entitystore/jgroups/JGroupsSerializationEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/main/java/org/qi4j/entitystore/jgroups/JGroupsSerializationEntityStoreMixin.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagation.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_trix_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_manager_2_2_1.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/excludeFromValidation.xml" afterPath="$PROJECT_DIR$/.idea/excludeFromValidation.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_sparqlxml_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/jini/target/pom-transformed.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/target/pom-transformed.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/sqldialects.xml" afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Getters.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/Getters.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_jetty_6_1_11.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_collections_2_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl104_over_slf4j_1_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_api_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/pom.xml" afterPath="$PROJECT_DIR$/libraries/beans/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionHandlingNotificationConcern.java" afterPath="$PROJECT_DIR$/libraries/exception/src/main/java/org/qi4j/library/exception/ExceptionHandlingNotificationConcern.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_reggie_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientConfiguration.java" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/src/main/java/org/qi4j/library/spaces/javaspaces/JavaSpacesClientConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/test/java/org/qi4j/library/jini/transaction/MahaloStartTest.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/test/java/org/qi4j/library/jini/transaction/MahaloStartTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_contextaware_2_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_ntriples_2_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_tangosol_coherence_3_4_2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ValidatableMessagesConcern.java" afterPath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/ValidatableMessagesConcern.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryMixin.java" afterPath="$PROJECT_DIR$/libraries/registry/src/main/java/org/qi4j/library/registry/RegistryMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/api/src/main/java/org/qi4j/library/spaces/Space.java" afterPath="$PROJECT_DIR$/libraries/spaces/api/src/main/java/org/qi4j/library/spaces/Space.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/RecordManager.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/RecordManager.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/javaspaces/qi4j-lib-spaces-javaspaces.iml" afterPath="$PROJECT_DIR$/libraries/spaces/javaspaces/qi4j-lib-spaces-javaspaces.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cglib_cglib_nodep_2_1_3.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/lookup/qi4j-lib-jini-lookup.iml" afterPath="$PROJECT_DIR$/libraries/jini/lookup/qi4j-lib-jini-lookup.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_jetty_util_6_1_11.xml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/QuickEntityStoreMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/SwiftEntityStoreMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/OrAppliesToFilter.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/properties/OrAppliesToFilter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_http_protocol_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/qi4j-lib-jini-transaction.iml" afterPath="$PROJECT_DIR$/libraries/jini/transaction/qi4j-lib-jini-transaction.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/AbstractValidatableConcern.java" afterPath="$PROJECT_DIR$/libraries/validation/src/main/java/org/qi4j/library/validation/AbstractValidatableConcern.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/RemoteEntityStore.class" afterPath="" />
+      <change type="MOVED" beforePath="$PROJECT_DIR$/libraries/transaction/src/test/java/org/qi4j/library/transaction/PropagationTest.java" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/test/java/org/qi4j/library/unitofwork/PropagationTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/ServerRmiEntityStoreService.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/qi4j-entitystore-rmi-0.7-SNAPSHOT-sources.jar" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_4_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/pom-transformed.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/pom.xml" afterPath="$PROJECT_DIR$/extensions/pom.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_concurrent_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_rdbms_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_binary_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_servlet_api_2_4.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagationException.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_xml_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/surefire-reports/TEST-org.qi4j.entitystore.rmi.RmiEntityStoreTest.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/test-classes/org/qi4j/entitystore/rmi/RmiEntityStoreTest.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_api_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_lang_2_2.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/projectCodeStyle.xml" afterPath="$PROJECT_DIR$/.idea/projectCodeStyle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-coherence/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-coherence/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_sparqljson_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-javaspaces/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-javaspaces/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_outrigger_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/pom.xml" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/pom.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryresultio_binary_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/importer/qi4j-lib-jini-importer.iml" afterPath="$PROJECT_DIR$/libraries/jini/importer/qi4j-lib-jini-importer.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_5.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/pom.xml" afterPath="$PROJECT_DIR$/libraries/thread/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3Configuration.java" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/src/main/java/org/qi4j/entitystore/s3/S3Configuration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" afterPath="$PROJECT_DIR$/libraries/transaction/qi4j-lib-transaction.iml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_river_mahalo_2_1_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloDownloadServletService.java" afterPath="$PROJECT_DIR$/libraries/jini/transaction/src/main/java/org/qi4j/library/jini/transaction/MahaloDownloadServletService.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_rdbms_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ServerRmiEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/ServerRmiEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiConfiguration.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jndi/src/main/java/org/qi4j/entitystore/jndi/JndiConfiguration.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanMixin.java" afterPath="$PROJECT_DIR$/libraries/beans/src/main/java/org/qi4j/library/beans/support/JavabeanMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadServiceConfigurationEntity.java" afterPath="$PROJECT_DIR$/libraries/thread/src/main/java/org/qi4j/library/thread/ThreadServiceConfigurationEntity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/executor/qi4j-lib-executor.iml" afterPath="$PROJECT_DIR$/libraries/executor/qi4j-lib-executor.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-coherence/src/main/java/org/qi4j/entitystore/coherence/CoherenceEntityState.java" afterPath="$PROJECT_DIR$/extensions/entitystore-coherence/src/main/java/org/qi4j/entitystore/coherence/CoherenceEntityState.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-preferences/src/main/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-preferences/src/main/java/org/qi4j/entitystore/prefs/PreferencesEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryConfiguration.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryConfiguration.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_nativerdf_2_2_1.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/main/java/org/qi4j/entitystore/jgroups/JGroupsEntityStoreService.java" afterPath="$PROJECT_DIR$/extensions/entitystore-jgroups/src/main/java/org/qi4j/entitystore/jgroups/JGroupsEntityStoreService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/transaction/pom.xml" afterPath="$PROJECT_DIR$/libraries/jini/transaction/pom.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" afterPath="$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/QuickEntityStoreAssembler.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/SwiftEntityStoreAssembler.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryMixin.java" afterPath="$PROJECT_DIR$/extensions/entitystore-rmi/src/main/java/org/qi4j/entitystore/rmi/RegistryMixin.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoDropIdentityCommand.java" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/UndoDropIdentityCommand.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_httpclient_commons_httpclient_3_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/extensions/entitystore-swift/src/test/resources/org/qi4j/entitystore/swift/SwiftEntityStoreService.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/jini/javaspaces/src/test/java/org/qi4j/library/jini/javaspaces/OutriggerStartTest.java" afterPath="$PROJECT_DIR$/libraries/jini/javaspaces/src/test/java/org/qi4j/library/jini/javaspaces/OutriggerStartTest.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/extensions/entitystore-s3/src/test/java/org/qi4j/entitystore/s3/S3EntityStoreTest.java" afterPath="$PROJECT_DIR$/extensions/entitystore-s3/src/test/java/org/qi4j/entitystore/s3/S3EntityStoreTest.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/target/pom-transformed.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_api_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_jetty_util_6_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_rdfxml_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_mortbay_jetty_jetty_6_1_11.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_collections_2_2.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_trig_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_3.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__info_aduna_commons_aduna_commons_io_2_3.xml" afterPath="" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkNoDiscardOn.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkConcern.java" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/RegistryService.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryparser_sparql_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_repository_dataset_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_http_client_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_memory_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/ldap/target/pom-transformed.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/spaces/target/pom-transformed.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_turtle_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_queryalgebra_model_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_5_0.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" afterPath="$PROJECT_DIR$/libraries/spaces/memory/qi4j-lib-spaces-memory.iml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_ntriples_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_directory_shared_shared_ldap_constants_0_9_12.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/libraries/transaction/src/main/java/org/qi4j/library/transaction/TransactionalConcern.java" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_n3_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/ServerRemoteEntityStoreMixin.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_qi4j_library_qi4j_lib_rdf_0_7.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_rio_api_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__org_openrdf_sesame_sesame_sail_inferencer_2_2_1.xml" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/extensions/entitystore-rmi/target/classes/org/qi4j/entitystore/rmi/RegistryMixin.class" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/Maven__commons_dbcp_commons_dbcp_1_2_2.xml" afterPath="" />
     </list>
     <ignored path=".idea/workspace.xml" />
     <ignored path="qi4j-sandbox.iws" />
@@ -376,46 +163,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MemorySpaceService.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceService.java">
+      <file leaf-file-name="UnitOfWorkConcern.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkConcern.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="0" selection-start="886" selection-end="886" vertical-scroll-proportion="0.0">
+            <state line="39" column="13" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwiftEntityStoreService.properties" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/test/resources/org/qi4j/entitystore/swift/SwiftEntityStoreService.properties">
+      <file leaf-file-name="UnitOfWorkNoDiscardOn.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkNoDiscardOn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="29" selection-start="0" selection-end="32" vertical-scroll-proportion="0.0">
+            <state line="34" column="42" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BucketManager.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/BucketManager.java">
+      <file leaf-file-name="UnitOfWorkPropagationException.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagationException.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="49" column="40" selection-start="1483" selection-end="1487" vertical-scroll-proportion="0.0">
+            <state line="17" column="13" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IdentityFile.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityFile.java">
+      <file leaf-file-name="UnitOfWorkPropagation.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagation.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="84" column="155" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0">
+            <state line="66" column="16" selection-start="1822" selection-end="1822" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dev-status.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/dev-status.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="13" column="0" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/libraries/spaces/javaspaces/pom.xml">
+        <entry file="file://$PROJECT_DIR$/libraries/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="53" column="25" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.0">
+            <state line="5" column="25" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -424,43 +229,25 @@
       <file leaf-file-name="pom.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/extensions/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="10" selection-start="649" selection-end="649" vertical-scroll-proportion="0.21744055">
+            <state line="17" column="25" selection-start="714" selection-end="714" vertical-scroll-proportion="0.23887588">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pom.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/pom.xml">
+      <file leaf-file-name="UnitOfWorkDiscardOn.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkDiscardOn.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="32" column="24" selection-start="1164" selection-end="1164" vertical-scroll-proportion="0.0">
+            <state line="50" column="18" selection-start="0" selection-end="1720" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SwiftEntityStoreTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/SwiftEntityStoreTest.java">
+      <file leaf-file-name="TransactionalTest.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/test/java/org/qi4j/library/unitofwork/TransactionalTest.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="28" column="13" selection-start="1005" selection-end="1005" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="IdentityFileTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/IdentityFileTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="131" column="22" selection-start="4173" selection-end="4173" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DataFileTest.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/test/java/org/qi4j/entitystore/swift/DataFileTest.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="180" column="0" selection-start="6729" selection-end="6729" vertical-scroll-proportion="0.0">
+            <state line="31" column="26" selection-start="1164" selection-end="1164" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -513,86 +300,6 @@
         <PATH_ELEMENT>
           <option name="myItemId" value="libraries and modules" />
           <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-sandbox" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="libraries and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-sandbox" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="libraries and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces-javaspaces" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-sandbox" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="libraries and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces-javaspaces" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="javaspaces" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-sandbox" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="libraries and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces and modules" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleGroupNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="qi4j-lib-spaces-javaspaces" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewModuleNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="javaspaces" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="src" />
-          <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
         </PATH_ELEMENT>
       </PATH>
       <PATH>
@@ -657,15 +364,18 @@
     </navigator>
   </component>
   <component name="PropertiesComponent">
+    <property name="project.structure.proportion" value="0.0" />
     <property name="MemberChooser.copyJavadoc" value="false" />
-    <property name="GoToClass.includeLibraries" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
-    <property name="MemberChooser.showClasses" value="true" />
+    <property name="project.structure.last.edited" value="Project" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="options.searchVisible" value="true" />
     <property name="GoToFile.includeJavaFiles" value="false" />
-    <property name="options.lastSelected" value="preferences.sourceCode" />
+    <property name="GoToClass.includeLibraries" value="false" />
+    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="MemberChooser.showClasses" value="true" />
+    <property name="project.structure.side.proportion" value="0.0" />
+    <property name="options.lastSelected" value="preferences.sourceCode.Imports" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
   </component>
   <component name="RunManager">
@@ -688,7 +398,7 @@
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
     </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false">
+    <configuration default="true" type="TestNG" factoryName="TestNG" enabled="false" merge="false" runner="emma">
       <module name="" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
       <option name="ALTERNATIVE_JRE_PATH" />
@@ -791,20 +501,20 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="2" y="22" width="1676" height="1024" extended-state="0" />
+    <frame x="2" y="22" width="1680" height="1024" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Web Preview" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Dataflow to this" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32985258" sideWeight="0.66451615" order="3" side_tool="false" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33394608" sideWeight="0.6656184" order="3" side_tool="false" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25" sideWeight="0.66451615" order="0" side_tool="false" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32809225" sideWeight="0.5" order="1" side_tool="false" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32795697" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="6" side_tool="false" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32795697" sideWeight="0.5" order="8" side_tool="false" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32704404" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="8" side_tool="false" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.66451615" order="1" side_tool="false" />
@@ -855,44 +565,9 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/libraries/spaces/memory/pom.xml">
+    <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="161" selection-start="1161" selection-end="1161" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="21" selection-start="452" selection-end="452" vertical-scroll-proportion="0.10643016">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="0" selection-start="511" selection-end="561" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceMixin.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="22" selection-start="3466" selection-end="3466" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/spaces/javaspaces/src/test/java/org/qi4j/library/spaces/javaspaces/JavaspacesTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="13" selection-start="1452" selection-end="1452" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/spaces/memory/src/main/java/org/qi4j/library/spaces/simple/MemorySpaceService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="0" selection-start="886" selection-end="886" vertical-scroll-proportion="0.0">
+        <state line="32" column="24" selection-start="1164" selection-end="1164" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -918,44 +593,86 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/test/resources/org/qi4j/entitystore/swift/SwiftEntityStoreService.properties">
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="29" selection-start="0" selection-end="32" vertical-scroll-proportion="0.0">
+        <state line="17" column="0" selection-start="668" selection-end="668" vertical-scroll-proportion="-7.034483">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/BucketManager.java">
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/test/java/org/qi4j/library/unitofwork/PropagationTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="49" column="40" selection-start="1483" selection-end="1487" vertical-scroll-proportion="0.0">
+        <state line="35" column="33" selection-start="1249" selection-end="1249" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/pom.xml">
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkConcern.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="24" selection-start="1164" selection-end="1164" vertical-scroll-proportion="0.0">
+        <state line="39" column="13" selection-start="1392" selection-end="1392" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/extensions/entitystore-swift/src/main/java/org/qi4j/entitystore/swift/IdentityFile.java">
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkNoDiscardOn.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="84" column="155" selection-start="2444" selection-end="2444" vertical-scroll-proportion="0.0">
+        <state line="34" column="42" selection-start="1122" selection-end="1122" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/libraries/spaces/javaspaces/pom.xml">
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagationException.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="25" selection-start="1737" selection-end="1737" vertical-scroll-proportion="0.0">
+        <state line="17" column="13" selection-start="629" selection-end="629" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkPropagation.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="66" column="16" selection-start="1822" selection-end="1822" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/dev-status.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="0" selection-start="407" selection-end="407" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="5" column="25" selection-start="329" selection-end="329" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/main/java/org/qi4j/library/unitofwork/UnitOfWorkDiscardOn.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="50" column="18" selection-start="0" selection-end="1720" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/libraries/unitofwork/src/test/java/org/qi4j/library/unitofwork/TransactionalTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="31" column="26" selection-start="1164" selection-end="1164" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/extensions/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="10" selection-start="649" selection-end="649" vertical-scroll-proportion="0.21744055">
+        <state line="17" column="25" selection-start="714" selection-end="714" vertical-scroll-proportion="0.23887588">
           <folding />
         </state>
       </provider>

@@ -37,6 +37,16 @@
         <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false" />
         <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false" />
         <option name="SPACE_BEFORE_SYNCHRONIZED_PARENTHESES" value="false" />
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="500" />
+        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="300" />
+        <option name="PACKAGES_TO_USE_IMPORT_ON_DEMAND">
+          <value />
+        </option>
+        <option name="IMPORT_LAYOUT_TABLE">
+          <value>
+            <package name="" withSubpackages="true" />
+          </value>
+        </option>
         <option name="IF_BRACE_FORCE" value="3" />
         <option name="DOWHILE_BRACE_FORCE" value="3" />
         <option name="WHILE_BRACE_FORCE" value="3" />

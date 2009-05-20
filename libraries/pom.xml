@@ -24,7 +24,7 @@
     <module>rmi</module>
     <module>spaces</module>
     <module>thread</module>
-    <module>transaction</module>
+    <module>unitofwork</module>
     <module>validation</module>
   </modules>
 </project>
