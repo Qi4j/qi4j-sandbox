@@ -28,6 +28,7 @@ import org.qi4j.api.service.Activatable;
 import org.qi4j.library.locking.WriteLock;
 import org.qi4j.spi.entity.*;
 import org.qi4j.spi.entity.helpers.DefaultEntityState;
+import org.qi4j.spi.entity.helpers.EntityTypeRegistryMixin;
 import org.qi4j.spi.serialization.SerializableState;
 
 import java.io.*;

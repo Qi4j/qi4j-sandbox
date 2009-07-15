@@ -5,11 +5,11 @@
   <parent>
     <groupId>org.qi4j</groupId>
     <artifactId>qi4j-library</artifactId>
-    <version>0.7</version>
+    <version>0.8-SNAPSHOT</version>
   </parent>
   <groupId>org.qi4j.library.jini</groupId>
   <artifactId>qi4j-lib-jini-javaspaces</artifactId>
-  <version>0.7-SNAPSHOT</version>
+  <version>0.8-SNAPSHOT</version>
   <name>Qi4j Library - Jini Javaspaces Services</name>
 
   <dependencies>
@@ -44,13 +44,13 @@
     <dependency>
       <groupId>org.qi4j.library.jini</groupId>
       <artifactId>qi4j-lib-jini-lookup</artifactId>
-      <version>0.7-SNAPSHOT</version>
+      <version>0.8-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.qi4j.library.jini</groupId>
       <artifactId>qi4j-lib-jini-transaction</artifactId>
-      <version>0.7-SNAPSHOT</version>
+      <version>0.8-SNAPSHOT</version>
       <scope>test</scope>
     </dependency>
     <dependency>

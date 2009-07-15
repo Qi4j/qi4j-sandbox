@@ -39,7 +39,6 @@ import java.util.concurrent.locks.ReadWriteLock;
  * JGroups implementation of EntityStore
  */
 public class JGroupsSerializationEntityStoreMixin
-    extends EntityTypeRegistryMixin
     implements Activatable
 {
     private @This ReadWriteLock lock;
@@ -68,7 +67,8 @@ public class JGroupsSerializationEntityStoreMixin
     {
         if( replicatedMap.containsKey( identity.toString() ) )
         {
-            throw new EntityAlreadyExistsException( "JGroups store", identity );
+//            throw new EntityAlreadyExistsException( "JGroups store", identity );
+            throw new EntityAlreadyExistsException( null );
         }
 
         return new DefaultEntityState( identity, getEntityType( identity.type() ) );

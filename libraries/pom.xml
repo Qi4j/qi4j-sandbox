@@ -4,13 +4,13 @@
   <parent>
     <groupId>org.qi4j.sandbox</groupId>
     <artifactId>qi4j-sandbox</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.qi4j.sandbox</groupId>
-  <artifactId>libraries-root</artifactId>
+  <artifactId>sb-libraries-root</artifactId>
   <name>Qi4j Sandbox Libraries - Build POM</name>
-  <version>0.7-SNAPSHOT</version>
+  <version>0.8-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>

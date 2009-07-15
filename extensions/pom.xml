@@ -4,12 +4,12 @@
   <parent>
     <groupId>org.qi4j.sandbox</groupId>
     <artifactId>qi4j-sandbox</artifactId>
-    <version>0.7-SNAPSHOT</version>
+    <version>0.8-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
   <groupId>org.qi4j.sandbox</groupId>
-  <artifactId>extensions-root</artifactId>
-  <version>0.7-SNAPSHOT</version>
+  <artifactId>sb-extensions-root</artifactId>
+  <version>0.8-SNAPSHOT</version>
   <name>Qi4j Sandbox Extensions - Build POM</name>
   <packaging>pom</packaging>
 
