@@ -17,42 +17,35 @@
 
 package org.qi4j.entitystore.jgroups;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.Writer;
+import java.util.Map;
 import org.jgroups.JChannel;
 import org.jgroups.blocks.ReplicatedHashMap;
-import org.qi4j.api.injection.scope.This;
-import org.qi4j.api.injection.scope.Uses;
+import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.library.locking.ReadLock;
-import org.qi4j.library.locking.WriteLock;
-import org.qi4j.spi.entity.*;
-import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.serialization.FastObjectInputStream;
-import org.qi4j.spi.serialization.FastObjectOutputStream;
-import org.qi4j.spi.serialization.SerializableState;
-import org.qi4j.spi.service.ServiceDescriptor;
-
-import java.io.*;
-import java.util.Iterator;
-import java.util.concurrent.locks.ReadWriteLock;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entity.EntityNotFoundException;
+import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entity.EntityType;
 
 /**
  * JGroups implementation of EntityStore
  */
 public class JGroupsSerializationEntityStoreMixin
-    implements Activatable
+    implements Activatable, MapEntityStore
 {
-    private @This ReadWriteLock lock;
-
-    private ReplicatedHashMap<String, byte[]> replicatedMap;
     private JChannel channel;
-    private @Uses ServiceDescriptor descriptor;
+    private ReplicatedHashMap<String, String> replicatedMap;
 
-    // Activatable implementation
     public void activate() throws Exception
     {
         channel = new JChannel();
         channel.connect( "entitystore" );
-        replicatedMap = new ReplicatedHashMap<String, byte[]>( channel, false );
+        replicatedMap = new ReplicatedHashMap<String, String>( channel, false );
         replicatedMap.setBlockingUpdates( true );
     }
 
@@ -61,163 +54,84 @@ public class JGroupsSerializationEntityStoreMixin
         channel.close();
     }
 
-    // EntityStore implementation
-    @WriteLock
-    public EntityState newEntityState( QualifiedIdentity identity ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
-        if( replicatedMap.containsKey( identity.toString() ) )
-        {
-//            throw new EntityAlreadyExistsException( "JGroups store", identity );
-            throw new EntityAlreadyExistsException( null );
-        }
-
-        return new DefaultEntityState( identity, getEntityType( identity.type() ) );
-    }
-
-    @ReadLock
-    public EntityState getEntityState( QualifiedIdentity identity ) throws EntityStoreException
-    {
-        EntityType entityType = getEntityType( identity.type() );
         try
         {
-            try
+            String data = replicatedMap.get( entityReference.identity() );
+            if( data == null )
             {
-                SerializableState serializableState = loadSerializableState( identity );
-                if( serializableState == null )
-                {
-                    throw new EntityNotFoundException( descriptor.identity(), identity );
-                }
-
-                DefaultEntityState state = new DefaultEntityState( serializableState.version(),
-                                                                   serializableState.lastModified(),
-                                                                   identity,
-                                                                   EntityStatus.LOADED,
-                                                                   entityType,
-                                                                   serializableState.properties(),
-                                                                   serializableState.associations(),
-                                                                   serializableState.manyAssociations() );
-                return state;
+                throw new EntityNotFoundException( entityReference );
             }
-            catch( ClassNotFoundException e )
-            {
-                throw new EntityStoreException( e );
-            }
+            return new StringReader( data );
         }
-        catch( IOException e )
+        catch( RuntimeException e )
         {
             throw new EntityStoreException( e );
         }
     }
 
-
-    public StateCommitter prepare( Iterable<EntityState> newStates, Iterable<EntityState> loadedStates, final Iterable<QualifiedIdentity> removedStates ) throws EntityStoreException
+    public void visitMap( MapEntityStoreVisitor visitor )
     {
-        lock.writeLock().lock();
         try
         {
-            long lastModified = System.currentTimeMillis();
-            ByteArrayOutputStream bout = new ByteArrayOutputStream();
-            storeNewStates( newStates, lastModified, bout );
-
-            storeLoadedStates( loadedStates, lastModified, bout );
-
-            removeStates( removedStates );
-        }
-        catch( Exception e )
-        {
-            lock.writeLock().unlock();
-        }
-
-        return new StateCommitter()
-        {
-            public void commit()
+            for( Map.Entry<String, String> key : replicatedMap.entrySet() )
             {
-                lock.writeLock().unlock();
-            }
-
-            public void cancel()
-            {
-
-                lock.writeLock().unlock();
-            }
-        };
-    }
-
-    public Iterator<EntityState> iterator()
-    {
-        return null;
-    }
-
-    private SerializableState loadSerializableState( QualifiedIdentity identity )
-        throws IOException, ClassNotFoundException
-    {
-        byte[] serializedState = replicatedMap.get( identity.toString() );
-
-        if( serializedState == null )
-        {
-            return null;
-        }
-
-        ByteArrayInputStream bin = new ByteArrayInputStream( serializedState );
-        ObjectInputStream oin = new FastObjectInputStream( bin, false );
-        return (SerializableState) oin.readObject();
-    }
-
-    private void storeNewStates( Iterable<EntityState> newStates, long lastModified, ByteArrayOutputStream bout )
-        throws IOException
-    {
-        for( EntityState entityState : newStates )
-        {
-            DefaultEntityState entityStateInstance = (DefaultEntityState) entityState;
-            final QualifiedIdentity identity = entityState.qualifiedIdentity();
-            SerializableState state = new SerializableState( identity,
-                                                             entityState.version(),
-                                                             lastModified,
-                                                             entityStateInstance.getProperties(),
-                                                             entityStateInstance.getAssociations(),
-                                                             entityStateInstance.getManyAssociations() );
-            ObjectOutputStream out = new FastObjectOutputStream( bout, false );
-            out.writeObject( state );
-            out.close();
-            byte[] stateArray = bout.toByteArray();
-            bout.reset();
-            replicatedMap.put( identity.toString(), stateArray );
-        }
-    }
-
-    private void storeLoadedStates( Iterable<EntityState> loadedStates, long lastModified, ByteArrayOutputStream bout )
-        throws IOException
-    {
-        for( EntityState entityState : loadedStates )
-        {
-            DefaultEntityState entityStateInstance = (DefaultEntityState) entityState;
-
-            if( entityStateInstance.isModified() )
-            {
-                long newVersion = entityState.version() + 1;
-                final QualifiedIdentity identity = entityState.qualifiedIdentity();
-                SerializableState state = new SerializableState( identity,
-                                                                 newVersion,
-                                                                 lastModified,
-                                                                 entityStateInstance.getProperties(),
-                                                                 entityStateInstance.getAssociations(),
-                                                                 entityStateInstance.getManyAssociations() );
-                ObjectOutputStream out = new FastObjectOutputStream( bout, false );
-                out.writeObject( state );
-                out.close();
-                byte[] stateArray = bout.toByteArray();
-                bout.reset();
-                replicatedMap.put( identity.toString(), stateArray );
+                visitor.visitEntity( new StringReader( key.getValue() ) );
             }
         }
+        catch( RuntimeException e )
+        {
+            throw new EntityStoreException( e );
+        }
     }
 
-    private void removeStates( Iterable<QualifiedIdentity> removedStates )
-        throws IOException
+    public void applyChanges( MapChanges changes ) throws IOException
     {
-        for( QualifiedIdentity removedState : removedStates )
+        try
         {
-            replicatedMap.remove( removedState.toString() );
+            changes.visitMap( new MapChanger()
+            {
+                public Writer newEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                {
+                    return new StringWriter( 1000 )
+                    {
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
+                            String value = toString();
+                            String key = ref.identity();
+                            replicatedMap.put( key, value );
+                        }
+                    };
+                }
+
+                public Writer updateEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                {
+                    return new StringWriter( 1000 )
+                    {
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
+                            String value = toString();
+                            String key = ref.identity();
+                            replicatedMap.put( key, value );
+                        }
+                    };
+                }
+
+                public void removeEntity( EntityReference ref, EntityType entityType ) throws EntityNotFoundException
+                {
+                    replicatedMap.remove( ref.identity() );
+                }
+            } );
+        }
+        catch( RuntimeException e )
+        {
+            IOException exception = new IOException();
+            exception.initCause( e );
+            throw exception;
         }
     }
 }
