@@ -35,7 +35,7 @@ import org.qi4j.spi.entity.EntityType;
 /**
  * JGroups implementation of EntityStore
  */
-public class JGroupsSerializationEntityStoreMixin
+public class JGroupsEntityStoreMixin
     implements Activatable, MapEntityStore
 {
     private JChannel channel;

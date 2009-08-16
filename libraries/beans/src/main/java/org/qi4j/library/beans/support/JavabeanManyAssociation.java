@@ -21,6 +21,7 @@ import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.entity.association.GenericAssociationInfo;
 import org.qi4j.api.entity.association.SetAssociation;
+import org.qi4j.api.entity.association.ManyAssociation;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -29,15 +30,16 @@ import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.List;
 
-public class JavabeanSetAssociation
-    implements SetAssociation
+public class JavabeanManyAssociation
+    implements ManyAssociation
 {
     private Method pojoMethod;
     private GenericAssociationInfo delegate;
     private final JavabeanMixin javabeanMixin;
 
-    public JavabeanSetAssociation( JavabeanMixin javabeanMixin, Method method )
+    public JavabeanManyAssociation( JavabeanMixin javabeanMixin, Method method )
     {
         this.javabeanMixin = javabeanMixin;
         delegate = new GenericAssociationInfo( method, new MetaInfo() );
@@ -83,9 +85,19 @@ public class JavabeanSetAssociation
         return delegate().isEmpty();
     }
 
+    public int count()
+    {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public boolean contains( Object object )
     {
         return delegate().contains( Wrapper.unwrap( object ) );
+    }
+
+    public boolean add( int i, Object entity )
+    {
+        return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public Iterator iterator()
@@ -112,6 +124,21 @@ public class JavabeanSetAssociation
     public boolean remove( Object object )
     {
         throw new UnsupportedOperationException( "Read/only." );
+    }
+
+    public Object get( int i )
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public List toList()
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    public Set toSet()
+    {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
     public boolean addAll( Collection collection )
