@@ -17,6 +17,18 @@
  */
 package org.qi4j.library.spaces.javaspaces;
 
+import java.io.IOException;
+import java.security.AllPermission;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.Policy;
+import java.util.logging.FileHandler;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import net.jini.security.policy.DynamicPolicyProvider;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,10 +42,6 @@ import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
 import org.qi4j.library.spaces.Space;
 import org.qi4j.library.spaces.tests.SpacesTestRig;
-
-import java.io.IOException;
-import java.security.*;
-import java.util.logging.*;
 
 @Ignore( "Implementation is not working yet." )
 public class JavaspacesTest extends SpacesTestRig
@@ -76,12 +84,12 @@ public class JavaspacesTest extends SpacesTestRig
             Policy.setPolicy( new DynamicPolicyProvider( allPolicy ) );
             System.setSecurityManager( new SecurityManager() );
         }
-        module.addAssembler( new JiniLookupServiceAssembler() );
-        module.addAssembler( new JiniTransactionServiceAssembler() );
-        module.addAssembler( new JiniJavaSpacesServiceAssembler() );
-        module.addAssembler( new JettyServiceAssembler() );
+        new JiniLookupServiceAssembler().assemble( module );
+        new JiniTransactionServiceAssembler().assemble( module );
+        new JiniJavaSpacesServiceAssembler().assemble( module );
+        new JettyServiceAssembler().assemble( module );
         module.addServices( MemoryEntityStoreService.class );
-        module.addAssembler( new JavaSpacesClientAssembler() );
+        new JavaSpacesClientAssembler().assemble( module );
         module.addObjects( SpaceHolder.class );
     }
 

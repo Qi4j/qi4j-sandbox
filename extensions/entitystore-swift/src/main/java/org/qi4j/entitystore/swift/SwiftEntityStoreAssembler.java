@@ -22,7 +22,7 @@ import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
 public class SwiftEntityStoreAssembler
     implements Assembler
@@ -37,7 +37,7 @@ public class SwiftEntityStoreAssembler
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
         module.addServices( SwiftEntityStoreService.class, UuidIdentityGeneratorService.class );
-        ModuleAssembly config = module.layerAssembly().newModuleAssembly( configurationModuleName );
+        ModuleAssembly config = module.layerAssembly().moduleAssembly( configurationModuleName );
         config.addEntities( SwiftConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }

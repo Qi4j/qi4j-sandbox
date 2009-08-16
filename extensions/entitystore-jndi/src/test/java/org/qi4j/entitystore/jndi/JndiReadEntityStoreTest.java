@@ -18,12 +18,14 @@
 package org.qi4j.entitystore.jndi;
 
 import org.junit.Test;
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.qi4j.api.common.Visibility;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
 
 import javax.naming.directory.Attributes;
@@ -36,7 +38,7 @@ public class JndiReadEntityStoreTest extends AbstractQi4jTest
     {
         module.addServices( JndiEntityStoreService.class, UuidIdentityGeneratorService.class );
 
-        ModuleAssembly config = module.layerAssembly().newModuleAssembly( "config" );
+        ModuleAssembly config = module.layerAssembly().moduleAssembly( "config" );
         config.addEntities( JndiConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
 
@@ -58,15 +60,16 @@ public class JndiReadEntityStoreTest extends AbstractQi4jTest
     }
 
     @Test
+    @Ignore
     public void testReadNiclasFromLdap()
         throws Exception
     {
         UnitOfWork uow = unitOfWorkFactory.newUnitOfWork();
         try
         {
-            User user = uow.find( "niclas.hedhman", User.class );
+            User user = uow.get( User.class, "niclas.hedhman" );
             System.out.println( user.givenName().get() + " " + user.sn().get() );
-//            Assert.assertEquals( "Niclas", user.givenName().get() );
+            Assert.assertEquals( "Niclas", user.givenName().get() );
         }
         finally
         {

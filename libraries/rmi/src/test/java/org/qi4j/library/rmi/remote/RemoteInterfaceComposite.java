@@ -12,6 +12,7 @@
 package org.qi4j.library.rmi.remote;
 
 import org.qi4j.api.composite.Composite;
+import org.qi4j.api.composite.TransientComposite;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.library.cache.InvocationCacheAbstractComposite;
 import org.qi4j.library.rmi.RMIMixin;
@@ -24,6 +25,6 @@ import org.qi4j.library.rmi.RMIMixin;
  */
 @Mixins( RMIMixin.class )
 public interface RemoteInterfaceComposite
-    extends RemoteInterface, InvocationCacheAbstractComposite, Composite
+    extends RemoteInterface, InvocationCacheAbstractComposite, TransientComposite
 {
 }

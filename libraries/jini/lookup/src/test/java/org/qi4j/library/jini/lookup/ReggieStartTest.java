@@ -67,10 +67,10 @@ public class ReggieStartTest extends AbstractQi4jTest
 
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
-        module.addAssembler( new JettyServiceAssembler() );
+        new JettyServiceAssembler().assemble( module );
         module.addObjects( Holder.class );
         module.addServices( MemoryEntityStoreService.class );
-        module.addAssembler( new JiniLookupServiceAssembler() );
+        new JiniLookupServiceAssembler().assemble( module );
     }
 
     @Test

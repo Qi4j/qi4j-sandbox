@@ -16,6 +16,12 @@
  */
 package org.qi4j.entitystore.javaspaces;
 
+import java.io.File;
+import java.security.AllPermission;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.Policy;
 import net.jini.security.policy.DynamicPolicyProvider;
 import org.junit.After;
 import org.junit.Test;
@@ -28,11 +34,8 @@ import org.qi4j.library.jini.javaspaces.JiniJavaSpacesServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
 import org.qi4j.library.spaces.javaspaces.JavaSpacesClientAssembler;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
-
-import java.io.File;
-import java.security.*;
 
 /**
  * JavaSpaces EntityStore test
@@ -53,11 +56,11 @@ public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
     {
         super.assemble( module );
         module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class );
-        module.addAssembler( new JettyServiceAssembler() );
-        module.addAssembler( new JavaSpacesClientAssembler() );
-        module.addAssembler( new JiniJavaSpacesServiceAssembler() );
-        module.addAssembler( new JiniLookupServiceAssembler() );
-        module.addAssembler( new JiniTransactionServiceAssembler() );
+        new JettyServiceAssembler().assemble( module );
+        new JavaSpacesClientAssembler().assemble( module );
+        new JiniJavaSpacesServiceAssembler().assemble( module );
+        new JiniLookupServiceAssembler().assemble( module );
+        new JiniTransactionServiceAssembler().assemble( module );
     }
 
     @Override @After public void tearDown()

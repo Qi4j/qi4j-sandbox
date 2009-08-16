@@ -16,24 +16,20 @@
  */
 package org.qi4j.entitystore.rmi;
 
-import org.qi4j.api.service.Activatable;
-import org.qi4j.library.locking.WriteLock;
-import org.qi4j.spi.entity.*;
-import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.entity.helpers.NoopStateCommitter;
-
 import java.io.IOException;
+import java.io.Reader;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import java.util.Collections;
-import java.util.Iterator;
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entity.EntityStoreException;
 
 /**
  * RMI client implementation of Entity
  */
 public class ClientRmiEntityStoreMixin
-    extends EntityTypeRegistryMixin
-    implements Activatable
+    implements Activatable, MapEntityStore
 {
     private RemoteEntityStore remote;
 
@@ -49,52 +45,18 @@ public class ClientRmiEntityStoreMixin
         remote = null;
     }
 
-    // EntityStore implementation
-    public EntityState newEntityState( QualifiedIdentity identity ) throws EntityStoreException
+    public Reader get( EntityReference entityReference ) throws EntityStoreException
     {
-        return new DefaultEntityState( identity, getEntityType( identity.type() ) );
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @WriteLock
-    public EntityState getEntityState( QualifiedIdentity identity ) throws EntityStoreException
+    public void visitMap( MapEntityStoreVisitor visitor )
     {
-        try
-        {
-            EntityState state = remote.getEntityState( identity );
-
-            return state;
-        }
-        catch( IOException e )
-        {
-            Throwable cause = e.getCause();
-            if( cause != null && cause instanceof EntityStoreException )
-            {
-                throw (EntityStoreException) cause;
-            }
-            else
-            {
-                throw new EntityStoreException( e );
-            }
-        }
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @WriteLock
-    public StateCommitter prepare( Iterable<EntityState> newStates, Iterable<EntityState> loadedStates, Iterable<QualifiedIdentity> removedStates ) throws EntityStoreException
+    public void applyChanges( MapChanges changes ) throws IOException
     {
-        try
-        {
-            remote.prepare( newStates, loadedStates, removedStates );
-        }
-        catch( IOException e )
-        {
-            throw new EntityStoreException( e );
-        }
-
-        return new NoopStateCommitter();
-    }
-
-    public Iterator<EntityState> iterator()
-    {
-        return Collections.EMPTY_LIST.iterator();
+        //To change body of implemented methods use File | Settings | File Templates.
     }
 }

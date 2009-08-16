@@ -12,6 +12,7 @@ Import-Package: org.qi4j.api.composite, \
                 org.qi4j.api.mixin, \
                 org.qi4j.api.property, \
                 org.qi4j.api.service, \
+                org.qi4j.entitystore.map, \
                 org.qi4j.library.locking, \
                 org.qi4j.spi, \
                 org.qi4j.spi.composite, \

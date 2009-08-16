@@ -17,18 +17,18 @@
  */
 package org.qi4j.library.beans.support;
 
-import org.qi4j.api.composite.CompositeBuilder;
-import org.qi4j.api.composite.CompositeBuilderFactory;
+import org.qi4j.api.composite.TransientBuilderFactory;
+import org.qi4j.api.composite.TransientBuilder;
 import org.qi4j.api.entity.association.AssociationInfo;
 
 public class Wrapper
 {
-    static Object wrap( Object resultObject, AssociationInfo info, CompositeBuilderFactory cbf )
+    static Object wrap( Object resultObject, AssociationInfo info, TransientBuilderFactory cbf )
     {
         Class type = (Class) info.type();
         if( type.isInterface() )
         {
-            CompositeBuilder<?> builder = cbf.newCompositeBuilder( type );
+            TransientBuilder<?> builder = cbf.newTransientBuilder( type );
             builder.use( resultObject );
             return builder.newInstance();
         }

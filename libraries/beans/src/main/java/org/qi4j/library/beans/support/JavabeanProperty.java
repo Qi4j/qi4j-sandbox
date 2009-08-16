@@ -17,13 +17,16 @@
  */
 package org.qi4j.library.beans.support;
 
-import org.qi4j.api.composite.CompositeBuilder;
-import org.qi4j.api.composite.CompositeBuilderFactory;
-import org.qi4j.api.property.ComputedPropertyInstance;
-
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Arrays;
 import java.util.List;
+import org.qi4j.api.composite.TransientBuilder;
+import org.qi4j.api.composite.TransientBuilderFactory;
+import org.qi4j.api.property.ComputedPropertyInstance;
 
 public class JavabeanProperty extends ComputedPropertyInstance
 {
@@ -53,7 +56,7 @@ public class JavabeanProperty extends ComputedPropertyInstance
         }
     }
 
-    private Object wrap( CompositeBuilderFactory factory, Object resultObject )
+    private Object wrap( TransientBuilderFactory factory, Object resultObject )
     {
         if( resultObject == null )
         {
@@ -79,7 +82,7 @@ public class JavabeanProperty extends ComputedPropertyInstance
                         resultObject = ( (List) resultObject ).toArray();
                     }
                 }
-                CompositeBuilder<?> builder = factory.newCompositeBuilder( clazz );
+                TransientBuilder<?> builder = factory.newTransientBuilder( clazz );
                 builder.use( resultObject );
                 return builder.newInstance();
             }

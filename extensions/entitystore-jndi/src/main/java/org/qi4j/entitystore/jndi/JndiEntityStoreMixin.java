@@ -17,55 +17,25 @@
  */
 package org.qi4j.entitystore.jndi;
 
-import org.qi4j.api.common.QualifiedName;
+import java.util.Hashtable;
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.directory.InitialDirContext;
+import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
-import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.property.Property;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.entity.*;
-import org.qi4j.spi.entity.association.AssociationType;
-import org.qi4j.spi.entity.association.ManyAssociationType;
-import org.qi4j.spi.entity.helpers.DefaultEntityState;
-import org.qi4j.spi.property.PropertyType;
-import org.qi4j.spi.service.ServiceDescriptor;
+import org.qi4j.api.usecase.Usecase;
+import org.qi4j.spi.entity.EntityStore;
+import org.qi4j.spi.structure.ModuleSPI;
+import org.qi4j.spi.unitofwork.EntityStoreUnitOfWork;
 
-import javax.naming.Context;
-import javax.naming.NamingEnumeration;
-import javax.naming.NamingException;
-import javax.naming.directory.Attribute;
-import javax.naming.directory.Attributes;
-import javax.naming.directory.InitialDirContext;
-import javax.naming.directory.SearchResult;
-import javax.naming.ldap.LdapName;
-import java.util.*;
-import java.util.concurrent.locks.ReadWriteLock;
-
-public class JndiEntityStoreMixin extends EntityTypeRegistryMixin
-    implements Activatable
+public class JndiEntityStoreMixin
+    implements Activatable, EntityStore
 {
-    private static final ArrayList<String> RESTRICTED_PROPERTIES = new ArrayList<String>();
-
-    static
-    {
-        RESTRICTED_PROPERTIES.add( "identity" );
-    }
-
-
-    private @This ReadWriteLock lock;
-    @Uses private ServiceDescriptor descriptor;
     @This private Configuration<JndiConfiguration> configuration;
-    private InitialDirContext context;
-    private String instanceVersionAttribute;
-    private String lastModifiedDateAttribute;
-    private Boolean isReadOnly;
-    private String identityAttribute;
-    private String baseDn;
-    private String qualifiedTypeAttribute;
-
-    public JndiEntityStoreMixin()
-    {
-    }
+    private JndiSetup setup;
 
     public void activate()
         throws Exception
@@ -77,24 +47,25 @@ public class JndiEntityStoreMixin extends EntityTypeRegistryMixin
         throws NamingException
     {
         JndiConfiguration conf = configuration.configuration();
-        instanceVersionAttribute = conf.versionAttribute().get();
-        if( instanceVersionAttribute == null )
+        setup = new JndiSetup();
+        setup.instanceVersionAttribute = conf.versionAttribute().get();
+        if( setup.instanceVersionAttribute == null )
         {
-            instanceVersionAttribute = "instanceVersion";
+            setup.instanceVersionAttribute = "instanceVersion";
         }
-        lastModifiedDateAttribute = conf.lastModifiedDateAttribute().get();
-        if( lastModifiedDateAttribute == null )
+        setup.lastModifiedDateAttribute = conf.lastModifiedDateAttribute().get();
+        if( setup.lastModifiedDateAttribute == null )
         {
-            lastModifiedDateAttribute = "lastModifiedDate";
+            setup.lastModifiedDateAttribute = "lastModifiedDate";
         }
-        identityAttribute = conf.identityAttribute().get();
-        if( identityAttribute == null )
+        setup.identityAttribute = conf.identityAttribute().get();
+        if( setup.identityAttribute == null )
         {
-            identityAttribute = "uid";
+            setup.identityAttribute = "uid";
         }
-        qualifiedTypeAttribute = conf.qualifiedTypeAttribute().get();
-        baseDn = conf.baseDN().get();
-        isReadOnly = conf.readOnly().get();
+        setup.qualifiedTypeAttribute = conf.qualifiedTypeAttribute().get();
+        setup.baseDn = conf.baseDN().get();
+        setup.isReadOnly = conf.readOnly().get();
 
         Hashtable<String, String> env = new Hashtable<String, String>();
         addToEnv( env, Context.AUTHORITATIVE, conf.authorative(), null );
@@ -111,7 +82,7 @@ public class JndiEntityStoreMixin extends EntityTypeRegistryMixin
         addToEnv( env, Context.SECURITY_PROTOCOL, conf.securityProtocol(), null );
         addToEnv( env, Context.STATE_FACTORIES, conf.stateFactories(), null );
         addToEnv( env, Context.URL_PKG_PREFIXES, conf.urlPkgPrefixes(), null );
-        context = new InitialDirContext( env );
+        setup.context = new InitialDirContext( env );
     }
 
     private void addToEnv( Hashtable<String, String> env, String key, Property<String> property, String defaultValue )
@@ -130,374 +101,17 @@ public class JndiEntityStoreMixin extends EntityTypeRegistryMixin
     public void passivate()
         throws Exception
     {
-        context.close();
+        setup.context.close();
+        setup = null;
     }
 
-    public EntityState newEntityState( QualifiedIdentity identity )
-        throws EntityStoreException
+    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, MetaInfo unitOfWorkMetaInfo, ModuleSPI module )
     {
-        if( isReadOnly )
-        {
-            throw new ReadOnlyEntityStoreException( "JndiEntityStore is read-only." );
-        }
-
-        EntityType entityType = getEntityType( identity.type() );
-        try
-        {
-            Attributes attrs = lookup( identity.identity() );
-            if( attrs != null && attrs.size() > 1 )
-            {
-                throw new EntityAlreadyExistsException( descriptor.identity(), identity );
-            }
-        }
-        catch( NamingException e )
-        {
-            throw new EntityStoreException( e );
-        }
-        return new DefaultEntityState( identity, entityType );
+        return new JndiUow( setup, usecase, unitOfWorkMetaInfo, module );
     }
 
-    public EntityState getEntityState( QualifiedIdentity identity )
-        throws EntityStoreException
+    public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, ModuleSPI moduleInstance )
     {
-        EntityType entityType = getEntityType( identity.type() );
-        try
-        {
-            String id = identity.identity();
-            Attributes attrs = lookup( id );
-
-            long version = getVersion( attrs );
-            long lastModified = getLastModified( attrs );
-            Map<QualifiedName, Object> properties = getProperties( attrs, entityType );
-//            properties.put( "identity", id);
-            Map<QualifiedName, QualifiedIdentity> associations = getAssociations( attrs, entityType );
-            Map<QualifiedName, Collection<QualifiedIdentity>> manyAssociations = getManyAssociations( attrs, entityType );
-            return new DefaultEntityState( version,
-                                           lastModified,
-                                           identity,
-                                           EntityStatus.LOADED,
-                                           entityType,
-                                           properties,
-                                           associations,
-                                           manyAssociations );
-        }
-        catch( Exception e )
-        {
-            throw new EntityStoreException( e );
-        }
-    }
-
-    private long getLastModified( Attributes attrs )
-        throws NamingException
-    {
-        Attribute lastModifiedAttr = attrs.get( lastModifiedDateAttribute );
-        if( lastModifiedAttr == null )
-        {
-            return -1;
-        }
-        String lastModifiedValue = (String) lastModifiedAttr.get();
-        long lastModified = Long.parseLong( lastModifiedValue );
-        return lastModified;
-    }
-
-    private long getVersion( Attributes attrs )
-        throws NamingException
-    {
-        Attribute versionAttr = attrs.get( instanceVersionAttribute );
-        if( versionAttr == null )
-        {
-            return -1;
-        }
-        String versionValue = (String) versionAttr.get();
-        long version = Long.parseLong( versionValue );
-        return version;
-    }
-
-    private Attributes lookup( String id )
-        throws NamingException
-    {
-        // TODO: Caching
-        LdapName dn = new LdapName( identityAttribute + "=" + id + "," + baseDn );
-        Attributes attrs = context.getAttributes( dn );
-        return attrs;
-    }
-
-    private Map<QualifiedName, Object> getProperties( Attributes attrs, EntityType entityType )
-        throws NamingException
-    {
-        Map<QualifiedName, Object> result = new HashMap<QualifiedName, Object>();
-        Iterable<PropertyType> props = entityType.properties();
-        for( PropertyType property : props )
-        {
-            QualifiedName qualifiedName = property.qualifiedName();
-            String propertyName = qualifiedName.name();
-            if( !RESTRICTED_PROPERTIES.contains( propertyName ) )
-            {
-                Attribute attribute = attrs.get( propertyName );
-                if( attribute != null )
-                {
-                    result.put( qualifiedName, attribute.get() );
-                }
-            }
-        }
-        return result;
-    }
-
-    private Map<QualifiedName, QualifiedIdentity> getAssociations( Attributes attrs, EntityType entityType )
-        throws NamingException
-    {
-        Map<QualifiedName, QualifiedIdentity> result = new HashMap<QualifiedName, QualifiedIdentity>();
-        Iterable<AssociationType> assocs = entityType.associations();
-        for( AssociationType associationType : assocs )
-        {
-            QualifiedName qualifiedName = associationType.qualifiedName();
-            String associationName = qualifiedName.name();
-            Attribute attribute = attrs.get( associationName );
-            String identity = (String) attribute.get();
-            QualifiedIdentity qualifiedIdentity = new QualifiedIdentity( identity, associationType.type() );
-            result.put( qualifiedName, qualifiedIdentity );
-        }
-        return result;
-    }
-
-    private Map<QualifiedName, Collection<QualifiedIdentity>> getManyAssociations( Attributes attrs, EntityType entityType )
-        throws NamingException
-    {
-        Map<QualifiedName, Collection<QualifiedIdentity>> result = new HashMap<QualifiedName, Collection<QualifiedIdentity>>();
-        Iterable<ManyAssociationType> assocs = entityType.manyAssociations();
-        for( ManyAssociationType associationType : assocs )
-        {
-            QualifiedName qualifiedName = associationType.qualifiedName();
-            String associationName = qualifiedName.name();
-            Attribute attribute = attrs.get( associationName );
-            String identity = (String) attribute.get();
-            QualifiedIdentity qualifiedIdentity = new QualifiedIdentity( identity, associationType.type() );
-            String assocName = attribute.getID();
-            Collection<QualifiedIdentity> entry = result.get( assocName );
-            if( entry == null )
-            {
-                entry = new ArrayList<QualifiedIdentity>();
-                result.put( qualifiedName, entry );
-            }
-            entry.add( qualifiedIdentity );
-        }
-        return result;
-    }
-
-    private void putProperties( Attributes attrs, EntityType entityType, Map<String, Object> values )
-    {
-        Iterable<PropertyType> props = entityType.properties();
-        for( PropertyType property : props )
-        {
-            QualifiedName qualifiedName = property.qualifiedName();
-            String propertyName = qualifiedName.name();
-            if( !RESTRICTED_PROPERTIES.contains( propertyName ) )
-            {
-                attrs.put( propertyName, values.get( propertyName ) );
-            }
-        }
-    }
-
-    private void putAssociations( Attributes attrs, EntityType entityType, Map<String, QualifiedIdentity> associations )
-    {
-//        Iterable<AssociationType> assocs = entityType.associations();
-//        for( AssociationType associationType : assocs )
-//        {
-//            String qualifiedName = associationType.qualifiedName();
-//            int pos = qualifiedName.lastIndexOf( ':' );
-//            String associationName = qualifiedName.substring( pos );
-//            Attribute attribute = attrs.get( associationName );
-//            String identity = (String) attribute.get();
-//            QualifiedIdentity qualifiedIdentity = new QualifiedIdentity( identity, associationType.type() );
-//            result.put( attribute.getID(), qualifiedIdentity );
-//        }
-    }
-
-    private void putManyAssociations( Attributes attrs, EntityType entityType, Map<String, Collection<QualifiedIdentity>> manyAssociations )
-    {
-//        Iterable<ManyAssociationType> assocs = entityType.manyAssociations();
-//        for( ManyAssociationType associationType : assocs )
-//        {
-//            String qualifiedName = associationType.qualifiedName();
-//            int pos = qualifiedName.lastIndexOf( ':' );
-//            String associationName = qualifiedName.substring( pos );
-//            Attribute attribute = attrs.get( associationName );
-//            String identity = (String) attribute.get();
-//            QualifiedIdentity qualifiedIdentity = new QualifiedIdentity( identity, associationType.type() );
-//            String assocName = attribute.getID();
-//            Collection<QualifiedIdentity> entry = result.get( assocName );
-//            if( entry == null )
-//            {
-//                entry = new ArrayList<QualifiedIdentity>();
-//                result.put( assocName, entry );
-//            }
-//            entry.add( qualifiedIdentity );
-//        }
-    }
-
-    public StateCommitter prepare( Iterable<EntityState> newStates, Iterable<EntityState> updatedStates, Iterable<QualifiedIdentity> removedStates )
-        throws EntityStoreException
-    {
-//        if( isReadOnly )
-        {
-            throw new ReadOnlyEntityStoreException( "JndiEntityStore is read-only." );
-        }
-//        boolean turbo = configuration.configuration().turboMode().get();
-//        lock.writeLock().lock();
-//
-//        long lastModified = System.currentTimeMillis();
-//        try
-//        {
-//            storeNewStates( newStates, lastModified );
-//            storeLoadedStates( loadedStates, lastModified );
-//            removeRemovedStates( removedStates, lastModified );
-//        }
-//        catch( Throwable e )
-//        {
-//            lock.writeLock().unlock();
-//            if( e instanceof EntityStoreException )
-//            {
-//                throw (EntityStoreException) e;
-//            }
-//            else
-//            {
-//                throw new EntityStoreException( e );
-//            }
-//        }
-//
-//        return new StateCommitter()
-//        {
-//            public void commit()
-//            {
-//                try
-//                {
-//                    recordManager.commit();
-//                }
-//                catch( IOException e )
-//                {
-//                    e.printStackTrace();
-//                }
-//                finally
-//                {
-//                    lock.writeLock().unlock();
-//                }
-//            }
-//
-//            public void cancel()
-//            {
-//
-//                try
-//                {
-//                    recordManager.rollback();
-//                    initializeIndex(); // HTree indices are invalid after rollbacks according to the JDBM docs
-//                }
-//                catch( IOException e )
-//                {
-//                    e.printStackTrace();
-//                }
-//                finally
-//                {
-//                    lock.writeLock().unlock();
-//                }
-//            }
-//        };
-    }
-
-    private void storeNewStates( Iterable<EntityState> newStates, long lastModified )
-    {
-//        for( EntityState newEntity : newStates )
-//        {
-//            DefaultEntityState defState = (DefaultEntityState) newEntity;
-//            Attributes attrs = lookup( defState.qualifiedIdentity().identity() );
-//            putProperties( attrs, defState.entityType(), defState.getProperties() );
-//            putAssociations( attrs, defState.entityType(), defState.getAssociations() );
-//            putManyAssociations( attrs, defState.entityType(), defState.getManyAssociations() );
-//        }
-    }
-
-    public Iterator<EntityState> iterator()
-    {
-        try
-        {
-            if( qualifiedTypeAttribute == null )
-            {
-                throw new UnsupportedOperationException( "Without an qualifiedTypeAttribute, this operation is not possible." );
-            }
-            LdapName name = new LdapName( baseDn );
-
-            final NamingEnumeration<SearchResult> result = context.search( name, "", null );
-
-            return new Iterator<EntityState>()
-            {
-                public boolean hasNext()
-                {
-                    try
-                    {
-                        return result.hasMore();
-                    }
-                    catch( NamingException e )
-                    {
-                        return false;
-                    }
-                }
-
-                public EntityState next()
-                {
-
-                    try
-                    {
-                        Attributes attributes = result.next().getAttributes();
-                        String qualifiedType = (String) attributes.get( qualifiedTypeAttribute ).get();
-                        String id = (String) attributes.get( identityAttribute ).get();
-                        QualifiedIdentity identity = new QualifiedIdentity( id, qualifiedType );
-                        EntityType entityType = getEntityType( identity.type() );
-
-                        long version = Long.parseLong( (String) attributes.get( instanceVersionAttribute ).get() );
-                        long lastModified = Long.parseLong( (String) attributes.get( lastModifiedDateAttribute ).get() );
-                        Map<QualifiedName, Object> properties = getProperties( attributes, entityType );
-                        Map<QualifiedName, QualifiedIdentity> associations = getAssociations( attributes, entityType );
-                        Map<QualifiedName, Collection<QualifiedIdentity>> manyAssociations = getManyAssociations( attributes, entityType );
-                        return new DefaultEntityState( version,
-                                                       lastModified,
-                                                       identity,
-                                                       EntityStatus.LOADED,
-                                                       entityType,
-                                                       properties,
-                                                       associations,
-                                                       manyAssociations );
-                    }
-                    catch( Exception e )
-                    {
-                        throw new EntityStoreException( e );
-                    }
-                }
-
-                public void remove()
-                {
-                }
-            };
-        }
-        catch( NamingException e )
-        {
-            return new NullIterator();
-        }
-    }
-
-    private class NullIterator
-        implements Iterator<EntityState>
-    {
-        public boolean hasNext()
-        {
-            return false;
-        }
-
-        public EntityState next()
-        {
-            return null;
-        }
-
-        public void remove()
-        {
-        }
+        return null;
     }
 }

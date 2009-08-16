@@ -19,9 +19,8 @@ import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.sideeffect.SideEffects;
-import org.qi4j.entitystore.memory.ConcurrentModificationCheckConcern;
 import org.qi4j.spi.entity.EntityStore;
-import org.qi4j.spi.entity.EntityStoreListenerNotificationSideEffect;
+import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
 
 /**
  * EntityStore backed by Preferences API.
@@ -44,7 +43,6 @@ import org.qi4j.spi.entity.EntityStoreListenerNotificationSideEffect;
  * @see org.qi4j.api.configuration.Configuration
  */
 @Concerns( ConcurrentModificationCheckConcern.class )
-@SideEffects( EntityStoreListenerNotificationSideEffect.class )
 @Mixins( PreferencesEntityStoreMixin.class )
 public interface PreferencesEntityStoreService
     extends EntityStore, ServiceComposite, Activatable

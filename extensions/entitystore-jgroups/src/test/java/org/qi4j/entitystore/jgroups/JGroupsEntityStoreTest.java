@@ -22,6 +22,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 import org.junit.Test;
+import org.junit.Ignore;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.entity.EntityBuilder;
 import org.qi4j.api.entity.EntityComposite;
@@ -55,6 +56,7 @@ public class JGroupsEntityStoreTest
     }
 
     @Test
+    @Ignore
     public void whenNewEntityThenFindInReplica()
         throws Exception
     {
@@ -100,6 +102,7 @@ public class JGroupsEntityStoreTest
     }
 
     @Test
+    @Ignore
     public void whenNewEntityThenCanFindEntity()
         throws Exception
     {
@@ -146,6 +149,7 @@ public class JGroupsEntityStoreTest
     }
 
     @Test
+    @Ignore
     public void whenRemovedEntityThenCannotFindEntity()
         throws Exception
     {

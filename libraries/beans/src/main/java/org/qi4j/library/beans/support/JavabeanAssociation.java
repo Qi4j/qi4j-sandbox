@@ -19,9 +19,9 @@ package org.qi4j.library.beans.support;
 
 import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.common.QualifiedName;
-import org.qi4j.api.composite.CompositeBuilder;
 import org.qi4j.api.entity.association.Association;
 import org.qi4j.api.entity.association.GenericAssociationInfo;
+import org.qi4j.api.composite.TransientBuilder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -79,7 +79,7 @@ public class JavabeanAssociation
             Class type = (Class) type();
             if( type.isInterface() )
             {
-                CompositeBuilder<?> builder = javabeanMixin.cbf.newCompositeBuilder( type );
+                TransientBuilder<?> builder = javabeanMixin.cbf.newTransientBuilder( type );
                 builder.use( resultObject );
                 return builder.newInstance();
             }

@@ -20,6 +20,7 @@ package org.qi4j.library.thread;
 import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import org.qi4j.api.composite.Composite;
+import org.qi4j.api.composite.TransientComposite;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.bootstrap.AssemblyException;
@@ -33,9 +34,9 @@ public class NewThreadServiceTest extends AbstractQi4jTest
     public void assemble( ModuleAssembly module )
         throws AssemblyException
     {
-        module.addComposites( UnderTestComposite.class );
+        module.addTransients( UnderTestComposite.class );
         module.addServices( MemoryEntityStoreService.class );
-        module.addAssembler( new NewThreadServiceAssembler() );
+        new NewThreadServiceAssembler().assemble( module );
     }
 
     @Test
@@ -44,7 +45,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
     {
         TestRunnable r1 = new TestRunnable();
         TestRunnable r2 = new TestRunnable();
-        UnderTest underTest = compositeBuilderFactory.newComposite( UnderTest.class );
+        UnderTest underTest = transientBuilderFactory.newTransient( UnderTest.class );
         Thread t1 = underTest.fetchThread( r1 );
         Thread t2 = underTest.fetchThread( r2 );
         assertFalse( t1.equals( t2 ) );
@@ -64,7 +65,7 @@ public class NewThreadServiceTest extends AbstractQi4jTest
     }
 
     @Mixins( UnderTestMixin.class )
-    public interface UnderTestComposite extends UnderTest, Composite
+    public interface UnderTestComposite extends UnderTest, TransientComposite
     {
     }
 

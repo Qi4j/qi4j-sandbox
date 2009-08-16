@@ -22,8 +22,8 @@ import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
 @Ignore
 public class SwiftEntityStoreTest extends AbstractEntityStoreTest
@@ -33,7 +33,7 @@ public class SwiftEntityStoreTest extends AbstractEntityStoreTest
         super.assemble( module );
         module.addServices( SwiftEntityStoreService.class, UuidIdentityGeneratorService.class );
 
-        ModuleAssembly config = module.layerAssembly().newModuleAssembly( "config" );
+        ModuleAssembly config = module.layerAssembly().moduleAssembly( "config" );
         config.addEntities( SwiftConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }

@@ -18,6 +18,15 @@
 
 package org.qi4j.entitystore.jndi;
 
-public class JndiSetup
+import javax.naming.directory.InitialDirContext;
+
+class JndiSetup
 {
+    InitialDirContext context;
+    String instanceVersionAttribute;
+    String lastModifiedDateAttribute;
+    Boolean isReadOnly;
+    String identityAttribute;
+    String baseDn;
+    String qualifiedTypeAttribute;
 }

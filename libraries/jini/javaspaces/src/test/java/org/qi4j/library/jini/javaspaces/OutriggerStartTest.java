@@ -17,6 +17,18 @@
  */
 package org.qi4j.library.jini.javaspaces;
 
+import java.io.IOException;
+import java.security.AllPermission;
+import java.security.CodeSource;
+import java.security.PermissionCollection;
+import java.security.Permissions;
+import java.security.Policy;
+import java.util.Collection;
+import java.util.logging.Formatter;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import net.jini.core.lookup.ServiceTemplate;
 import net.jini.discovery.DiscoveryEvent;
 import net.jini.discovery.DiscoveryListener;
@@ -37,11 +49,6 @@ import org.qi4j.library.http.JettyServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
 import org.qi4j.test.AbstractQi4jTest;
-
-import java.io.IOException;
-import java.security.*;
-import java.util.Collection;
-import java.util.logging.*;
 
 public class OutriggerStartTest extends AbstractQi4jTest
 {
@@ -65,10 +72,10 @@ public class OutriggerStartTest extends AbstractQi4jTest
 
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
-        module.addAssembler( new JiniTransactionServiceAssembler() );
-        module.addAssembler( new JiniLookupServiceAssembler() );
-        module.addAssembler( new JiniJavaSpacesServiceAssembler() );
-        module.addAssembler( new JettyServiceAssembler() );
+        new JiniTransactionServiceAssembler().assemble( module );
+        new JiniLookupServiceAssembler().assemble( module );
+        new JiniJavaSpacesServiceAssembler().assemble( module );
+        new JettyServiceAssembler().assemble( module );
         module.addObjects( Holder.class );
         module.addServices( MemoryEntityStoreService.class );
     }

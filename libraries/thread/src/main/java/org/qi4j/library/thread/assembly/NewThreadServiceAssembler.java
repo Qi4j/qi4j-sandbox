@@ -35,6 +35,6 @@ public class NewThreadServiceAssembler
         module.addServices( ThreadGroupServiceComposite.class );
         module.addEntities( ThreadServiceConfigurationEntity.class );
         module.addEntities( ThreadGroupConfigurationEntity.class );
-        module.addAssembler( new TransientSequencingAssembler() );
+        new TransientSequencingAssembler().assemble( module );
     }
 }

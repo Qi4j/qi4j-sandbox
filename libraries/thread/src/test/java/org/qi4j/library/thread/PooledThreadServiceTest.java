@@ -22,6 +22,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import org.junit.Test;
 import org.qi4j.api.composite.Composite;
+import org.qi4j.api.composite.TransientComposite;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.bootstrap.AssemblyException;
@@ -37,16 +38,16 @@ public class PooledThreadServiceTest extends AbstractQi4jTest
     public void assemble( ModuleAssembly module )
         throws AssemblyException
     {
-        module.addComposites( UnderTestComposite.class );
+        module.addTransients( UnderTestComposite.class );
         module.addServices( MemoryEntityStoreService.class );
-        module.addAssembler( new PooledThreadServiceAssembler() );
+        new PooledThreadServiceAssembler().assemble( module );
     }
 
     @Test
     public void whenUsingPooledThreadProviderThenSameThreadsAreHandedBack()
         throws Exception
     {
-        UnderTest underTest = compositeBuilderFactory.newComposite( UnderTest.class );
+        UnderTest underTest = transientBuilderFactory.newTransient( UnderTest.class );
         ArrayList<Thread> threads = new ArrayList<Thread>();
         int poolsize = underTest.maxThreads();
         TestRunnable r1 = new TestRunnable();
@@ -93,7 +94,7 @@ public class PooledThreadServiceTest extends AbstractQi4jTest
     }
 
     @Mixins( UnderTestMixin.class )
-    public interface UnderTestComposite extends UnderTest, Composite
+    public interface UnderTestComposite extends UnderTest, TransientComposite
     {
     }
 
