@@ -84,7 +84,7 @@ public class JGroupsEntityStoreTest
         System.out.println( "Create entity" );
         UnitOfWork app1Unit = app1.unitOfWorkFactory().newUnitOfWork();
         EntityBuilder<TestEntity> builder = app1Unit.newEntityBuilder( TestEntity.class );
-        TestEntity instance = builder.prototype();
+        TestEntity instance = builder.instance();
         instance.name().set( "Foo" );
         instance = builder.newInstance();
         app1Unit.complete();

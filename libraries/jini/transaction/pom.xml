@@ -40,7 +40,6 @@
       <groupId>org.qi4j.library.jini</groupId>
       <artifactId>qi4j-lib-jini-lookup</artifactId>
       <version>0.8-SNAPSHOT</version>
-      <scope>test</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.river</groupId>

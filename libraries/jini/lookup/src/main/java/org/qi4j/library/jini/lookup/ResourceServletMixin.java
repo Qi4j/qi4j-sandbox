@@ -17,8 +17,6 @@
  */
 package org.qi4j.library.jini.lookup;
 
-import org.qi4j.api.util.Streams;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

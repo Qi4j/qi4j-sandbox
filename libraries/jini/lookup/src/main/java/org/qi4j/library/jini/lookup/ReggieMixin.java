@@ -26,7 +26,6 @@ import org.qi4j.api.common.Optional;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.service.Activatable;
-import org.qi4j.api.util.Streams;
 import org.qi4j.library.http.HttpService;
 import org.qi4j.library.http.Interface;
 
