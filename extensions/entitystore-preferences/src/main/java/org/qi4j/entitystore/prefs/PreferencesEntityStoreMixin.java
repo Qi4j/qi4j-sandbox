@@ -47,8 +47,7 @@ public class PreferencesEntityStoreMixin
 
     private Preferences getApplicationRoot()
     {
-        MetaInfo metaInfo = descriptor.metaInfo();
-        PreferenceEntityStoreInfo storeInfo = metaInfo.get( PreferenceEntityStoreInfo.class );
+        PreferenceEntityStoreInfo storeInfo = descriptor.metaInfo( PreferenceEntityStoreInfo.class );
 
         Preferences preferences;
         if( storeInfo == null )
@@ -71,7 +70,7 @@ public class PreferencesEntityStoreMixin
     {
     }
 
-    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, MetaInfo unitOfWorkMetaInfo, ModuleSPI module )
+    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, ModuleSPI module )
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }

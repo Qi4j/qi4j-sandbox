@@ -55,17 +55,15 @@ public class JndiUow implements EntityStoreUnitOfWork
     }
 
     private Usecase usecase;
-    private MetaInfo unitOfWorkMetaInfo;
     private ModuleSPI module;
     private String uowIdentity;
     private JndiSetup setup;
 
-    public JndiUow( JndiSetup setup, Usecase usecase, MetaInfo unitOfWorkMetaInfo, ModuleSPI module )
+    public JndiUow( JndiSetup setup, Usecase usecase, ModuleSPI module )
     {
         this.setup = setup;
         uowIdentity = UUID.randomUUID().toString();
         this.usecase = usecase;
-        this.unitOfWorkMetaInfo = unitOfWorkMetaInfo;
         this.module = module;
     }
 

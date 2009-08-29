@@ -105,9 +105,9 @@ public class JndiEntityStoreMixin
         setup = null;
     }
 
-    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, MetaInfo unitOfWorkMetaInfo, ModuleSPI module )
+    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, ModuleSPI module )
     {
-        return new JndiUow( setup, usecase, unitOfWorkMetaInfo, module );
+        return new JndiUow( setup, usecase, module );
     }
 
     public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, ModuleSPI moduleInstance )
