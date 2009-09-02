@@ -22,37 +22,12 @@ import java.util.prefs.Preferences;
 /**
  * @author edward.yakop@gmail.com
  */
-public final class PreferenceEntityStoreInfo
+public final class PreferencesEntityStoreInfo
     implements Serializable
 {
-    public static enum PreferenceNode
-    {
-        /**
-         * @see Preferences#systemRoot()
-         */
-        SYSTEM_ROOT( Preferences.systemRoot() ),
+    private Preferences rootNode;
 
-        /**
-         * @see Preferences#userRoot()
-         */
-        USER_ROOT( Preferences.userRoot() );
-
-        private final Preferences preferences;
-
-        private PreferenceNode( Preferences preferences )
-        {
-            this.preferences = preferences;
-        }
-
-        final Preferences getNode()
-        {
-            return preferences;
-        }
-    }
-
-    private final PreferenceNode rootNode;
-
-    public PreferenceEntityStoreInfo( PreferenceNode aRootNode )
+    public PreferencesEntityStoreInfo( Preferences aRootNode )
     {
         rootNode = aRootNode;
     }
@@ -60,7 +35,7 @@ public final class PreferenceEntityStoreInfo
     /**
      * @return root preference node to use.
      */
-    public PreferenceNode getRootNode()
+    public Preferences getRootNode()
     {
         return rootNode;
     }

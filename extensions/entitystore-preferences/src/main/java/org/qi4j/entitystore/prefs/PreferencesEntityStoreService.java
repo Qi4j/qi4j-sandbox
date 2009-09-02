@@ -21,6 +21,7 @@ import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.sideeffect.SideEffects;
 import org.qi4j.spi.entity.EntityStore;
 import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
+import org.qi4j.spi.entity.helpers.EntityStateVersions;
 
 /**
  * EntityStore backed by Preferences API.
@@ -31,13 +32,13 @@ import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
  * Each entity is stored under its identity name.
  * <p/>
  * Property types are converted to native Preferences API types
- * as much as possible. All others will be serialized to a byte array.
+ * as much as possible. All others will be serialized to a string using JSON.
  * <p/>
- * ManyAssociations are stored as multi-line strings (one QualifiedIdentity
- * per line), and Associations are stored as the stringified QualifiedIdentity
+ * ManyAssociations are stored as multi-line strings (one identity
+ * per line), and Associations are stored as the identity
  * of the referenced Entity.
  * <p/>
- * The main use of the EntityStore is for storage of ServiceComposite Configurations.
+ * The main use of the EntityStore is for storage of ConfigurationComposites for ServiceComposites.
  *
  * @see ServiceComposite
  * @see org.qi4j.api.configuration.Configuration
@@ -45,6 +46,6 @@ import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
 @Concerns( ConcurrentModificationCheckConcern.class )
 @Mixins( PreferencesEntityStoreMixin.class )
 public interface PreferencesEntityStoreService
-    extends EntityStore, ServiceComposite, Activatable
+    extends EntityStore, ServiceComposite, EntityStateVersions, Activatable
 {
 }

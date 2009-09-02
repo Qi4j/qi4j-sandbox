@@ -21,6 +21,7 @@ import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
+import java.util.prefs.Preferences;
 
 public class PreferenceEntityStoreAssembler
     implements Assembler
@@ -29,7 +30,7 @@ public class PreferenceEntityStoreAssembler
         throws AssemblyException
     {
         module.addServices( PreferencesEntityStoreService.class )
-            .setMetaInfo( new PreferenceEntityStoreInfo( PreferenceEntityStoreInfo.PreferenceNode.USER_ROOT ) )
+            .setMetaInfo( new PreferencesEntityStoreInfo( Preferences.userRoot().node(module.layerAssembly().applicationAssembly().name() )) )
             .instantiateOnStartup();
         module.addServices( UuidIdentityGeneratorService.class );
     }
