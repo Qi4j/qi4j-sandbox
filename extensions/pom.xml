@@ -18,7 +18,6 @@
     <module>entitystore-jndi</module>
     <module>entitystore-javaspaces</module>
     <module>entitystore-jgroups</module>
-    <module>entitystore-preferences</module>
     <module>entitystore-rmi</module>
     <module>entitystore-s3</module>
     <module>entitystore-swift</module>
