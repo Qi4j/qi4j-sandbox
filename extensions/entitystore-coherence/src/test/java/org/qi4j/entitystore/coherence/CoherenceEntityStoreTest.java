@@ -23,7 +23,7 @@ import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
 
 /**
@@ -36,7 +36,7 @@ public class CoherenceEntityStoreTest extends AbstractEntityStoreTest
         super.assemble( module );
         module.addServices( CoherenceEntityStoreService.class, UuidIdentityGeneratorService.class );
 
-        ModuleAssembly config = module.layerAssembly().newModuleAssembly( "config" );
+        ModuleAssembly config = module.layerAssembly().moduleAssembly( "config" );
         config.addEntities( CoherenceConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }

@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.qi4j.entitystore.coherence;
 
 import org.qi4j.api.concern.Concerns;
@@ -22,16 +23,17 @@ import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
-import org.qi4j.api.sideeffect.SideEffects;
-import org.qi4j.entitystore.memory.ConcurrentModificationCheckConcern;
+import org.qi4j.entitystore.map.MapEntityStoreMixin;
 import org.qi4j.library.locking.LockingAbstractComposite;
 import org.qi4j.spi.entity.EntityStore;
-import org.qi4j.spi.entity.EntityStoreListenerNotificationSideEffect;
+import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
+import org.qi4j.spi.entity.helpers.EntityStateVersions;
+import org.qi4j.spi.entity.helpers.StateChangeNotificationConcern;
 
-@Concerns( ConcurrentModificationCheckConcern.class )
-@SideEffects( EntityStoreListenerNotificationSideEffect.class )
-@Mixins( CoherenceEntityStoreMixin.class )
+@Concerns( { StateChangeNotificationConcern.class, ConcurrentModificationCheckConcern.class } )
+@Mixins( { MapEntityStoreMixin.class, CoherenceEntityStoreMixin.class } )
 public interface CoherenceEntityStoreService
-    extends EntityStore, ServiceComposite, Activatable, LockingAbstractComposite, Configuration
+    extends EntityStore, EntityStateVersions, DatabaseExport, DatabaseImport, ServiceComposite, Activatable, LockingAbstractComposite, Configuration
 {
 }
+

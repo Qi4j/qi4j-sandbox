@@ -22,7 +22,7 @@ import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
-import org.qi4j.spi.entity.helpers.UuidIdentityGeneratorService;
+import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
 public class CoherenceEntityStoreAssembler
     implements Assembler
@@ -38,7 +38,7 @@ public class CoherenceEntityStoreAssembler
         throws AssemblyException
     {
         module.addServices( CoherenceEntityStoreService.class, UuidIdentityGeneratorService.class );
-        ModuleAssembly config = module.layerAssembly().newModuleAssembly( configurationModule );
+        ModuleAssembly config = module.layerAssembly().moduleAssembly( configurationModule );
         config.addEntities( CoherenceConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );
     }

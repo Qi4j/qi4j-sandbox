@@ -22,7 +22,6 @@
     <module>observations</module>
     <module>registry</module>
     <module>rmi</module>
-    <module>spaces</module>
     <module>thread</module>
     <module>unitofwork</module>
     <module>validation</module>

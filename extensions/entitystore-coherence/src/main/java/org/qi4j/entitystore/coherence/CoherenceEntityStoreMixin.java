@@ -15,28 +15,39 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.qi4j.entitystore.coherence;
 
 import com.tangosol.net.CacheFactory;
 import com.tangosol.net.NamedCache;
-import org.qi4j.api.configuration.Configuration;
-import org.qi4j.api.injection.scope.This;
-import org.qi4j.api.injection.scope.Uses;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.spi.entity.*;
-import org.qi4j.spi.service.ServiceDescriptor;
-
-import java.util.HashMap;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.locks.ReadWriteLock;
+import org.qi4j.api.configuration.Configuration;
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.injection.scope.Uses;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entity.EntityNotFoundException;
+import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entity.EntityType;
+import org.qi4j.spi.service.ServiceDescriptor;
 
-public class CoherenceEntityStoreMixin extends EntityTypeRegistryMixin
-    implements Activatable
+public class CoherenceEntityStoreMixin
+    implements Activatable, MapEntityStore, DatabaseExport, DatabaseImport
 {
-    private @This ReadWriteLock lock;
-    private @This Configuration<CoherenceConfiguration> config;
-    private @Uses ServiceDescriptor descriptor;
+    @This private ReadWriteLock lock;
+    @This private Configuration<CoherenceConfiguration> config;
+    @Uses private ServiceDescriptor descriptor;
+
     private NamedCache cache;
 
     // Activatable implementation
@@ -53,119 +64,129 @@ public class CoherenceEntityStoreMixin extends EntityTypeRegistryMixin
         cache.destroy();
     }
 
-    public EntityState newEntityState( QualifiedIdentity identity )
-        throws EntityStoreException
+    public Reader get( EntityReference entityReference ) throws EntityStoreException
     {
-        EntityType entityType = getEntityType( identity.type() );
-        return new CoherenceEntityState( identity, entityType );
-    }
+        byte[] data = (byte[]) cache.get( entityReference.identity() );
 
-    public EntityState getEntityState( QualifiedIdentity identity )
-        throws EntityStoreException
-    {
-        EntityType entityType = getEntityType( identity.type() );
-        if( entityType == null )
+        if( data == null )
         {
-            throw new UnknownEntityTypeException( identity.type() );
+            throw new EntityNotFoundException( entityReference );
         }
-
-        // Synchronization on non-final is valid semantics here. Only set in activate()/deactivate() pair of methods.
-        //noinspection SynchronizeOnNonFinalField
-        synchronized( cache )
+        try
         {
-            CoherenceEntityState state = (CoherenceEntityState) cache.get( identity );
-            if( state == null )
-            {
-                throw new EntityNotFoundException( descriptor.identity(), identity );
-            }
-            return state;
+            return new StringReader( new String( data, "UTF-8" ) );
+        }
+        catch( UnsupportedEncodingException e )
+        {
+            // Can not happen.
+            throw new InternalError();
         }
     }
 
-    public StateCommitter prepare( Iterable<EntityState> newStates,
-                                   Iterable<EntityState> loadedStates,
-                                   final Iterable<QualifiedIdentity> removedStates )
-        throws EntityStoreException
+    public void applyChanges( MapChanges changes )
+        throws IOException
     {
-        final Map<QualifiedIdentity, CoherenceEntityState> updatedState =
-            new HashMap<QualifiedIdentity, CoherenceEntityState>();
-
-        for( EntityState entityState : newStates )
+        try
         {
-            CoherenceEntityState entityStateInstance = (CoherenceEntityState) entityState;
-            updatedState.put( entityState.qualifiedIdentity(), entityStateInstance );
-        }
-
-        for( EntityState entityState : loadedStates )
-        {
-            CoherenceEntityState entityStateInstance = (CoherenceEntityState) entityState;
-            if( entityStateInstance.isModified() )
+            changes.visitMap( new MapChanger()
             {
-                updatedState.put( entityState.qualifiedIdentity(), entityStateInstance );
-            }
-        }
-        return new StateCommitter()
-        {
-            public void commit()
-            {
-                // Synchronization on non-final is valid semantics here. Only set in activate()/deactivate() pair of methods.
-                //noinspection SynchronizeOnNonFinalField
-                synchronized( cache )
+                public Writer newEntity( final EntityReference ref, EntityType entityType ) throws IOException
                 {
-                    // Remove state
-                    for( QualifiedIdentity removedEntityId : removedStates )
+                    return new StringWriter( 1000 )
                     {
-                        cache.remove( removedEntityId );
-                    }
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
 
-                    // Update state
-                    for( Map.Entry<QualifiedIdentity, CoherenceEntityState> state : updatedState.entrySet() )
-                    {
-                        final CoherenceEntityState value = state.getValue();
-                        if( value.status() == EntityStatus.LOADED )
-                        {
-                            if( value.isModified() )
-                            {
-                                value.increaseVersion();
-                            }
+                            byte[] stateArray = toString().getBytes( "UTF-8" );
+                            cache.put( ref.identity(), stateArray );
                         }
-                        else
-                        {
-                            value.markAsLoaded();
-                        }
-                        value.clearModified();
-                        cache.put( state.getKey(), value );
-                    }
+                    };
                 }
-            }
 
-            public void cancel()
-            {
-                // Do nothing
-            }
-        };
-    }
+                public Writer updateEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                {
+                    return new StringWriter( 1000 )
+                    {
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
+                            byte[] stateArray = toString().getBytes( "UTF-8" );
+                            cache.put( ref.identity(), stateArray );
+                        }
+                    };
+                }
 
-    public Iterator<EntityState> iterator()
-    {
-        final Iterator iterator = cache.keySet().iterator();
-        return new Iterator<EntityState>()
+                public void removeEntity( EntityReference ref, EntityType entityType ) throws EntityNotFoundException
+                {
+                    cache.remove( ref.identity() );
+                }
+            } );
+        }
+        catch( Exception e )
         {
-            public boolean hasNext()
+            if( e instanceof IOException )
             {
-                return iterator.hasNext();
+                throw (IOException) e;
             }
+            else if( e instanceof EntityStoreException )
+            {
+                throw (EntityStoreException) e;
+            }
+            else
+            {
+                IOException exception = new IOException();
+                exception.initCause( e );
+                throw exception;
+            }
+        }
 
-            public EntityState next()
-            {
-                return getEntityState( (QualifiedIdentity) iterator.next() );
-            }
-
-            public void remove()
-            {
-                throw new UnsupportedOperationException();
-            }
-        };
     }
 
+
+    public void visitMap( MapEntityStoreVisitor visitor )
+    {
+        Iterator<Map.Entry<String, byte[]>> list = cache.entrySet().iterator();
+        while( list.hasNext() )
+        {
+            Map.Entry<String, byte[]> entry = list.next();
+            String id = entry.getKey();
+            byte[] data = entry.getValue();
+            try
+            {
+                visitor.visitEntity( new StringReader( new String( data, "UTF-8" ) ) );
+            }
+            catch( UnsupportedEncodingException e )
+            {
+                // Can not happen!
+            }
+        }
+    }
+
+    public void exportTo( Writer out )
+        throws IOException
+    {
+        Iterator<Map.Entry<String, byte[]>> list = cache.entrySet().iterator();
+        while( list.hasNext() )
+        {
+            Map.Entry<String, byte[]> entry = list.next();
+            byte[] data = entry.getValue();
+            String value = new String( data, "UTF-8" );
+            out.write( value );
+            out.write( '\n' );
+        }
+    }
+
+    public void importFrom( Reader in ) throws IOException
+    {
+        BufferedReader reader = new BufferedReader( in );
+        String object;
+        while( ( object = reader.readLine() ) != null )
+        {
+            String id = object.substring( "{\"identity\":\"".length() );
+            id = id.substring( 0, id.indexOf( '"' ) );
+            byte[] stateArray = object.getBytes( "UTF-8" );
+            cache.put( id, stateArray );
+        }
+    }
 }

@@ -11,4 +11,30 @@
     <module>libraries</module>
     <module>extensions</module>
   </modules>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>qi4j-core-api</artifactId>
+        <version>1.0-RC1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>qi4j-core-spi</artifactId>
+        <version>1.0-RC1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>qi4j-core-bootstrap</artifactId>
+        <version>1.0-RC1</version>
+      </dependency>
+      <dependency>
+        <groupId>org.qi4j.core</groupId>
+        <artifactId>qi4j-core-testsupport</artifactId>
+        <version>1.0-RC1</version>
+        <scope>test</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 </project>

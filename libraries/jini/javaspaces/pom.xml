@@ -2,15 +2,15 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>org.qi4j.sandbox</groupId>
-    <artifactId>qi4j-sandbox</artifactId>
-    <version>0.8-SNAPSHOT</version>
-  </parent>
   <groupId>org.qi4j.library.jini</groupId>
   <artifactId>qi4j-lib-jini-javaspaces</artifactId>
   <version>0.8-SNAPSHOT</version>
   <name>Qi4j Library - Jini Javaspaces Services</name>
+
+  <properties>
+    <version.qi4j-core>1.0-RC1</version.qi4j-core>
+    <version.qi4j-libraries>1.0-RC1</version.qi4j-libraries>
+  </properties>
 
   <dependencies>
     <dependency>
