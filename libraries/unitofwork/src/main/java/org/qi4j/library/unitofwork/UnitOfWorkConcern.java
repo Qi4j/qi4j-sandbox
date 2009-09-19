@@ -34,7 +34,6 @@ import org.qi4j.api.usecase.Usecase;
  *
  * @see org.qi4j.api.unitofwork.UnitOfWorkPropagation
  * @see org.qi4j.api.unitofwork.UnitOfWorkDiscardOn
- * @since 0.8
  */
 @AppliesTo( UnitOfWorkPropagation.class )
 public class UnitOfWorkConcern extends GenericConcern

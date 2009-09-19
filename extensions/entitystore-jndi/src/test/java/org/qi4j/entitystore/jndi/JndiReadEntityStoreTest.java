@@ -37,7 +37,6 @@ public class JndiReadEntityStoreTest extends AbstractQi4jTest
     public void assemble( ModuleAssembly module ) throws AssemblyException
     {
         module.addServices( JndiEntityStoreService.class, UuidIdentityGeneratorService.class );
-
         ModuleAssembly config = module.layerAssembly().moduleAssembly( "config" );
         config.addEntities( JndiConfiguration.class ).visibleIn( Visibility.layer );
         config.addServices( MemoryEntityStoreService.class );

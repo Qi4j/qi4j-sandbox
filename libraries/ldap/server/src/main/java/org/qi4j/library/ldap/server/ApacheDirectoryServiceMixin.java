@@ -17,84 +17,84 @@
  */
 package org.qi4j.library.ldap.server;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.directory.server.core.DefaultDirectoryService;
 import org.apache.directory.server.core.DirectoryService;
 import org.apache.directory.server.core.entry.ServerEntry;
 import org.apache.directory.server.core.partition.Partition;
 import org.apache.directory.server.core.partition.impl.btree.jdbm.JdbmIndex;
 import org.apache.directory.server.core.partition.impl.btree.jdbm.JdbmPartition;
-import org.apache.directory.server.xdbm.Index;
 import org.apache.directory.shared.ldap.exception.LdapNameNotFoundException;
 import org.apache.directory.shared.ldap.name.LdapDN;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.service.Activatable;
-
-import java.util.HashSet;
-import java.util.Set;
+import org.qi4j.api.service.ServiceComposite;
 
 public class ApacheDirectoryServiceMixin
-    implements Activatable
+    implements Activatable, Ldap
 {
-    @This Configuration<LdapConfiguration> configuration;
+    @This private Configuration<LdapConfiguration> configuration;
 
     /**
      * The directory service
      */
     private DirectoryService service;
+    private boolean running;
+
+    public ApacheDirectoryServiceMixin()
+    {
+        System.out.println( "Starting LDAP." );
+    }
 
     public void activate()
         throws Exception
     {
+        // Initialize the LDAP service
+        service = new DefaultDirectoryService();
+
+        // Disable the ChangeLog system
+        service.getChangeLog().setEnabled( false );
+
+
+        LdapConfiguration conf = configuration.configuration();
+        String partitionId = conf.partitionId().get();
+        Partition partition = addPartition( partitionId, conf.partitionDn().get() );
+
+        // Index some attributes on the apache partition
+        String[] attrs = { "objectClass", "ou", "uid" };
+        addIndex( partition, attrs );
+        addIndex( partition, configAttributes() );
+
+        // Inject the apache root entry if it does not already exist
         try
         {
-            String[] attrs = { "objectClass", "ou", "uid" };
-            // Initialize the LDAP service
-            service = new DefaultDirectoryService();
-
-            // Disable the ChangeLog system
-            service.getChangeLog().setEnabled( false );
-
-
-            // Create a new partition named 'apache'.
-            LdapConfiguration conf = configuration.configuration();
-            String partitionId = conf.partitionId().get();
-            if( partitionId == null )
-            {
-                partitionId = "qi4j";
-            }
-            Partition apachePartition = addPartition( partitionId, conf.partitionDn().get() );
-
-            // Index some attributes on the apache partition
-            addIndex( apachePartition, attrs );
-
-            // And start the service
-            service.startup();
-
-            // Inject the apache root entry if it does not already exist
-            try
-            {
-                service.getAdminSession().lookup( apachePartition.getSuffixDn() );
-            }
-            catch( LdapNameNotFoundException lnnfe )
-            {
-                LdapDN dnApache = new LdapDN( "dc=Apache,dc=Org" );
-                ServerEntry entryApache = service.newEntry( dnApache );
-                entryApache.add( "objectClass", "top", "domain", "extensibleObject" );
-                entryApache.add( "dc", "Apache" );
-                service.getAdminSession().add( entryApache );
-            }
+            service.getAdminSession().lookup( partition.getSuffixDn() );
         }
-        catch( Exception e )
+        catch( LdapNameNotFoundException lnnfe )
         {
-            throw e;
+
+            LdapDN dnApache = new LdapDN( "dc=Apache,dc=Org" );
+            ServerEntry entryApache = service.newEntry( dnApache );
+            entryApache.add( "objectClass", "top", "domain", "extensibleObject" );
+            entryApache.add( "dc", "Apache" );
+            service.getAdminSession().add( entryApache );
         }
         service.startup();
+        running = true;
+    }
+
+    private String[] configAttributes()
+    {
+        String attrs = configuration.configuration().indexAttributes().get();
+        return attrs.split( "," );
     }
 
     public void passivate()
         throws Exception
     {
+        running = false;
         service.shutdown();
     }
 
@@ -109,7 +109,6 @@ public class ApacheDirectoryServiceMixin
      */
     private Partition addPartition( String partitionId, String partitionDn ) throws Exception
     {
-        // Create a new partition named 'foo'.
         Partition partition = new JdbmPartition();
         partition.setId( partitionId );
         partition.setSuffix( partitionDn );
@@ -127,13 +126,18 @@ public class ApacheDirectoryServiceMixin
     private void addIndex( Partition partition, String... attrs )
     {
         // Index some attributes on the apache partition
-        Set<Index<?, ServerEntry>> indexedAttributes = new HashSet<Index<?, ServerEntry>>();
+        Set indexedAttributes = new HashSet();
 
         for( String attribute : attrs )
         {
             indexedAttributes.add( new JdbmIndex<String, ServerEntry>( attribute ) );
         }
 
-//        ((JdbmPartition)partition).setIndexedAttributes( indexedAttributes );
+        ( (JdbmPartition) partition ).setIndexedAttributes( indexedAttributes );
+    }
+
+    public boolean isRunning()
+    {
+        return running;
     }
 }
