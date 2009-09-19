@@ -18,6 +18,7 @@
 package org.qi4j.entitystore.swift;
 
 import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.api.entity.EntityReference;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -25,28 +26,28 @@ import java.io.RandomAccessFile;
 public class UndoNewIdentityCommand
     implements UndoCommand
 {
-    private QualifiedIdentity identity;
+    private EntityReference reference;
 
-    public UndoNewIdentityCommand( QualifiedIdentity identity )
+    public UndoNewIdentityCommand( EntityReference reference )
     {
-        this.identity = identity;
+        this.reference = reference;
     }
 
     public void undo( RandomAccessFile dataFile, IdentityFile idFile ) throws IOException
     {
-        idFile.drop( identity );
+        idFile.drop( reference );
     }
 
     public void save( RandomAccessFile undoJournal ) throws IOException
     {
-        undoJournal.writeUTF( identity.toString() );
+        undoJournal.writeUTF( reference.toString() );
     }
 
     static UndoNewIdentityCommand load( RandomAccessFile undoJournal )
         throws IOException
     {
         String idString = undoJournal.readUTF();
-        QualifiedIdentity identity = QualifiedIdentity.parseQualifiedIdentity( idString );
-        return new UndoNewIdentityCommand( identity );
+        EntityReference ref = new EntityReference( idString );
+        return new UndoNewIdentityCommand( ref );
     }
 }

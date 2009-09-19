@@ -20,6 +20,10 @@ package org.qi4j.entitystore.swift;
 import java.io.File;
 import java.io.IOException;
 import java.io.Reader;
+import java.io.StringReader;
+import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.io.Writer;
 import java.util.concurrent.locks.ReadWriteLock;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.entity.EntityReference;
@@ -27,7 +31,9 @@ import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entity.EntityNotFoundException;
 import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.service.ServiceDescriptor;
 
 public class SwiftEntityStoreMixin
@@ -37,10 +43,6 @@ public class SwiftEntityStoreMixin
     @Uses private ServiceDescriptor descriptor;
     @This private Configuration<SwiftConfiguration> configuration;
     private RecordManager recordManager;
-
-    public SwiftEntityStoreMixin()
-    {
-    }
 
     public void activate()
         throws Exception
@@ -63,249 +65,102 @@ public class SwiftEntityStoreMixin
         recordManager.close();
     }
 
-//    public EntityState newEntityState( QualifiedIdentity identity ) throws EntityStoreException
-//    {
-//        EntityType entityType = getEntityType( identity.type() );
-//        return new DefaultEntityState( identity, entityType );
-//        return null;
-//    }
-
-//    public EntityState getEntityState( QualifiedIdentity identity ) throws EntityStoreException
-//    {
-//        EntityType entityType = getEntityType( identity.type() );
-//
-//        try
-//        {
-//
-//            try
-//            {
-//                SerializableState serializableState = loadSerializableState( identity );
-//                if( serializableState == null )
-//                {
-//                    throw new EntityNotFoundException( descriptor.identity(), identity );
-//                }
-//
-//                return new DefaultEntityState( serializableState.version(),
-//                                               serializableState.lastModified(),
-//                                               identity,
-//                                               EntityStatus.LOADED,
-//                                               entityType,
-//                                               serializableState.properties(),
-//                                               serializableState.associations(),
-//                                               serializableState.manyAssociations() );
-//            }
-//            catch( ClassNotFoundException e )
-//            {
-//                throw new EntityStoreException( e );
-//            }
-//        }
-//        catch( IOException e )
-//        {
-//            throw new EntityStoreException( e );
-//        }
-//    }
-//
-//    public StateCommitter prepare( Iterable<EntityState> newStates, Iterable<EntityState> updatedStates, Iterable<QualifiedIdentity> removedStates )
-//        throws EntityStoreException
-//    {
-//        boolean turbo = configuration.configuration().turboMode().get();
-//        lock.writeLock().lock();
-//
-//        long lastModified = System.currentTimeMillis();
-//        try
-//        {
-//            ByteArrayOutputStream bout = new ByteArrayOutputStream();
-//            storeNewStates( newStates, turbo, lastModified, bout );
-//            storeLoadedStates( updatedStates, turbo, lastModified, bout );
-//            removeStates( removedStates );
-//        }
-//        catch( Throwable e )
-//        {
-//            try
-//            {
-//                recordManager.discard();
-//            }
-//            catch( IOException e1 )
-//            {
-//                throw new EntityStoreException( "Problem with underlying storage system." );
-//            }
-//            lock.writeLock().unlock();
-//            if( e instanceof EntityStoreException )
-//            {
-//                throw (EntityStoreException) e;
-//            }
-//            else
-//            {
-//                throw new EntityStoreException( e );
-//            }
-//        }
-//
-//        return new StateCommitter()
-//        {
-//            public void commit()
-//            {
-//                try
-//                {
-//                    recordManager.commit();
-//                }
-//                catch( IOException e1 )
-//                {
-//                    throw new EntityStoreException( "Problem with underlying storage system." );
-//                }
-//                finally
-//                {
-//                    lock.writeLock().unlock();
-//                }
-//            }
-//
-//            public void cancel()
-//            {
-//                try
-//                {
-//                    recordManager.discard();
-//                }
-//                catch( IOException e1 )
-//                {
-//                    throw new EntityStoreException( "Problem with underlying storage system." );
-//                }
-//                finally
-//                {
-//                    lock.writeLock().unlock();
-//                }
-//            }
-//        };
-//    }
-//
-//    public Iterator<EntityState> iterator()
-//    {
-//        final Iterator<QualifiedIdentity> iterator = recordManager.iterator();
-//
-//        return new Iterator<EntityState>()
-//        {
-//            public boolean hasNext()
-//            {
-//                return iterator.hasNext();
-//            }
-//
-//            public EntityState next()
-//            {
-//                try
-//                {
-//                    QualifiedIdentity identity = iterator.next();
-//                    SerializableState serializableState = loadSerializableState( identity );
-//                    if( serializableState == null )
-//                    {
-//                        throw new EntityNotFoundException( descriptor.identity(), identity );
-//                    }
-//
-//                    return new DefaultEntityState( serializableState.version(),
-//                                                   serializableState.lastModified(),
-//                                                   serializableState.qualifiedIdentity(),
-//                                                   EntityStatus.LOADED,
-//                                                   getEntityType( serializableState.qualifiedIdentity().type() ),
-//                                                   serializableState.properties(),
-//                                                   serializableState.associations(),
-//                                                   serializableState.manyAssociations() );
-//                }
-//                catch( Exception e )
-//                {
-//                    throw new EntityStoreException( e );
-//                }
-//            }
-//
-//            public void remove()
-//            {
-//            }
-//        };
-//    }
-//
-//
-//    private SerializableState loadSerializableState( QualifiedIdentity identity )
-//        throws IOException, ClassNotFoundException
-//    {
-//        DataBlock data = recordManager.readData( identity );
-//
-//        if( data == null )
-//        {
-//            return null;
-//        }
-//        byte[] serializedState = data.data;
-//
-//        ByteArrayInputStream bin = new ByteArrayInputStream( serializedState );
-//        ObjectInputStream oin = new FastObjectInputStream( bin, configuration.configuration().turboMode().get() );
-//        return (SerializableState) oin.readObject();
-//    }
-//
-//    private void storeNewStates( Iterable<EntityState> newStates, boolean turbo, long lastModified, ByteArrayOutputStream bout )
-//        throws IOException
-//    {
-//        for( EntityState entityState : newStates )
-//        {
-//            DefaultEntityState entityStateInstance = (DefaultEntityState) entityState;
-//            SerializableState state = new SerializableState( entityState.qualifiedIdentity(),
-//                                                             entityState.version(),
-//                                                             lastModified,
-//                                                             entityStateInstance.getProperties(),
-//                                                             entityStateInstance.getAssociations(),
-//                                                             entityStateInstance.getManyAssociations() );
-//            ObjectOutputStream out = new FastObjectOutputStream( bout, turbo );
-//            out.writeObject( state );
-//            out.close();
-//            byte[] stateArray = bout.toByteArray();
-//            DataBlock data = new DataBlock( entityState.qualifiedIdentity(), stateArray, entityState.version(), 1 );
-//            recordManager.putData( data );
-//            bout.reset();
-//        }
-//    }
-//
-//    private void storeLoadedStates( Iterable<EntityState> loadedStates, boolean turbo, long lastModified, ByteArrayOutputStream bout )
-//        throws IOException
-//    {
-//        for( EntityState entityState : loadedStates )
-//        {
-//            DefaultEntityState entityStateInstance = (DefaultEntityState) entityState;
-//
-//            if( entityStateInstance.isModified() )
-//            {
-//                long newVersion = entityState.version() + 1;
-//                SerializableState state = new SerializableState( entityState.qualifiedIdentity(),
-//                                                                 newVersion,
-//                                                                 lastModified,
-//                                                                 entityStateInstance.getProperties(),
-//                                                                 entityStateInstance.getAssociations(),
-//                                                                 entityStateInstance.getManyAssociations() );
-//                ObjectOutputStream out = new FastObjectOutputStream( bout, turbo );
-//                out.writeObject( state );
-//                out.close();
-//                byte[] stateArray = bout.toByteArray();
-//                bout.reset();
-//                DataBlock data = new DataBlock( entityState.qualifiedIdentity(), stateArray, newVersion, 1 );
-//                recordManager.putData( data );
-//            }
-//        }
-//    }
-//
-//    private void removeStates( Iterable<QualifiedIdentity> removedStates )
-//        throws IOException
-//    {
-//        for( QualifiedIdentity removedState : removedStates )
-//        {
-//            recordManager.deleteData( removedState );
-//        }
-//    }
-
-    public Reader get( EntityReference entityReference ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        try
+        {
+            DataBlock dataBlock = recordManager.readData( entityReference );
+            if( dataBlock == null )
+            {
+                throw new EntityNotFoundException( entityReference );
+            }
+            StringReader reader = new StringReader( new String( dataBlock.data, "UTF-8" ) );
+            return reader;
+        }
+        catch( UnsupportedEncodingException e )
+        {
+            // Can not happen.
+            throw new InternalError();
+        }
+        catch( IOException e )
+        {
+            throw new EntityStoreException( "Unable to read '" + entityReference + "' from the store.", e );
+        }
     }
 
     public void visitMap( MapEntityStoreVisitor visitor )
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        recordManager.visitMap( visitor );
     }
 
-    public void applyChanges( MapChanges changes ) throws IOException
+    public void applyChanges( MapChanges changes )
+        throws IOException
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        try
+        {
+            changes.visitMap( new MapChanger()
+            {
+                public Writer newEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                {
+                    return new StringWriter( 1000 )
+                    {
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
+
+                            byte[] stateArray = toString().getBytes( "UTF-8" );
+                            DataBlock block = new DataBlock( ref, stateArray, 0, 0 );
+                            recordManager.putData( block );
+                        }
+                    };
+                }
+
+                public Writer updateEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                {
+                    return new StringWriter( 1000 )
+                    {
+                        @Override public void close() throws IOException
+                        {
+                            super.close();
+                            byte[] stateArray = toString().getBytes( "UTF-8" );
+                            DataBlock block = new DataBlock( ref, stateArray, 0, 0 );
+                            recordManager.putData( block );
+                        }
+                    };
+                }
+
+                public void removeEntity( EntityReference ref, EntityType entityType ) throws EntityNotFoundException
+                {
+                    try
+                    {
+                        recordManager.deleteData( ref );
+                    }
+                    catch( IOException e )
+                    {
+                        throw new EntityStoreException( e );
+                    }
+                }
+            } );
+            recordManager.commit();
+        }
+        catch( Exception e )
+        {
+            recordManager.discard();
+            if( e instanceof IOException )
+            {
+                throw (IOException) e;
+            }
+            else if( e instanceof EntityStoreException )
+            {
+                throw (EntityStoreException) e;
+            }
+            else
+            {
+                IOException exception = new IOException();
+                exception.initCause( e );
+                throw exception;
+            }
+        }
     }
 }

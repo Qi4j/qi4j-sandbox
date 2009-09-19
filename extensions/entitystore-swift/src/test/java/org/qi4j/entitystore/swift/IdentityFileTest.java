@@ -17,14 +17,15 @@
  */
 package org.qi4j.entitystore.swift;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
-import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.api.entity.EntityReference;
 
-import java.io.File;
-import java.io.IOException;
-
+@SuppressWarnings( { "ResultOfMethodCallIgnored" } )
 public class IdentityFileTest
 {
     private File idFile;
@@ -46,13 +47,13 @@ public class IdentityFileTest
         idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1000 );
+        populateRandom( file );
         long value = 9783249823L;
-        QualifiedIdentity identity = createIdentity( "SomeIdentity" );
+        EntityReference identity = createIdentity( "SomeIdentity" );
         file.remember( identity, value );
         long recalled = file.find( identity );
         Assert.assertEquals( "Wrong position retrieved for item.", value, recalled );
     }
-
 
     @Test
     public void whenCreating50EntriesThenGetTheResultBack()
@@ -61,21 +62,23 @@ public class IdentityFileTest
         idFile = new File( "swift-store" );
         idFile.mkdirs();
         file = IdentityFile.create( idFile, 64, 1000 );
+        populateRandom( file );
         long[] pos = new long[50];
         for( int i = 0; i < 50; i++ )
         {
             pos[ i ] = (long) ( Math.random() * Long.MAX_VALUE );
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             file.remember( identity, pos[ i ] );
         }
 
         for( int i = 0; i < 50; i++ )
         {
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             long recalled = file.find( identity );
             Assert.assertEquals( "Wrong position retrieved for item " + i + ".", pos[ i ], recalled );
         }
     }
+
 
     @Test
     public void whenIdentityIsLongerThanAllowedExpectException()
@@ -86,7 +89,7 @@ public class IdentityFileTest
         file = IdentityFile.create( idFile, 24, 1000 );
         try
         {
-            QualifiedIdentity identity = createIdentity( "12345678901" );
+            EntityReference identity = createIdentity( "12345678901" );
             file.remember( identity, 827349813743908274L );
             Assert.fail( "Should not allow this long identity." );
         }
@@ -107,13 +110,13 @@ public class IdentityFileTest
         for( int i = 0; i < 150; i++ )
         {
             pos[ i ] = (long) ( Math.random() * Long.MAX_VALUE );
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             file.remember( identity, pos[ i ] );
         }
 
         for( int i = 0; i < 150; i++ )
         {
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             long recalled = file.find( identity );
             Assert.assertEquals( "Wrong position retrieved for item " + i + ".", pos[ i ], recalled );
         }
@@ -130,19 +133,19 @@ public class IdentityFileTest
         for( int i = 0; i < 150; i++ )
         {
             pos[ i ] = (long) ( Math.random() * Long.MAX_VALUE );
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             file.remember( identity, pos[ i ] );
         }
 
         for( int i = 0; i < 150; i++ )
         {
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             file.drop( identity );
         }
 
         for( int i = 0; i < 150; i++ )
         {
-            QualifiedIdentity identity = createIdentity( "Identity-" + i );
+            EntityReference identity = createIdentity( "Identity-" + i );
             Assert.assertEquals( "Identity entry not gone.", -1, file.find( identity ) );
         }
     }
@@ -173,8 +176,21 @@ public class IdentityFileTest
         file.delete();
     }
 
-    private QualifiedIdentity createIdentity( String identity )
+    private EntityReference createIdentity( String identity )
     {
-        return QualifiedIdentity.parseQualifiedIdentity( "org.qi4j.entity.test.Data:" + identity );
+        return new EntityReference( identity );
+    }
+
+    private void populateRandom( IdentityFile file )
+        throws IOException
+    {
+        Random rnd = new Random();
+        int max = (int) ( file.entries() * 0.5 );
+        for( int i = 0; i < max; i++ )
+        {
+            String id = String.valueOf( rnd.nextInt(16) );
+            EntityReference ref = new EntityReference( id );
+            file.remember(ref, i);
+        }
     }
 }

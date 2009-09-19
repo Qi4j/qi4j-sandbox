@@ -50,6 +50,8 @@ public class UndoExtendCommand
     public void undo( RandomAccessFile dataFile, IdentityFile idFile ) throws IOException
     {
         dataFile.setLength( previousLength );
+        dataFile.seek( dataFile.length() );
+        dataFile.writeInt( -1 );  // Put in the EOF
     }
 
     public void save( RandomAccessFile undoJournal ) throws IOException

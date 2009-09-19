@@ -25,10 +25,10 @@ import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
-@Ignore
 public class SwiftEntityStoreTest extends AbstractEntityStoreTest
 {
-    public void assemble( ModuleAssembly module ) throws AssemblyException
+    public void assemble( ModuleAssembly module )
+        throws AssemblyException
     {
         super.assemble( module );
         module.addServices( SwiftEntityStoreService.class, UuidIdentityGeneratorService.class );

@@ -17,18 +17,18 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.api.entity.EntityReference;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Iterator;
 
 class StoreIterator
-    implements Iterator<QualifiedIdentity>
+    implements Iterator<EntityReference>
 {
     private boolean isAvailable;
     private RandomAccessFile store;
-    private QualifiedIdentity identity;
+    private EntityReference identity;
     private long position;
     private int identityMaxLength;
 
@@ -45,9 +45,9 @@ class StoreIterator
         return isAvailable;
     }
 
-    public QualifiedIdentity next()
+    public EntityReference next()
     {
-        QualifiedIdentity result = identity;
+        EntityReference result = identity;
         getNext();
         return result;
     }
@@ -90,7 +90,7 @@ class StoreIterator
         throw new UnsupportedOperationException();
     }
 
-    private QualifiedIdentity readIdentity()
+    private EntityReference readIdentity()
         throws IOException
     {
         int idSize = store.readByte();
@@ -101,6 +101,6 @@ class StoreIterator
         byte[] idData = new byte[idSize];
         store.read( idData );
         store.skipBytes( identityMaxLength - idSize );
-        return QualifiedIdentity.parseQualifiedIdentity( new String( idData ) );
+        return new EntityReference( new String( idData ) );
     }
 }

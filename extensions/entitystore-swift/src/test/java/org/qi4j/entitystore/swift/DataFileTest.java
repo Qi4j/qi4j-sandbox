@@ -19,7 +19,7 @@ package org.qi4j.entitystore.swift;
 
 import org.junit.Assert;
 import org.junit.Test;
-import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.api.entity.EntityReference;
 
 import java.io.File;
 
@@ -33,12 +33,12 @@ public class DataFileTest
         RecordManager man = new RecordManager( dir, false );
         try
         {
-            QualifiedIdentity identity = createIdentity( "12345678" );
+            EntityReference ref = createReference( "12345678" );
             String data = "Hej hopp du glade man!!";
-            DataBlock originalData = new DataBlock( identity, data.getBytes(), 81273, 91283 );
+            DataBlock originalData = new DataBlock( ref, data.getBytes(), 81273, 91283 );
             man.putData( originalData );
 
-            DataBlock retrieveData = man.readData( identity );
+            DataBlock retrieveData = man.readData( ref );
             Assert.assertEquals( "Incorrect Data retrieved.", originalData, retrieveData );
         }
         finally
@@ -55,14 +55,14 @@ public class DataFileTest
         RecordManager man = new RecordManager( dir, false );
         try
         {
-            QualifiedIdentity[] ids = new QualifiedIdentity[100];
+            EntityReference[] ids = new EntityReference[100];
             String[] values = new String[100];
             int[] schemas = new int[100];
             long[] versions = new long[100];
             long t0 = System.currentTimeMillis();
             for( int i = 0; i < 100; i++ )
             {
-                ids[ i ] = createIdentity( "habba" + i );
+                ids[ i ] = createReference( "habba" + i );
                 values[ i ] = "Hej hopp du glade man!!" + Math.random();
                 DataBlock originalData = new DataBlock( ids[ i ], values[ i ].getBytes(), versions[ i ], schemas[ i ] );
                 man.putData( originalData );
@@ -73,7 +73,7 @@ public class DataFileTest
             for( int i = 0; i < 100; i++ )
             {
                 DataBlock data = man.readData( ids[ i ] );
-                Assert.assertEquals( "Incorrect Data retrieved.", ids[ i ], data.identity );
+                Assert.assertEquals( "Incorrect Data retrieved.", ids[ i ], data.reference );
                 Assert.assertEquals( "Incorrect Data retrieved.", versions[ i ], data.instanceVersion );
                 Assert.assertEquals( "Incorrect Data retrieved.", values[ i ], new String( data.data ) );
                 Assert.assertEquals( "Incorrect Data retrieved.", schemas[ i ], data.schemaVersion );
@@ -93,14 +93,14 @@ public class DataFileTest
         RecordManager man = new RecordManager( dir, false );
         try
         {
-            QualifiedIdentity[] ids = new QualifiedIdentity[100];
+            EntityReference[] ids = new EntityReference[100];
             String[] values = new String[100];
             int[] schemas = new int[100];
             long[] versions = new long[100];
             long t0 = System.currentTimeMillis();
             for( int i = 0; i < 100; i++ )
             {
-                ids[ i ] = createIdentity( "habba" + i );
+                ids[ i ] = createReference( "habba" + i );
                 values[ i ] = "Hej hopp du glade man!!" + Math.random();
                 DataBlock originalData = new DataBlock( ids[ i ], values[ i ].getBytes(), versions[ i ], schemas[ i ] );
                 man.putData( originalData );
@@ -111,7 +111,7 @@ public class DataFileTest
             for( int i = 0; i < 100; i++ )
             {
                 DataBlock data = man.readData( ids[ i ] );
-                Assert.assertEquals( "Incorrect Data retrieved.", ids[ i ], data.identity );
+                Assert.assertEquals( "Incorrect Data retrieved.", ids[ i ], data.reference );
                 Assert.assertEquals( "Incorrect Data retrieved.", versions[ i ], data.instanceVersion );
                 Assert.assertEquals( "Incorrect Data retrieved.", values[ i ], new String( data.data ) );
                 Assert.assertEquals( "Incorrect Data retrieved.", schemas[ i ], data.schemaVersion );
@@ -125,20 +125,20 @@ public class DataFileTest
 
 
     @Test
-    public void whenIdentityIsAtMaxThenExpectSameDataBack()
+    public void whenEntityReferenceIsAtMaxThenExpectSameDataBack()
         throws Exception
     {
         File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
-            QualifiedIdentity identity = createIdentity( "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678912" );
+            EntityReference ref = createReference( "012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678912" );
             String data = "Hej hopp du glade man!!";
-            DataBlock originalData = new DataBlock( identity, data.getBytes(), 81273, 91283 );
+            DataBlock originalData = new DataBlock( ref, data.getBytes(), 81273, 91283 );
             man.putData( originalData );
             man.commit();
 
-            DataBlock retrieveData = man.readData( identity );
+            DataBlock retrieveData = man.readData( ref );
             Assert.assertEquals( "Incorrect Data retrieved.", originalData, retrieveData );
         }
         finally
@@ -149,16 +149,20 @@ public class DataFileTest
     }
 
     @Test
-    public void whenTooLongIdentityThenExpectException()
+    public void whenTooLongEntityReferenceThenExpectException()
         throws Exception
     {
         File dir = new File( "swift-store" );
         RecordManager man = new RecordManager( dir, false );
         try
         {
-            QualifiedIdentity identity = createIdentity( "0123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789123" );
+            StringBuffer buf = new StringBuffer();
+            for( int i=0 ; i < 129 ; i++ )
+                buf.append( (i % 10) );
+            EntityReference ref = createReference( buf.toString() );
+            
             String data = "Hej hopp du glade man!!";
-            DataBlock originalData = new DataBlock( identity, data.getBytes(), 81273, 91283 );
+            DataBlock originalData = new DataBlock( ref, data.getBytes(), 81273, 91283 );
             man.putData( originalData );
             Assert.fail( "Exceeeding max length didn't cause Exception." );
         }
@@ -173,8 +177,8 @@ public class DataFileTest
 
     }
 
-    private QualifiedIdentity createIdentity( String identity )
+    private EntityReference createReference( String identity )
     {
-        return QualifiedIdentity.parseQualifiedIdentity( "org.qi4j.entity.test.Data:" + identity );
+        return new EntityReference( identity );
     }
 }

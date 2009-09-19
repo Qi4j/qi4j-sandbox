@@ -18,17 +18,19 @@
 package org.qi4j.entitystore.swift;
 
 import org.qi4j.api.concern.Concerns;
-import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
-import org.qi4j.api.sideeffect.SideEffects;
+import org.qi4j.entitystore.map.MapEntityStoreMixin;
 import org.qi4j.library.locking.LockingAbstractComposite;
 import org.qi4j.spi.entity.EntityStore;
 import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
+import org.qi4j.spi.entity.helpers.StateChangeNotificationConcern;
+import org.qi4j.spi.entity.helpers.EntityStateVersions;
 
-@Concerns( ConcurrentModificationCheckConcern.class )
-@Mixins( SwiftEntityStoreMixin.class )
-public interface SwiftEntityStoreService extends Activatable, EntityStore, ServiceComposite, LockingAbstractComposite, Configuration
+@Concerns( { StateChangeNotificationConcern.class, ConcurrentModificationCheckConcern.class } )
+@Mixins( { MapEntityStoreMixin.class, SwiftEntityStoreMixin.class } )
+public interface SwiftEntityStoreService
+    extends Activatable, EntityStore, EntityStateVersions, ServiceComposite, LockingAbstractComposite
 {
 }

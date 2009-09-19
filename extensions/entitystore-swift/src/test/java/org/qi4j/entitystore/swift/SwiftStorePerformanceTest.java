@@ -1,5 +1,5 @@
 /*
- * Copyright 2008 Niclas Hedhman.
+ * Copyright 2009 Niclas Hedhman.
  *
  * Licensed  under the  Apache License,  Version 2.0  (the "License");
  * you may not use  this file  except in  compliance with the License.
@@ -15,17 +15,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
-import org.qi4j.api.entity.EntityReference;
+import org.qi4j.test.entity.performance.AbstractEntityStorePerformanceTest;
+import org.qi4j.bootstrap.Assembler;
 
-public class IdentityTooLongException extends EntityStoreException
+public class SwiftStorePerformanceTest extends AbstractEntityStorePerformanceTest
 {
-    public IdentityTooLongException( EntityReference identity )
+    public SwiftStorePerformanceTest()
     {
-        super( "The identity is too long for the configured store: " + identity.toString().length() + ", " + identity );
+        super( "SwiftEntityStore", createAssembler() );
+    }
 
+    private static Assembler createAssembler()
+    {
+        return new SwiftEntityStoreAssembler( "config" );
     }
 }

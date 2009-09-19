@@ -18,7 +18,8 @@
 package org.qi4j.entitystore.swift;
 
 import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.entitystore.map.MapEntityStore;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,26 +68,23 @@ public class RecordManager
         dataStore.putData( data );
     }
 
-    public void deleteData( QualifiedIdentity identity )
+    public void deleteData( EntityReference reference )
         throws IOException
     {
-        dataStore.delete( identity );
+        dataStore.delete( reference );
     }
 
-    public DataBlock readData( QualifiedIdentity identity )
+    public DataBlock readData( EntityReference reference )
         throws IOException
     {
-        return dataStore.readData( identity );
+        return dataStore.readData( reference );
     }
 
-    public Iterator<QualifiedIdentity> iterator()
-    {
-        return dataStore.iterator();
-    }
-
+    
     public void commit()
         throws IOException
     {
+        dataStore.flush();
         commands.clear();
         undoJournal.setLength( 0 );
     }
@@ -190,5 +188,10 @@ public class RecordManager
         {
             throw new EntityStoreException( "Unable to recover from previous crash." );
         }
+    }
+
+    public void visitMap( MapEntityStore.MapEntityStoreVisitor visitor )
+    {
+        dataStore.visitMap( visitor );
     }
 }

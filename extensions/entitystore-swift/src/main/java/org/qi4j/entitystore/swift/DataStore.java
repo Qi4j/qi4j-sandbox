@@ -17,14 +17,13 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
-
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
-import java.util.Iterator;
+import java.io.StringReader;
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entity.EntityStoreException;
 
 /**
  * This class handles the Heap Data file.
@@ -58,8 +57,15 @@ import java.util.Iterator;
 public class DataStore
 {
     static final long DATA_AREA_OFFSET = 256;
+    private static final int BLOCK_OVERHEAD = 27;
     private static final int CURRENT_VERSION = 1;
     private static final String HEAP_DATA_FILENAME = "heap.data";
+
+    private static final int USAGE_UNUSED = 0;
+    private static final int USAGE_PRIME = 1;
+    private static final int USAGE_MIRROR = 2;
+    private static final int USAGE_PRIMECHANGE = 3;
+    private static final int USAGE_MIRRORCHANGE = 4;
 
     private RandomAccessFile dataFile;
     private IdentityFile identityFile;
@@ -102,6 +108,8 @@ public class DataStore
             dataFile.writeInt( identityMaxLength );
             dataFile.seek( DATA_AREA_OFFSET - 1 );
             dataFile.writeByte( 0 );
+            dataFile.seek( DATA_AREA_OFFSET );
+            dataFile.writeInt( -1 );  // EOF marker
         }
         // Ensure full flush, then reopen...
         dataFile.close();
@@ -140,48 +148,26 @@ public class DataStore
         return identityFile;
     }
 
-    DataBlock readData( QualifiedIdentity identity ) throws IOException
+    DataBlock readData( EntityReference reference )
+        throws IOException
     {
-        long pos = identityFile.find( identity );
+        long pos = identityFile.find( reference );
         if( pos < 0 )
         {
             return null;
         }
         dataFile.seek( pos );
         dataFile.skipBytes( 4 ); // Skip BlockSize
-        byte usage = dataFile.readByte();
-        long instanceVersion = dataFile.readLong();
-        int schemaVersion = dataFile.readInt();
-        QualifiedIdentity existingIdentity = readIdentity();
-        if( !existingIdentity.equals( identity ) )
-        {
-            throw new EntityStoreException( "Inconsistent Data Heap." );
-        }
-        if( usage == 2 )
-        {
-            long mirror = dataFile.readLong();
-            dataFile.seek( mirror );
-        }
-        else
-        {
-            dataFile.skipBytes( 8 ); // skip the MirrorPointer
-        }
-        int dataSize = dataFile.readInt();
-        byte[] data = new byte[dataSize];
-        dataFile.read( data );
-        return new DataBlock( identity, data, instanceVersion, schemaVersion );
+        return readDataBlock( reference );
     }
 
     void putData( DataBlock data )
         throws IOException
     {
-        long pos = identityFile.find( data.identity );
+        long pos = identityFile.find( data.reference );
         if( pos < 0 )
         {
-            pos = addData( data );
-            UndoNewIdentityCommand undoNewIdentityCommand = new UndoNewIdentityCommand( data.identity );
-            undoManager.saveUndoCommand( undoNewIdentityCommand );
-            identityFile.remember( data.identity, pos );
+            putNewData( data );
         }
         else
         {
@@ -189,46 +175,74 @@ public class DataStore
             int blockSize = dataFile.readInt();
             long usagePointer = dataFile.getFilePointer();
             byte usage = dataFile.readByte();
-            int dataAreaSize = ( blockSize - 64 ) / 2;
-            if( dataAreaSize < ( data.data.length + 4 ) )
+            dataFile.skipBytes( -1 );
+            dataFile.writeByte( usage == USAGE_PRIME ? USAGE_PRIMECHANGE : USAGE_MIRRORCHANGE );
+            int dataAreaSize = ( blockSize - BLOCK_OVERHEAD ) / 2 - 4;
+            if( dataAreaSize < data.data.length )
             {
-                long newPosition = addData( data );
-                UndoModifyCommand undoModifyCommand = new UndoModifyCommand( pos, usage, data.instanceVersion, data.schemaVersion );
-                undoManager.saveUndoCommand( undoModifyCommand );
-                dataFile.seek( usagePointer );
-                dataFile.writeByte( 0 );
-                UndoDropIdentityCommand undoDropIdentityCommand = new UndoDropIdentityCommand( data.identity, pos );
-                undoManager.saveUndoCommand( undoDropIdentityCommand );
-                identityFile.remember( data.identity, newPosition );
+                putTooLarge( data, pos, usagePointer, usage );
             }
             else
             {
-                dataFile.skipBytes( 12 ); // Skip instanceVersion and schemaVersion
-                QualifiedIdentity existingIdentity = readIdentity();
-                if( !existingIdentity.equals( data.identity ) )
-                {
-                    throw new EntityStoreException( "Inconsistent Data Heap: was " + existingIdentity + ", expected " + data.identity );
-                }
-                long mirror = dataFile.readLong();
-                if( usage == 1 )
-                {
-                    dataFile.seek( mirror );
-                }
-                UndoModifyCommand undoModifyCommand = new UndoModifyCommand( pos, usage, data.instanceVersion, data.schemaVersion );
-                undoManager.saveUndoCommand( undoModifyCommand );
-
-                dataFile.writeInt( data.data.length );
-                dataFile.write( data.data );
-                dataFile.seek( usagePointer );
-                dataFile.writeByte( usage == 1 ? 2 : 1 );
+                putOver( data, pos, usagePointer, usage );
             }
         }
     }
 
-    public void delete( QualifiedIdentity identity )
+    /* In this case we need to write the new data to the opposite of the current active block. */
+    private void putOver( DataBlock data, long pos, long usagePointer, byte usage )
         throws IOException
     {
-        long pos = identityFile.find( identity );
+        dataFile.skipBytes( 12 ); // Skip instanceVersion and schemaVersion
+        EntityReference existingReference = readReference();
+        if( !existingReference.equals( data.reference ) )
+        {
+            throw new EntityStoreException( "Inconsistent Data Heap: was " + existingReference + ", expected " + data.reference );
+        }
+        long mirror = dataFile.readLong();
+        if( usage == USAGE_PRIME )
+        {
+            dataFile.seek( mirror );
+        }
+        UndoModifyCommand undoModifyCommand = new UndoModifyCommand( pos, usage, data.instanceVersion, data.schemaVersion );
+        undoManager.saveUndoCommand( undoModifyCommand );
+
+        dataFile.writeInt( data.data.length );
+        dataFile.write( data.data );
+        dataFile.seek( usagePointer );
+        dataFile.writeByte( usage == USAGE_PRIME ? USAGE_MIRROR : USAGE_PRIME );
+    }
+
+    /* This case is when the data doesn't fit in the pre-allocated extra space. Write it to the end, and mark the
+       previous block unused.
+     */
+    private void putTooLarge( DataBlock data, long pos, long usagePointer, byte usage )
+        throws IOException
+    {
+        long newPosition = addData( data );
+        UndoModifyCommand undoModifyCommand = new UndoModifyCommand( pos, usage, data.instanceVersion, data.schemaVersion );
+        undoManager.saveUndoCommand( undoModifyCommand );
+        dataFile.seek( usagePointer );
+        dataFile.writeByte( USAGE_UNUSED );
+        UndoDropIdentityCommand undoDropIdentityCommand = new UndoDropIdentityCommand( data.reference, pos );
+        undoManager.saveUndoCommand( undoDropIdentityCommand );
+        identityFile.remember( data.reference, newPosition );
+    }
+
+    private void putNewData( DataBlock data )
+        throws IOException
+    {
+        long pos;
+        pos = addData( data );
+        UndoNewIdentityCommand undoNewIdentityCommand = new UndoNewIdentityCommand( data.reference );
+        undoManager.saveUndoCommand( undoNewIdentityCommand );
+        identityFile.remember( data.reference, pos );
+    }
+
+    public void delete( EntityReference reference )
+        throws IOException
+    {
+        long pos = identityFile.find( reference );
         if( pos < 0 )
         {
             // Doesn't exist.
@@ -237,25 +251,32 @@ public class DataStore
         dataFile.seek( pos );
         dataFile.skipBytes( 4 ); // Skip BlockSize
         byte usage = dataFile.readByte();
-        if( usage == 0 )
+        if( usage == USAGE_UNUSED )
         {
             // Not used?? Why is the IdentityFile pointing to it then?? Should the following line actually be
             // executed here.
             //    identityFile.drop( identity );
             return;
         }
-        UndoDropIdentityCommand undoDropIdentityCommand = new UndoDropIdentityCommand( identity, pos );
+        UndoDropIdentityCommand undoDropIdentityCommand = new UndoDropIdentityCommand( reference, pos );
         undoManager.saveUndoCommand( undoDropIdentityCommand );
 
         UndoDeleteCommand undoDeleteCommand = new UndoDeleteCommand( pos, usage );
         undoManager.saveUndoCommand( undoDeleteCommand );
 
-        identityFile.drop( identity );
+        identityFile.drop( reference );
         dataFile.skipBytes( -1 );
-        dataFile.writeByte( 0 );
+        dataFile.writeByte( USAGE_UNUSED );   // Mark Unused block
     }
 
-    void close() throws IOException
+    void flush()
+        throws IOException
+    {
+//        dataFile.getFD().sync();
+    }
+
+    void close()
+        throws IOException
     {
         identityFile.close();
         dataFile.seek( 0 );
@@ -264,26 +285,48 @@ public class DataStore
         dataFile.close();
     }
 
-    private long addData( DataBlock data )
+    private long addData( DataBlock block )
         throws IOException
     {
-        dataFile.seek( dataFile.length() );
+        dataFile.seek( dataFile.length() - 4 ); // last 4 bytes contain a -1
         long blockStart = dataFile.getFilePointer();
-        int dataAreaSize = ( data.data.length + 4 ) * 4;
+
+        // Allow each datablock to grow to twice its size, and provide a primary and mirror allocation.
+        int dataAreaSize = ( block.data.length * 2 + 4 ) * 2;
         UndoExtendCommand undoExtendCommand = new UndoExtendCommand( blockStart );
         undoManager.saveUndoCommand( undoExtendCommand );
 
-        dataFile.writeInt( dataAreaSize + identityMaxLength + 26 );
-        dataFile.writeByte( 3 ); // In-progress
-        dataFile.writeLong( data.instanceVersion );
-        dataFile.writeInt( data.schemaVersion );
-        writeIdentity( data.identity );
+        int blockSize = dataAreaSize + identityMaxLength + BLOCK_OVERHEAD;
+        dataFile.writeInt( blockSize );
+        long usagePointer = dataFile.getFilePointer();
+        dataFile.writeByte( USAGE_PRIMECHANGE ); // In-progress
+        dataFile.writeLong( block.instanceVersion );
+        dataFile.writeInt( block.schemaVersion );
+        writeIdentity( block.reference );
 
         long mirrorPosition = blockStart + dataAreaSize / 2;
         dataFile.writeLong( mirrorPosition );
-        dataFile.writeInt( data.data.length );
-        dataFile.write( data.data );
+        dataFile.writeInt( block.data.length );
+        dataFile.write( block.data );
+        dataFile.seek( blockStart + blockSize );
+        dataFile.writeInt( -1 ); // Write EOF marker.
+        dataFile.seek( usagePointer );
+        dataFile.write( USAGE_PRIME );
         return blockStart;
+    }
+
+    private void writeIdentity( EntityReference reference )
+        throws IOException
+    {
+        byte[] idBytes = reference.identity().getBytes();
+        if( idBytes.length > identityMaxLength )
+        {
+            throw new EntityStoreException( "Identity is too long. Only " + identityMaxLength + " characters are allowed in this EntityStore." );
+        }
+        byte[] id = new byte[identityMaxLength];
+        System.arraycopy( idBytes, 0, id, 0, idBytes.length );
+        dataFile.writeByte( idBytes.length );
+        dataFile.write( id );
     }
 
     private void compact()
@@ -321,38 +364,99 @@ public class DataStore
     private void reIndex()
         throws IOException
     {
-        identityFile = IdentityFile.create( new File( dataDir, "idx" ), identityMaxLength + 16, entries < 10000 ? 10000 : entries * 2 );
+        identityFile = IdentityFile.create( new File( dataDir, "idx" ), identityMaxLength + 16, entries < 5000 ? 10000 : entries * 2 );
 
         dataFile.seek( DATA_AREA_OFFSET );
         while( dataFile.getFilePointer() < dataFile.length() )
         {
             long blockStart = dataFile.getFilePointer();
             int blockSize = dataFile.readInt();
+            if( blockSize == -1 )
+            {
+                break;
+            }
             byte usage = dataFile.readByte();
             dataFile.skipBytes( 12 ); // Skip instanceVersion and schemaVersion
-            QualifiedIdentity identity = readIdentity();
-            if( usage != 0 )
+            EntityReference reference = readReference();
+            if( usage != USAGE_UNUSED )
             {
-                identityFile.remember( identity, blockStart );
+                identityFile.remember( reference, blockStart );
             }
             dataFile.seek( blockStart + blockSize );
         }
     }
 
-    private void writeIdentity( QualifiedIdentity identity ) throws IOException
+    public void visitMap( MapEntityStore.MapEntityStoreVisitor visitor )
     {
-        byte[] idBytes = identity.toString().getBytes();
-        if( idBytes.length > identityMaxLength )
+        try
         {
-            throw new EntityStoreException( "Identity is too long. Only " + identityMaxLength + " characters are allowed in this EntityStore." );
+            long position = DATA_AREA_OFFSET;
+            while( position < dataFile.length() )
+            {
+                dataFile.seek( position );
+                int blockSize = dataFile.readInt();
+                if( blockSize == -1 ) // EOF marker
+                {
+                    return;
+                }
+                if( blockSize == 0 )
+                {
+                    // TODO This is a bug. Why does it occur??
+                    throw new InternalError();
+                }
+                position = position + blockSize;  // position for next round...
+                DataBlock block = readDataBlock( null );
+                if( block != null )
+                {
+                    visitor.visitEntity( new StringReader( new String( block.data, "UTF-8" ) ) );
+                }
+            }
         }
-        byte[] id = new byte[identityMaxLength];
-        System.arraycopy( idBytes, 0, id, 0, idBytes.length );
-        dataFile.writeByte( idBytes.length );
-        dataFile.write( id );
+        catch( IOException e )
+        {
+            throw new EntityStoreException(e);
+        }
     }
 
-    private QualifiedIdentity readIdentity()
+    private DataBlock readDataBlock( EntityReference reference )
+        throws IOException
+    {
+        byte usage = dataFile.readByte();
+        if( usage == USAGE_UNUSED )
+        {
+            return null;
+        }
+        long instanceVersion = dataFile.readLong();
+        int schemaVersion = dataFile.readInt();
+        EntityReference existingReference = readReference();
+        if( reference == null )
+        {
+            reference = existingReference;
+        }
+        if( !existingReference.equals( reference ) )
+        {
+            throw new EntityStoreException( "Inconsistent Data Heap." );
+        }
+        if( usage == USAGE_MIRROR )
+        {
+            long mirror = dataFile.readLong();
+            dataFile.seek( mirror );
+        }
+        else
+        {
+            dataFile.skipBytes( 8 ); // skip the MirrorPointer
+        }
+        int dataSize = dataFile.readInt();
+        if( dataSize < 0 )
+        {
+            throw new InternalError();
+        }
+        byte[] data = new byte[dataSize];
+        dataFile.read( data );
+        return new DataBlock( reference, data, instanceVersion, schemaVersion );
+    }
+
+    private EntityReference readReference()
         throws IOException
     {
         int idSize = dataFile.readByte();
@@ -363,38 +467,6 @@ public class DataStore
         byte[] idData = new byte[idSize];
         dataFile.read( idData );
         dataFile.skipBytes( identityMaxLength - idSize );
-        return QualifiedIdentity.parseQualifiedIdentity( new String( idData ) );
-    }
-
-    public Iterator<QualifiedIdentity> iterator()
-    {
-        File file = new File( dataDir, HEAP_DATA_FILENAME );
-        try
-        {
-            RandomAccessFile store = new RandomAccessFile( file, "r" );
-            return new StoreIterator( store, identityMaxLength );
-        }
-        catch( FileNotFoundException e )
-        {
-            return new NullIterator();
-        }
-    }
-
-    private static class NullIterator
-        implements Iterator<QualifiedIdentity>
-    {
-        public boolean hasNext()
-        {
-            return false;
-        }
-
-        public QualifiedIdentity next()
-        {
-            return null;
-        }
-
-        public void remove()
-        {
-        }
+        return new EntityReference( new String( idData ) );
     }
 }
