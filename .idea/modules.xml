@@ -2,9 +2,9 @@
 <project relativePaths="false" version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-coherence/entitystore-coherence.iml" filepath="$PROJECT_DIR$/extensions/entitystore-coherence/entitystore-coherence.iml" />
       <module fileurl="file://$PROJECT_DIR$/extensions/extensions.iml" filepath="$PROJECT_DIR$/extensions/extensions.iml" group="extensions and modules" />
       <module fileurl="file://$PROJECT_DIR$/libraries/libraries.iml" filepath="$PROJECT_DIR$/libraries/libraries.iml" group="libraries and modules" />
+      <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" filepath="$PROJECT_DIR$/extensions/entitystore-coherence/qi4j-entitystore-coherence.iml" group="extensions and modules" />
       <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" filepath="$PROJECT_DIR$/extensions/entitystore-javaspaces/qi4j-entitystore-javaspaces.iml" group="extensions and modules" />
       <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" filepath="$PROJECT_DIR$/extensions/entitystore-jgroups/qi4j-entitystore-jgroups.iml" group="extensions and modules" />
       <module fileurl="file://$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" filepath="$PROJECT_DIR$/extensions/entitystore-jndi/qi4j-entitystore-jndi.iml" group="extensions and modules" />
