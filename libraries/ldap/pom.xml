@@ -4,7 +4,7 @@
   <groupId>org.qi4j.library.ldap</groupId>
   <artifactId>qi4j-lib-ldap</artifactId>
   <name>Qi4j Library LDAP</name>
-  <version>0.8-SNAPSHOT</version>
+  <version>1.0-SNAPSHOT</version>
   <packaging>pom</packaging>
   <!-- This POM is ONLY to initiate the modules to be built. -->
   <modules>
