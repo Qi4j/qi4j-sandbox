@@ -22,6 +22,7 @@ import org.qi4j.test.AbstractQi4jTest;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.bootstrap.AssemblyException;
 import org.junit.Test;
+import org.junit.Ignore;
 
 public class LdapServerTest extends AbstractQi4jTest
 {
@@ -29,9 +30,11 @@ public class LdapServerTest extends AbstractQi4jTest
         throws AssemblyException
     {
         module.addServices( LdapService.class ).instantiateOnStartup();
+        module.addEntities( LdapConfiguration.class );
     }
 
     @Test
+    @Ignore
     public void keepServerRunning()
         throws Exception
     {

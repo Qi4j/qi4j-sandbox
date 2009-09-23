@@ -6,7 +6,7 @@
     <artifactId>qi4j-library</artifactId>
     <version>1.0-RC1</version>
   </parent>
-  <groupId>org.qi4j.library.ldap</groupId>
+  <groupId>org.qi4j.library</groupId>
   <artifactId>qi4j-lib-ldap-client</artifactId>
   <name>Qi4j Library - LDAP Client</name>
   <version>1.0-SNAPSHOT</version>
