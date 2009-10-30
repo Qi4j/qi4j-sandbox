@@ -22,10 +22,9 @@ import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
-import org.qi4j.api.sideeffect.SideEffects;
 import org.qi4j.library.locking.LockingAbstractComposite;
-import org.qi4j.spi.entity.EntityStore;
-import org.qi4j.spi.entity.helpers.ConcurrentModificationCheckConcern;
+import org.qi4j.spi.entitystore.ConcurrentModificationCheckConcern;
+import org.qi4j.spi.entitystore.EntityStore;
 
 @Concerns( ConcurrentModificationCheckConcern.class )
 @Mixins( JndiEntityStoreMixin.class )

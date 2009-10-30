@@ -21,15 +21,15 @@ import java.util.Hashtable;
 import javax.naming.Context;
 import javax.naming.NamingException;
 import javax.naming.directory.InitialDirContext;
-import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.property.Property;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.usecase.Usecase;
-import org.qi4j.spi.entity.EntityStore;
+import org.qi4j.api.structure.Module;
+import org.qi4j.spi.entitystore.EntityStore;
+import org.qi4j.spi.entitystore.EntityStoreUnitOfWork;
 import org.qi4j.spi.structure.ModuleSPI;
-import org.qi4j.spi.unitofwork.EntityStoreUnitOfWork;
 
 public class JndiEntityStoreMixin
     implements Activatable, EntityStore
@@ -105,12 +105,12 @@ public class JndiEntityStoreMixin
         setup = null;
     }
 
-    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, ModuleSPI module )
+    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, Module module )
     {
         return new JndiUow( setup, usecase, module );
     }
 
-    public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, ModuleSPI moduleInstance )
+    public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, Module moduleInstance )
     {
         return null;
     }

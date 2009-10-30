@@ -17,8 +17,6 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.EntityStoreException;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -26,6 +24,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedList;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 public class BucketManager
     implements Runnable
@@ -98,6 +97,7 @@ public class BucketManager
         while( cache.size() > 20 )
         {
             LruEntry entry = sorting.removeFirst(); // Check if this is at the right end;
+            entry.file.close();
             cache.remove( entry.hash );
         }
     }

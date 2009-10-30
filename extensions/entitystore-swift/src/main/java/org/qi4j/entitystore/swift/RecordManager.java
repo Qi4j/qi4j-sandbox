@@ -17,15 +17,13 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.api.entity.EntityReference;
-import org.qi4j.entitystore.map.MapEntityStore;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
-import java.util.Iterator;
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 public class RecordManager
     implements UndoManager

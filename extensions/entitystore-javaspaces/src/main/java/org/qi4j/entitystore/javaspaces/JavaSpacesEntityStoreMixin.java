@@ -18,7 +18,6 @@ package org.qi4j.entitystore.javaspaces;
 
 import java.io.IOException;
 import java.io.Reader;
-import java.io.Serializable;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.Writer;
@@ -26,9 +25,9 @@ import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.entitystore.map.MapEntityStore;
 import org.qi4j.library.spaces.Space;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityStoreException;
 import org.qi4j.spi.entity.EntityType;
+import org.qi4j.spi.entitystore.EntityNotFoundException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * Java Spaces implementation of EntityStore.
@@ -36,39 +35,44 @@ import org.qi4j.spi.entity.EntityType;
 public class JavaSpacesEntityStoreMixin
     implements MapEntityStore
 {
-    @Service private Space space;
+    @Service
+    private Space space;
 
-    public Reader get( EntityReference entityReference ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
         String id = entityReference.identity();
-        String jsonData = (String) space.readIfExists( id );
+        String jsonData = space.readIfExists( id );
+        if( jsonData == null )
+        {
+            throw new EntityNotFoundException( entityReference );
+        }
         return new StringReader( jsonData );
     }
 
     public void visitMap( MapEntityStoreVisitor visitor )
     {
-        for( Serializable data : space )
+        for( String json : space )
         {
-            if( data instanceof String )
-            {
-                String json = (String) data;
-                Reader state = new StringReader( json );
-                visitor.visitEntity( state );
-            }
+            Reader state = new StringReader( json );
+            visitor.visitEntity( state );
         }
     }
 
-    public void applyChanges( MapChanges changes ) throws IOException
+    public void applyChanges( MapChanges changes )
+        throws IOException
     {
         try
         {
             changes.visitMap( new MapChanger()
             {
-                public Writer newEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                public Writer newEntity( final EntityReference ref, EntityType entityType )
+                    throws IOException
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close()
+                        @Override
+                        public void close()
                             throws IOException
                         {
                             super.close();
@@ -80,11 +84,14 @@ public class JavaSpacesEntityStoreMixin
                     };
                 }
 
-                public Writer updateEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                public Writer updateEntity( final EntityReference ref, EntityType entityType )
+                    throws IOException
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close() throws IOException
+                        @Override
+                        public void close()
+                            throws IOException
                         {
                             super.close();
                             String stateData = toString();
@@ -95,7 +102,8 @@ public class JavaSpacesEntityStoreMixin
                     };
                 }
 
-                public void removeEntity( EntityReference ref, EntityType entityType ) throws EntityNotFoundException
+                public void removeEntity( EntityReference ref, EntityType entityType )
+                    throws EntityNotFoundException
                 {
                     String indexKey = ref.toString();
                     space.takeIfExists( indexKey );
@@ -119,6 +127,5 @@ public class JavaSpacesEntityStoreMixin
                 throw exception;
             }
         }
-
     }
 }

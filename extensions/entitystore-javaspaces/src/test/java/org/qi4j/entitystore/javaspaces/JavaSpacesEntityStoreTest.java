@@ -24,7 +24,9 @@ import java.security.Permissions;
 import java.security.Policy;
 import net.jini.security.policy.DynamicPolicyProvider;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
+import org.qi4j.api.common.Visibility;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
@@ -33,21 +35,23 @@ import org.qi4j.library.http.JettyServiceAssembler;
 import org.qi4j.library.jini.javaspaces.JiniJavaSpacesServiceAssembler;
 import org.qi4j.library.jini.lookup.JiniLookupServiceAssembler;
 import org.qi4j.library.jini.transaction.JiniTransactionServiceAssembler;
-import org.qi4j.library.spaces.javaspaces.JavaSpacesClientAssembler;
+import org.qi4j.library.spaces.javaspaces.JavaSpacesClientConfiguration;
+import org.qi4j.library.spaces.javaspaces.JavaSpacesClientService;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
 
 /**
  * JavaSpaces EntityStore test
  */
-public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
+@Ignore
+public class JavaSpacesEntityStoreTest
+    extends AbstractEntityStoreTest
 {
     static
     {
         Policy basePolicy = new AllPolicy();
         DynamicPolicyProvider policyProvider = new DynamicPolicyProvider( basePolicy );
         Policy.setPolicy( policyProvider );
-
     }
 
     @SuppressWarnings( "unchecked" )
@@ -55,30 +59,49 @@ public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
         throws AssemblyException
     {
         super.assemble( module );
-        module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class );
-        new JettyServiceAssembler().assemble( module );
-        new JavaSpacesClientAssembler().assemble( module );
-        new JiniJavaSpacesServiceAssembler().assemble( module );
-        new JiniLookupServiceAssembler().assemble( module );
-        new JiniTransactionServiceAssembler().assemble( module );
+        module.addServices( JavaSpacesEntityStoreService.class,
+                            MemoryEntityStoreService.class,
+                            UuidIdentityGeneratorService.class )
+            .instantiateOnStartup();
+
+        ModuleAssembly configModule = module.layerAssembly().moduleAssembly( "JavaSpacesConfiguration" );
+        new JiniTransactionServiceAssembler().assemble( configModule );
+        new JiniLookupServiceAssembler().assemble( configModule );
+        new JiniJavaSpacesServiceAssembler().assemble( configModule );
+        new JettyServiceAssembler().assemble( configModule );
+        configModule.addServices( JavaSpacesClientService.class ).visibleIn( Visibility.layer ).instantiateOnStartup();
+        configModule.addEntities( JavaSpacesClientConfiguration.class );
+        configModule.addServices( MemoryEntityStoreService.class ).instantiateOnStartup();
+        configModule.addServices( MemoryEntityStoreService.class,
+                                  UuidIdentityGeneratorService.class );
     }
 
-    @Override @After public void tearDown()
+    @Override
+    @After
+    public void tearDown()
         throws Exception
     {
         super.tearDown();
         delete( new File( "qi4jtemp" ) );
+        Thread.sleep( 1000 );
     }
 
     @Test
-    @Override public void givenConcurrentUnitOfWorksWhenUoWCompletesThenCheckConcurrentModification() throws UnitOfWorkCompletionException
+    @Override
+    public void givenConcurrentUnitOfWorksWhenUoWCompletesThenCheckConcurrentModification()
+        throws UnitOfWorkCompletionException
     {
         super.givenConcurrentUnitOfWorksWhenUoWCompletesThenCheckConcurrentModification();
     }
 
     private void delete( File dir )
     {
-        for( File file : dir.listFiles() )
+        File[] files = dir.listFiles();
+        if( files == null )
+        {
+            return;
+        }
+        for( File file : files )
         {
             if( file.isDirectory() )
             {
@@ -94,7 +117,8 @@ public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
     {
     }
 
-    public static class AllPolicy extends Policy
+    public static class AllPolicy
+        extends Policy
     {
 
         public AllPolicy()
@@ -113,5 +137,4 @@ public class JavaSpacesEntityStoreTest extends AbstractEntityStoreTest
         {
         }
     }
-
 }

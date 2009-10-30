@@ -23,7 +23,7 @@ import java.rmi.registry.Registry;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * RMI client implementation of Entity
@@ -34,18 +34,21 @@ public class ClientRmiEntityStoreMixin
     private RemoteEntityStore remote;
 
     // Activatable implementation
-    public void activate() throws Exception
+    public void activate()
+        throws Exception
     {
         Registry registry = LocateRegistry.getRegistry( "localhost" );
         remote = (RemoteEntityStore) registry.lookup( ServerRmiEntityStoreService.class.getSimpleName() );
     }
 
-    public void passivate() throws Exception
+    public void passivate()
+        throws Exception
     {
         remote = null;
     }
 
-    public Reader get( EntityReference entityReference ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -55,7 +58,8 @@ public class ClientRmiEntityStoreMixin
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void applyChanges( MapChanges changes ) throws IOException
+    public void applyChanges( MapChanges changes )
+        throws IOException
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }

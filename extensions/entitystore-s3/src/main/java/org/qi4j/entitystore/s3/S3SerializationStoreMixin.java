@@ -27,7 +27,7 @@ import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * Amazon S3 implementation of SerializationStore.
@@ -37,13 +37,16 @@ import org.qi4j.spi.entity.EntityStoreException;
 public class S3SerializationStoreMixin
     implements Activatable, MapEntityStore
 {
-    private @This Configuration<S3Configuration> configuration;
+
+    @This
+    private Configuration<S3Configuration> configuration;
 
     private S3Service s3Service;
     private S3Bucket entityBucket;
 
     // Activatable implementation
-    public void activate() throws Exception
+    public void activate()
+        throws Exception
     {
         String awsAccessKey = configuration.configuration().accessKey().get();
         String awsSecretKey = configuration.configuration().secretKey().get();
@@ -71,11 +74,13 @@ public class S3SerializationStoreMixin
         }
     }
 
-    public void passivate() throws Exception
+    public void passivate()
+        throws Exception
     {
     }
 
-    public Reader get( EntityReference entityReference ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
@@ -85,7 +90,8 @@ public class S3SerializationStoreMixin
         //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void applyChanges( MapChanges changes ) throws IOException
+    public void applyChanges( MapChanges changes )
+        throws IOException
     {
         //To change body of implemented methods use File | Settings | File Templates.
     }

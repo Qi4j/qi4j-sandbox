@@ -17,9 +17,8 @@
  */
 package org.qi4j.entitystore.swift;
 
-import org.qi4j.spi.entity.EntityStoreException;
-import org.qi4j.spi.entity.QualifiedIdentity;
 import org.qi4j.api.entity.EntityReference;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 public class IdentityTooLongException extends EntityStoreException
 {

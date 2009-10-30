@@ -10,6 +10,7 @@ Import-Package:\
     org.qi4j.api.mixin, \
     org.qi4j.api.property, \
     org.qi4j.api.service, \
+    org.qi4j.api.structure, \
     org.qi4j.api.usecase, \
     org.qi4j.bootstrap, \
     org.qi4j.entitystore.memory, \
@@ -17,11 +18,12 @@ Import-Package:\
     org.qi4j.spi.entity, \
     org.qi4j.spi.entity.association, \
     org.qi4j.spi.entity.helpers, \
+    org.qi4j.spi.entitystore,  \
     org.qi4j.spi.property, \
     org.qi4j.spi.structure, \
     org.qi4j.spi.unitofwork, \
     org.qi4j.spi.uuid
-
+    
 Export-Package:\
     org.qi4j.entitystore.jndi
 

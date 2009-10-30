@@ -22,7 +22,6 @@ import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.EntityStatus;
 import org.qi4j.spi.entity.EntityDescriptor;
 import org.qi4j.spi.entity.ManyAssociationState;
-import org.qi4j.spi.entity.helpers.DefaultEntityStoreUnitOfWork;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.common.TypeName;
 import org.qi4j.api.common.QualifiedName;

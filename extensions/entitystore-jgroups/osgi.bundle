@@ -34,6 +34,7 @@ Import-Package: javax.crypto, \
                 org.qi4j.spi.composite, \
                 org.qi4j.spi.entity, \
                 org.qi4j.spi.entity.helpers, \
+                org.qi4j.spi.entitystore, \
                 org.qi4j.spi.serialization, \
                 org.qi4j.spi.service, \
                 org.w3c.dom

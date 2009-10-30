@@ -28,9 +28,9 @@ import org.jgroups.blocks.ReplicatedHashMap;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityStoreException;
 import org.qi4j.spi.entity.EntityType;
+import org.qi4j.spi.entitystore.EntityNotFoundException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * JGroups implementation of EntityStore

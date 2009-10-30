@@ -19,52 +19,20 @@ package org.qi4j.library.spaces.javaspaces;
 
 import net.jini.core.entry.Entry;
 
-import java.io.*;
-
 public final class StorageEntry
     implements Entry
 {
     public String identity;
-    public byte[] payload;
+    public String payload;
 
     public StorageEntry()
     {
     }
 
-    public StorageEntry( String id, Serializable entry )
+    public StorageEntry( String id, String data )
     {
         identity = id;
-
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        try
-        {
-            ObjectOutputStream oos = new ObjectOutputStream( out );
-            oos.writeObject( entry );
-            oos.flush();
-            oos.close();
-            payload = out.toByteArray();
-        }
-        catch( IOException e )
-        {
-            e.printStackTrace();
-            // Ignore, can not happen.
-        }
-        finally
-        {
-            try
-            {
-                out.close();
-            }
-            catch( IOException e )
-            {
-                // ignore.
-            }
-        }
-    }
-
-    public StorageEntry( String id )
-    {
-        identity = id;
+        payload = data;
     }
 
     public String identity()
@@ -72,34 +40,8 @@ public final class StorageEntry
         return identity;
     }
 
-    public Serializable data()
+    public String data()
     {
-        ByteArrayInputStream in = new ByteArrayInputStream( payload );
-        try
-        {
-            ObjectInputStream ois = new ObjectInputStream( in );
-            Serializable entry = (Serializable) ois.readObject();
-            return entry;
-        }
-        catch( IOException e )
-        {
-            e.printStackTrace();
-        }
-        catch( ClassNotFoundException e )
-        {
-            e.printStackTrace();
-        }
-        finally
-        {
-            try
-            {
-                in.close();
-            }
-            catch( IOException e )
-            {
-                // can not happen.
-            }
-        }
-        return null;
+        return payload;
     }
 }

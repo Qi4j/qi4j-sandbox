@@ -1,5 +1,8 @@
 target/
-.idea/workspace.xml
+.idea/
+*.iws
+*.ipr
+*.iml
 libraries/beans/target/
 libraries/executor/target/
 libraries/jini/importer/target/

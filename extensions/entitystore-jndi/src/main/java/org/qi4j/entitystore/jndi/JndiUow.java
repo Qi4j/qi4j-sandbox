@@ -27,23 +27,23 @@ import javax.naming.NamingException;
 import javax.naming.directory.Attribute;
 import javax.naming.directory.Attributes;
 import javax.naming.ldap.LdapName;
-import org.qi4j.api.common.MetaInfo;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.structure.Module;
 import org.qi4j.api.usecase.Usecase;
 import org.qi4j.spi.entity.EntityDescriptor;
-import org.qi4j.spi.entity.EntityNotFoundException;
 import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entity.EntityStatus;
-import org.qi4j.spi.entity.EntityStoreException;
 import org.qi4j.spi.entity.EntityType;
-import org.qi4j.spi.entity.ReadOnlyEntityStoreException;
-import org.qi4j.spi.entity.StateCommitter;
 import org.qi4j.spi.entity.association.AssociationType;
 import org.qi4j.spi.entity.association.ManyAssociationType;
+import org.qi4j.spi.entitystore.EntityNotFoundException;
+import org.qi4j.spi.entitystore.EntityStoreException;
+import org.qi4j.spi.entitystore.EntityStoreUnitOfWork;
+import org.qi4j.spi.entitystore.ReadOnlyEntityStoreException;
+import org.qi4j.spi.entitystore.StateCommitter;
 import org.qi4j.spi.property.PropertyType;
 import org.qi4j.spi.structure.ModuleSPI;
-import org.qi4j.spi.unitofwork.EntityStoreUnitOfWork;
 
 public class JndiUow implements EntityStoreUnitOfWork
 {
@@ -55,11 +55,11 @@ public class JndiUow implements EntityStoreUnitOfWork
     }
 
     private Usecase usecase;
-    private ModuleSPI module;
+    private Module module;
     private String uowIdentity;
     private JndiSetup setup;
 
-    public JndiUow( JndiSetup setup, Usecase usecase, ModuleSPI module )
+    public JndiUow( JndiSetup setup, Usecase usecase, Module module )
     {
         this.setup = setup;
         uowIdentity = UUID.randomUUID().toString();
@@ -89,7 +89,7 @@ public class JndiUow implements EntityStoreUnitOfWork
             String version = Long.toString( getVersion( attrs ) );
             long lastModified = getLastModified( attrs );
             EntityStatus status = EntityStatus.LOADED;
-            EntityDescriptor descriptor = module.entityDescriptor( getType( attrs ) );
+            EntityDescriptor descriptor = ((ModuleSPI) module).entityDescriptor( getType( attrs ) );
             EntityType entityType = descriptor.entityType();
             Map<QualifiedName, Object> properties = getProperties( attrs, entityType );
             Map<QualifiedName, EntityReference> associations = getAssociations( attrs, entityType );

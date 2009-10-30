@@ -36,17 +36,22 @@ import org.qi4j.api.injection.scope.This;
 import org.qi4j.api.injection.scope.Uses;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entity.EntityNotFoundException;
-import org.qi4j.spi.entity.EntityStoreException;
 import org.qi4j.spi.entity.EntityType;
+import org.qi4j.spi.entitystore.EntityNotFoundException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 import org.qi4j.spi.service.ServiceDescriptor;
 
 public class CoherenceEntityStoreMixin
     implements Activatable, MapEntityStore, DatabaseExport, DatabaseImport
 {
-    @This private ReadWriteLock lock;
-    @This private Configuration<CoherenceConfiguration> config;
-    @Uses private ServiceDescriptor descriptor;
+    @This
+    private ReadWriteLock lock;
+
+    @This
+    private Configuration<CoherenceConfiguration> config;
+
+    @Uses
+    private ServiceDescriptor descriptor;
 
     private NamedCache cache;
 
@@ -64,7 +69,8 @@ public class CoherenceEntityStoreMixin
         cache.destroy();
     }
 
-    public Reader get( EntityReference entityReference ) throws EntityStoreException
+    public Reader get( EntityReference entityReference )
+        throws EntityStoreException
     {
         byte[] data = (byte[]) cache.get( entityReference.identity() );
 
@@ -90,11 +96,14 @@ public class CoherenceEntityStoreMixin
         {
             changes.visitMap( new MapChanger()
             {
-                public Writer newEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                public Writer newEntity( final EntityReference ref, EntityType entityType )
+                    throws IOException
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close() throws IOException
+                        @Override
+                        public void close()
+                            throws IOException
                         {
                             super.close();
 
@@ -104,11 +113,14 @@ public class CoherenceEntityStoreMixin
                     };
                 }
 
-                public Writer updateEntity( final EntityReference ref, EntityType entityType ) throws IOException
+                public Writer updateEntity( final EntityReference ref, EntityType entityType )
+                    throws IOException
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close() throws IOException
+                        @Override
+                        public void close()
+                            throws IOException
                         {
                             super.close();
                             byte[] stateArray = toString().getBytes( "UTF-8" );
@@ -117,7 +129,8 @@ public class CoherenceEntityStoreMixin
                     };
                 }
 
-                public void removeEntity( EntityReference ref, EntityType entityType ) throws EntityNotFoundException
+                public void removeEntity( EntityReference ref, EntityType entityType )
+                    throws EntityNotFoundException
                 {
                     cache.remove( ref.identity() );
                 }
@@ -140,9 +153,7 @@ public class CoherenceEntityStoreMixin
                 throw exception;
             }
         }
-
     }
-
 
     public void visitMap( MapEntityStoreVisitor visitor )
     {
@@ -177,7 +188,8 @@ public class CoherenceEntityStoreMixin
         }
     }
 
-    public void importFrom( Reader in ) throws IOException
+    public void importFrom( Reader in )
+        throws IOException
     {
         BufferedReader reader = new BufferedReader( in );
         String object;

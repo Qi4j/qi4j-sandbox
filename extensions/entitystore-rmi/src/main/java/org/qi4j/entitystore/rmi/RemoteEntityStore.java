@@ -1,11 +1,10 @@
 package org.qi4j.entitystore.rmi;
 
-import org.qi4j.spi.entity.ConcurrentEntityStateModificationException;
-import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.QualifiedIdentity;
-
 import java.io.IOException;
 import java.rmi.Remote;
+import org.qi4j.spi.entity.EntityState;
+import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.spi.entitystore.ConcurrentEntityStateModificationException;
 
 /**
  * Interface for remote EntityStore

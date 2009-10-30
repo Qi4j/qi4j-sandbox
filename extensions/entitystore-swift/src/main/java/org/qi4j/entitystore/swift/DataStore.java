@@ -23,7 +23,7 @@ import java.io.RandomAccessFile;
 import java.io.StringReader;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entity.EntityStoreException;
+import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * This class handles the Heap Data file.
@@ -57,7 +57,7 @@ import org.qi4j.spi.entity.EntityStoreException;
 public class DataStore
 {
     static final long DATA_AREA_OFFSET = 256;
-    private static final int BLOCK_OVERHEAD = 27;
+    private static final int BLOCK_OVERHEAD = 26;
     private static final int CURRENT_VERSION = 1;
     private static final String HEAP_DATA_FILENAME = "heap.data";
 
@@ -193,7 +193,8 @@ public class DataStore
     private void putOver( DataBlock data, long pos, long usagePointer, byte usage )
         throws IOException
     {
-        dataFile.skipBytes( 12 ); // Skip instanceVersion and schemaVersion
+        dataFile.seek( usagePointer ); // Point to "usage"
+        dataFile.skipBytes( 13 ); // Skip usage, instanceVersion and schemaVersion
         EntityReference existingReference = readReference();
         if( !existingReference.equals( data.reference ) )
         {
@@ -304,7 +305,7 @@ public class DataStore
         dataFile.writeInt( block.schemaVersion );
         writeIdentity( block.reference );
 
-        long mirrorPosition = blockStart + dataAreaSize / 2;
+        long mirrorPosition = blockStart + BLOCK_OVERHEAD + identityMaxLength + dataAreaSize / 2;
         dataFile.writeLong( mirrorPosition );
         dataFile.writeInt( block.data.length );
         dataFile.write( block.data );
@@ -318,7 +319,7 @@ public class DataStore
     private void writeIdentity( EntityReference reference )
         throws IOException
     {
-        byte[] idBytes = reference.identity().getBytes();
+        byte[] idBytes = reference.identity().getBytes("UTF-8");
         if( idBytes.length > identityMaxLength )
         {
             throw new EntityStoreException( "Identity is too long. Only " + identityMaxLength + " characters are allowed in this EntityStore." );

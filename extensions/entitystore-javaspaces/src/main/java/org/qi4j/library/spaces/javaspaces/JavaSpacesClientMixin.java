@@ -63,7 +63,7 @@ public class JavaSpacesClientMixin
         transactionStack = new StackThreadLocal<TransactionProxy>();
     }
 
-    public void write( String id, Serializable entry )
+    public void write( String id, String entry )
     {
         synchronized( this )
         {
@@ -94,7 +94,7 @@ public class JavaSpacesClientMixin
             {
                 try
                 {
-                    StorageEntry entry = (StorageEntry) spaceService.service.take( new StorageEntry( id ), currentTransaction(), 6000 );
+                    StorageEntry entry = (StorageEntry) spaceService.service.take( new StorageEntry( id, null ), currentTransaction(), 6000 );
                     if( entry == null )
                     {
                         return null;
@@ -122,7 +122,7 @@ public class JavaSpacesClientMixin
         return null;
     }
 
-    public Serializable takeIfExists( String id )
+    public String takeIfExists( String id )
     {
         synchronized( this )
         {
@@ -130,7 +130,7 @@ public class JavaSpacesClientMixin
             {
                 try
                 {
-                    StorageEntry entry = (StorageEntry) spaceService.service.takeIfExists( new StorageEntry( id ), currentTransaction(), 6000 );
+                    StorageEntry entry = (StorageEntry) spaceService.service.takeIfExists( new StorageEntry( id, null ), currentTransaction(), 6000 );
                     if( entry == null )
                     {
                         return null;
@@ -166,7 +166,7 @@ public class JavaSpacesClientMixin
             {
                 try
                 {
-                    StorageEntry entry = (StorageEntry) spaceService.service.read( new StorageEntry( id ), currentTransaction(), timeout );
+                    StorageEntry entry = (StorageEntry) spaceService.service.read( new StorageEntry( id, null ), currentTransaction(), timeout );
                     if( entry == null )
                     {
                         return null;
@@ -194,7 +194,7 @@ public class JavaSpacesClientMixin
         return null;
     }
 
-    public Serializable readIfExists( String id )
+    public String readIfExists( String id )
     {
         synchronized( this )
         {
@@ -203,7 +203,7 @@ public class JavaSpacesClientMixin
 
                 try
                 {
-                    StorageEntry entry = (StorageEntry) spaceService.service.readIfExists( new StorageEntry( id ), currentTransaction(), 6000 );
+                    StorageEntry entry = (StorageEntry) spaceService.service.readIfExists( new StorageEntry( id, null ), currentTransaction(), 6000 );
                     if( entry == null )
                     {
                         return null;
@@ -351,10 +351,10 @@ public class JavaSpacesClientMixin
         curStack.remove( transaction );
     }
 
-    public Iterator<Serializable> iterator()
+    public Iterator<String> iterator()
     {
         ArrayList templates = new ArrayList();
-        templates.add( new StorageEntry() );
+        templates.add( new StorageEntry(null, null) );
         try
         {
             Transaction txn = currentTransaction();
@@ -423,7 +423,7 @@ public class JavaSpacesClientMixin
     }
 
     private static class EntryIterator
-        implements Iterator<Serializable>
+        implements Iterator<String>
     {
         private MatchSet matchSet;
         private StorageEntry nextEntry;
@@ -457,9 +457,9 @@ public class JavaSpacesClientMixin
             return nextEntry != null;
         }
 
-        public Serializable next()
+        public String next()
         {
-            Serializable result = nextEntry.data();
+            String result = nextEntry.data();
             try
             {
                 nextEntry = getNext( matchSet );

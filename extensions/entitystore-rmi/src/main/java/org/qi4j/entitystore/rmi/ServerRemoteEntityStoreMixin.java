@@ -30,9 +30,9 @@ import org.qi4j.api.structure.Module;
 import org.qi4j.library.locking.WriteLock;
 import org.qi4j.spi.Qi4jSPI;
 import org.qi4j.spi.entity.EntityState;
-import org.qi4j.spi.entity.EntityStore;
-import org.qi4j.spi.entity.EntityStoreException;
 import org.qi4j.spi.entity.QualifiedIdentity;
+import org.qi4j.spi.entitystore.EntityStore;
+import org.qi4j.spi.entitystore.EntityStoreException;
 import org.qi4j.spi.service.ServiceDescriptor;
 
 /**
@@ -41,22 +41,37 @@ import org.qi4j.spi.service.ServiceDescriptor;
 public class ServerRemoteEntityStoreMixin
     implements RemoteEntityStore, Activatable
 {
-    private @Uses ServiceDescriptor descriptor;
-    private @This RemoteEntityStore remote;
-    private @This ReadWriteLock lock;
-    private @Structure Module module;
-    private @Structure Qi4jSPI spi;
-    private @Service EntityStore entityStore;
-    private @Service ServiceReference<Registry> registry;
+    @Uses
+    private ServiceDescriptor descriptor;
+
+    @This
+    private RemoteEntityStore remote;
+
+    @This
+    private ReadWriteLock lock;
+
+    @Structure
+    private Module module;
+
+    @Structure
+    private Qi4jSPI spi;
+
+    @Service
+    private EntityStore entityStore;
+
+    @Service
+    private ServiceReference<Registry> registry;
 
     // Activatable implementation
-    public void activate() throws Exception
+    public void activate()
+        throws Exception
     {
         RemoteEntityStore stub = (RemoteEntityStore) UnicastRemoteObject.exportObject( remote, 0 );
         registry.get().bind( descriptor.identity(), stub );
     }
 
-    public void passivate() throws Exception
+    public void passivate()
+        throws Exception
     {
         if( registry.isActive() )
         {
@@ -142,7 +157,10 @@ public class ServerRemoteEntityStoreMixin
 //        }
 //    }
 
-    public void prepare( Iterable<EntityState> newStates, Iterable<EntityState> loadedStates, Iterable<QualifiedIdentity> removedStates )
+    public void prepare( Iterable<EntityState> newStates,
+                         Iterable<EntityState> loadedStates,
+                         Iterable<QualifiedIdentity> removedStates
+    )
     {
 //        lock.writeLock().lock();
 //        try
