@@ -18,13 +18,14 @@
 
 package org.qi4j.library.ldap.server;
 
-import org.qi4j.test.AbstractQi4jTest;
-import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.bootstrap.AssemblyException;
-import org.junit.Test;
 import org.junit.Ignore;
+import org.junit.Test;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.test.AbstractQi4jTest;
 
-public class LdapServerTest extends AbstractQi4jTest
+public class LdapServerTest
+    extends AbstractQi4jTest
 {
     public void assemble( ModuleAssembly module )
         throws AssemblyException
@@ -42,7 +43,9 @@ public class LdapServerTest extends AbstractQi4jTest
         while( true )
         {
             if( System.currentTimeMillis() > time )
+            {
                 break;
+            }
         }
     }
 }
