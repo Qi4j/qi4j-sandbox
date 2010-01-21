@@ -27,7 +27,6 @@ import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.api.unitofwork.UnitOfWorkFactory;
-import org.qi4j.api.usecase.Usecase;
 
 /**
  * {@code UnitOfWorkConcern} manages the unit of work complete and discard policy.
@@ -36,10 +35,13 @@ import org.qi4j.api.usecase.Usecase;
  * @see org.qi4j.api.unitofwork.UnitOfWorkDiscardOn
  */
 @AppliesTo( UnitOfWorkPropagation.class )
-public class UnitOfWorkConcern extends GenericConcern
+public class UnitOfWorkConcern
+    extends GenericConcern
 {
-    @Structure private UnitOfWorkFactory uowf;
-    @Invocation private UnitOfWorkPropagation propagation;
+    @Structure
+    private UnitOfWorkFactory uowf;
+    @Invocation
+    private UnitOfWorkPropagation propagation;
 
     /**
      * Handles method with {@code UnitOfWorkPropagation} annotation.
@@ -47,7 +49,9 @@ public class UnitOfWorkConcern extends GenericConcern
      * @param proxy  The object.
      * @param method The invoked method.
      * @param args   The method arguments.
+     *
      * @return The returned value of method invocation.
+     *
      * @throws Throwable Thrown if the method invocation throw exception.
      */
     public Object invoke( Object proxy, Method method, Object[] args )
@@ -66,10 +70,6 @@ public class UnitOfWorkConcern extends GenericConcern
         {
             return requiresNewRequires( proxy, method, args );
         }
-        else if( propagationPolicy == UnitOfWorkPropagation.Propagation.REQUIRES_NESTED )
-        {
-            return requiresNestedStrategy( proxy, method, args );
-        }
         throw new UnitOfWorkPropagationException( "'null' is not allowed as propagation strategy." );
     }
 
@@ -79,6 +79,7 @@ public class UnitOfWorkConcern extends GenericConcern
      * @param aMethod         The invoked method. This argument must not be {@code null}.
      * @param aUnitOfWork     The current unit of work. This argument must not be {@code null}.
      * @param exceptionThrown The exception thrown. This argument must not be {@code null}.
+     *
      * @throws org.qi4j.api.unitofwork.UnitOfWorkCompletionException
      *          If the complete() method fails.
      */
@@ -134,50 +135,7 @@ public class UnitOfWorkConcern extends GenericConcern
 
     private UnitOfWork createNewUnitOfWork()
     {
-        UnitOfWork currentUnitOfWork;
-        if( propagation.usecasePropagation() == UnitOfWorkPropagation.UsecasePropagation.DEFAULT )
-        {
-            currentUnitOfWork = uowf.newUnitOfWork();
-        }
-        else
-        {
-            Usecase currentUsecase = uowf.currentUnitOfWork().usecase();
-            currentUnitOfWork = uowf.nestedUnitOfWork( currentUsecase );
-        }
-        return currentUnitOfWork;
-    }
-
-    private UnitOfWork createNestedOrNewUnitOfWork()
-    {
-        UnitOfWork unitOfWork;
-        final UnitOfWork current = uowf.currentUnitOfWork();
-        if( current == null || propagation.usecasePropagation() == UnitOfWorkPropagation.UsecasePropagation.DEFAULT )
-        {
-            unitOfWork = uowf.nestedUnitOfWork();
-        }
-        else
-        {
-            Usecase currentUsecase = current.usecase();
-            unitOfWork = uowf.nestedUnitOfWork( currentUsecase );
-        }
-        return unitOfWork;
-    }
-
-    private Object requiresNestedStrategy( Object proxy, Method method, Object[] args )
-        throws Throwable
-    {
-        UnitOfWork currentUnitOfWork = createNestedOrNewUnitOfWork();
-        try
-        {
-            Object result = next.invoke( proxy, method, args );
-            currentUnitOfWork.complete();
-            return result;
-        }
-        catch( Throwable throwable )
-        {
-            discardIfRequired( method, currentUnitOfWork, throwable );
-            throw throwable;
-        }
+        return uowf.newUnitOfWork();
     }
 
     private Object requiresNewRequires( Object proxy, Method method, Object[] args )
