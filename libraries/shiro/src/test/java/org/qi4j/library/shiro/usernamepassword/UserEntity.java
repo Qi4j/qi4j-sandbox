@@ -19,22 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.usernamepassword;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import org.qi4j.api.injection.InjectionScope;
+import org.qi4j.api.entity.EntityComposite;
+import org.qi4j.api.property.Property;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-@Target( ElementType.METHOD )
-@Retention( RetentionPolicy.RUNTIME )
-@Documented
-@InjectionScope
-public @interface RequiresUser
+public interface UserEntity
+        extends EntityComposite
 {
+
+    Property<String> username();
+
+    Property<String> passwordHash();
+
 }

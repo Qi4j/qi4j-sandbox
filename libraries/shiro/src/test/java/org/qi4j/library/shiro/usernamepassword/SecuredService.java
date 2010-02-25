@@ -19,29 +19,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.usernamepassword;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import org.qi4j.api.injection.InjectionScope;
+import org.qi4j.api.concern.Concerns;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.library.shiro.annotations.RequiresUser;
+import org.qi4j.library.shiro.annotations.RequiresUserConcern;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-@Target( ElementType.METHOD )
-@Retention( RetentionPolicy.RUNTIME )
-@Documented
-@InjectionScope
-public @interface RequiresPermissions
+@Mixins( SecuredService.Mixin.class )
+@Concerns( RequiresUserConcern.class )
+public interface SecuredService
+        extends ServiceComposite
 {
 
-    /**
-     * The permission string which will be passed to {@link org.apache.shiro.subject.Subject#isPermitted(String)}
-     * to determine if the user is allowed to invoke the code protected by this annotation.
-     */
-    String value();
+    @RequiresUser
+    void doSomethingThatRequiresUser();
+
+    abstract class Mixin
+            implements SecuredService
+    {
+
+        public void doSomethingThatRequiresUser()
+        {
+            System.out.println( "Doing something that requires a valid user" );
+        }
+
+    }
 
 }

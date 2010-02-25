@@ -19,15 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.annotations;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.LinkedHashSet;
 import java.util.Set;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.PermissionUtils;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
 import org.qi4j.api.injection.scope.Invocation;
@@ -37,36 +37,33 @@ import org.qi4j.api.injection.scope.Invocation;
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
 @Deprecated
-@AppliesTo( RequiresPermissions.class )
-public class RequiresPermissionsConcern
+@AppliesTo( RequiresRoles.class )
+public class RequiresRolesConcern
         extends ConcernOf<InvocationHandler>
         implements InvocationHandler
 {
 
     @Invocation
-    private RequiresPermissions requiresPermissions;
+    private RequiresRoles requiresRoles;
 
     public Object invoke( Object proxy, Method method, Object[] args )
             throws Throwable
     {
-        String permsString = requiresPermissions.value();
-        Set<String> permissions = PermissionUtils.toPermissionStrings( permsString );
-        Subject subject = SecurityUtils.getSubject();
-        if ( permissions.size() == 1 ) {
-            if ( !subject.isPermitted( permissions.iterator().next() ) ) {
-                String msg = "Calling Subject does not have required permission [" + permsString + "].  "
-                        + "Method invocation denied.";
+        String roleId = requiresRoles.value();
+        String[] roles = roleId.split( "," );
+        if ( roles.length == 1 ) {
+            if ( !SecurityUtils.getSubject().hasRole( roles[0] ) ) {
+                String msg = "Calling Subject does not have required role [" + roleId + "].  "
+                        + "MethodInvocation denied.";
                 throw new UnauthorizedException( msg );
             }
         } else {
-            String[] permStrings = new String[ permissions.size() ];
-            permStrings = permissions.toArray( permStrings );
-            if ( !subject.isPermittedAll( permStrings ) ) {
-                String msg = "Calling Subject does not have required permissions [" + permsString + "].  "
-                        + "Method invocation denied.";
+            Set<String> rolesSet = new LinkedHashSet<String>( Arrays.asList( roles ) );
+            if ( !SecurityUtils.getSubject().hasAllRoles( rolesSet ) ) {
+                String msg = "Calling Subject does not have required roles [" + roleId + "].  "
+                        + "MethodInvocation denied.";
                 throw new UnauthorizedException( msg );
             }
-
         }
         return next.invoke( proxy, method, args );
     }

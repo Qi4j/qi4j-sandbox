@@ -19,51 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.annotations;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
-import org.qi4j.api.injection.scope.Invocation;
 
 /**
  * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
 @Deprecated
-@AppliesTo( RequiresRoles.class )
-public class RequiresRolesConcern
+@AppliesTo( RequiresUser.class )
+public class RequiresUserConcern
         extends ConcernOf<InvocationHandler>
         implements InvocationHandler
 {
 
-    @Invocation
-    private RequiresRoles requiresRoles;
-
     public Object invoke( Object proxy, Method method, Object[] args )
             throws Throwable
     {
-        String roleId = requiresRoles.value();
-        String[] roles = roleId.split( "," );
-        if ( roles.length == 1 ) {
-            if ( !SecurityUtils.getSubject().hasRole( roles[0] ) ) {
-                String msg = "Calling Subject does not have required role [" + roleId + "].  "
-                        + "MethodInvocation denied.";
-                throw new UnauthorizedException( msg );
-            }
-        } else {
-            Set<String> rolesSet = new LinkedHashSet<String>( Arrays.asList( roles ) );
-            if ( !SecurityUtils.getSubject().hasAllRoles( rolesSet ) ) {
-                String msg = "Calling Subject does not have required roles [" + roleId + "].  "
-                        + "MethodInvocation denied.";
-                throw new UnauthorizedException( msg );
-            }
+        if ( SecurityUtils.getSubject().getPrincipal() == null ) {
+            throw new UnauthenticatedException( "Attempting to perform a user-only operation.  The current Subject is "
+                    + "not a user (they haven't been authenticated or remembered from a previous login).  "
+                    + "Access denied." );
         }
         return next.invoke( proxy, method, args );
     }

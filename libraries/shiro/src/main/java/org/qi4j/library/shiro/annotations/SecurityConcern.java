@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.annotations;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.annotations;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -35,13 +35,6 @@ import org.qi4j.api.injection.InjectionScope;
 @Retention( RetentionPolicy.RUNTIME )
 @Documented
 @InjectionScope
-public @interface RequiresRoles
+public @interface RequiresGuest
 {
-
-    /**
-     * A single String role name or multiple comma-delimitted role names required in order for the method
-     * invocation to be allowed.
-     */
-    String value();
-
 }

@@ -19,35 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro;
+package org.qi4j.library.shiro.annotations;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.qi4j.api.common.AppliesTo;
-import org.qi4j.api.concern.ConcernOf;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.qi4j.api.injection.InjectionScope;
 
 /**
- * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-@Deprecated
-@AppliesTo( RequiresUser.class )
-public class RequiresUserConcern
-        extends ConcernOf<InvocationHandler>
-        implements InvocationHandler
+@Target( ElementType.METHOD )
+@Retention( RetentionPolicy.RUNTIME )
+@Documented
+@InjectionScope
+public @interface RequiresAuthentication
 {
-
-    public Object invoke( Object proxy, Method method, Object[] args )
-            throws Throwable
-    {
-        if ( SecurityUtils.getSubject().getPrincipal() == null ) {
-            throw new UnauthenticatedException( "Attempting to perform a user-only operation.  The current Subject is "
-                    + "not a user (they haven't been authenticated or remembered from a previous login).  "
-                    + "Access denied." );
-        }
-        return next.invoke( proxy, method, args );
-    }
-
 }
