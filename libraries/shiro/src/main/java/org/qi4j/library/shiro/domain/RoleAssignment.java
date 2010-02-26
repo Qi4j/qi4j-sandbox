@@ -19,21 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.domain;
 
 import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
-import org.qi4j.library.shiro.domain.RoleAssignee;
+import org.qi4j.api.entity.association.Association;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public interface UserEntity
-        extends RoleAssignee, EntityComposite
+public interface RoleAssignment
+        extends EntityComposite
 {
 
-    Property<String> username();
+    Association<Role> role();
 
-    Property<String> passwordHash();
+    Association<RoleAssignee> assignee();
 
 }

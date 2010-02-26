@@ -24,6 +24,7 @@ package org.qi4j.library.shiro.usernamepassword;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthenticatedException;
+import org.apache.shiro.authz.UnauthorizedException;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.config.IniSecurityManagerFactory;
@@ -40,6 +41,9 @@ import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.index.rdf.assembly.RdfMemoryStoreAssembler;
+import org.qi4j.library.shiro.domain.Permission;
+import org.qi4j.library.shiro.domain.Role;
+import org.qi4j.library.shiro.domain.RoleAssignment;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
 
@@ -65,14 +69,19 @@ public class UsernamePasswordTest
     public static final int PASSWORD_HASH_ITERATIONS = 11;
     public static final String TEST_USERNAME = "root";
     public static final String TEST_PASSWORD = "secret";
+    public static final String TEST_PERMISSION = "gizmo";
+    public static final String TEST_ROLE = "admin";
 
     public void assemble( ModuleAssembly module )
             throws AssemblyException
     {
         module.layerAssembly().setName( LAYER );
         module.setName( MODULE );
+        module.addEntities( Permission.class,
+                            Role.class,
+                            RoleAssignment.class,
+                            UserEntity.class );
         module.addObjects( Qi4jRealm.class );
-        module.addEntities( UserEntity.class );
         module.addServices( SecuredService.class );
         module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class ).visibleIn( Visibility.module );
         new RdfMemoryStoreAssembler( null, Visibility.module, Visibility.module ).assemble( module );
@@ -94,11 +103,31 @@ public class UsernamePasswordTest
 
         // Create Test User
         UnitOfWork uow = unitOfWorkFactory.newUnitOfWork();
+
+        EntityBuilder<Permission> permissionBuilder = uow.newEntityBuilder( Permission.class );
+        Permission permission = permissionBuilder.instance();
+        permission.string().set( TEST_PERMISSION );
+        permission = permissionBuilder.newInstance();
+
+        EntityBuilder<Role> roleBuilder = uow.newEntityBuilder( Role.class );
+        Role role = roleBuilder.instance();
+        role.name().set( TEST_ROLE );
+        role.permissions().add( permission );
+        role = roleBuilder.newInstance();
+
         EntityBuilder<UserEntity> userBuilder = uow.newEntityBuilder( UserEntity.class );
         UserEntity user = userBuilder.instance();
         user.username().set( TEST_USERNAME );
         user.passwordHash().set( new Sha256Hash( TEST_PASSWORD, TEST_USERNAME, PASSWORD_HASH_ITERATIONS ).toBase64() );
         user = userBuilder.newInstance();
+
+        EntityBuilder<RoleAssignment> roleAssignmentBuilder = uow.newEntityBuilder( RoleAssignment.class );
+        RoleAssignment roleAssignment = roleAssignmentBuilder.instance();
+        roleAssignment.role().set( role );
+        user.roleAssignments().add( roleAssignment );
+        roleAssignment.assignee().set( user );
+        roleAssignment = roleAssignmentBuilder.newInstance();
+
         uow.complete();
     }
 
@@ -112,8 +141,20 @@ public class UsernamePasswordTest
             fail( "We're not authenticated, must fail" );
         } catch ( UnauthenticatedException ex ) {
         }
+        try {
+            secured.doSomethingThatRequiresPermissions();
+            fail( "We're not authenticated, must fail" );
+        } catch ( UnauthorizedException ex ) {
+        }
+        try {
+            secured.doSomethingThatRequiresRoles();
+            fail( "We're not authenticated, must fail" );
+        } catch ( UnauthorizedException ex ) {
+        }
         SecurityUtils.getSubject().login( new UsernamePasswordToken( TEST_USERNAME, TEST_PASSWORD ) );
         secured.doSomethingThatRequiresUser();
+        secured.doSomethingThatRequiresPermissions();
+        secured.doSomethingThatRequiresRoles();
     }
 
 }

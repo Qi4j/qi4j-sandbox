@@ -26,6 +26,8 @@ import java.lang.reflect.Method;
 import java.util.Set;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.mgt.DefaultSecurityManager;
+import org.apache.shiro.subject.DelegatingSubject;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.util.PermissionUtils;
 import org.qi4j.api.common.AppliesTo;
