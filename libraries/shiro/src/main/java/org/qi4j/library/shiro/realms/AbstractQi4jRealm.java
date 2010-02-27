@@ -45,6 +45,12 @@ public abstract class AbstractQi4jRealm
     @Structure
     protected UnitOfWorkFactory uowf;
 
+    public AbstractQi4jRealm()
+    {
+        super();
+        setCachingEnabled( false );
+    }
+
     @Override
     protected final AuthorizationInfo doGetAuthorizationInfo( PrincipalCollection principals )
     {

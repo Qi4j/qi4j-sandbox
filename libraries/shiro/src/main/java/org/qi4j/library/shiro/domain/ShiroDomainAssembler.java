@@ -19,22 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.domain;
 
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
-import org.qi4j.library.shiro.domain.RoleAssignee;
-import org.qi4j.library.shiro.domain.SecureHashSecurable;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 
 /**
- * @author Paul Merlin <p.merlin@nosphere.org>
+ * @author Paul Merlin <paul@nosphere.org>
  */
-public interface UserEntity
-        extends RoleAssignee, SecureHashSecurable, EntityComposite
+public class ShiroDomainAssembler
+        implements Assembler
 {
 
-    Property<String> username();
-
-    Property<String> passwordHash();
+    public void assemble( ModuleAssembly module )
+            throws AssemblyException
+    {
+        module.addEntities( Role.class,
+                            RoleAssignment.class,
+                            Permission.class );
+        module.addValues( SecureHash.class );
+        module.addServices( SecureHashFactory.class );
+    }
 
 }

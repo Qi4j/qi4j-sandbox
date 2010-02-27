@@ -19,22 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.authc;
 
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
-import org.qi4j.library.shiro.domain.RoleAssignee;
-import org.qi4j.library.shiro.domain.SecureHashSecurable;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
+import org.qi4j.library.shiro.domain.SecureHash;
 
 /**
- * @author Paul Merlin <p.merlin@nosphere.org>
+ * @author Paul Merlin <paul@nosphere.org>
  */
-public interface UserEntity
-        extends RoleAssignee, SecureHashSecurable, EntityComposite
+public class SecureHashAuthenticationInfo
+        extends SimpleAuthenticationInfo
 {
 
-    Property<String> username();
+    private final String username;
+    private final SecureHash secureHash;
 
-    Property<String> passwordHash();
+    public SecureHashAuthenticationInfo( String username, SecureHash secureHash, String realmName )
+    {
+        super( username, secureHash, realmName );
+        this.username = username;
+        this.secureHash = secureHash;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public SecureHash getSecureHash()
+    {
+        return secureHash;
+    }
 
 }

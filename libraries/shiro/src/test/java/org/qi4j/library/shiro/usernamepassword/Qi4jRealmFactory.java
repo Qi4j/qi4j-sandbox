@@ -50,7 +50,7 @@ public class Qi4jRealmFactory
         credentialMatcher.setHashSalted( true );
         credentialMatcher.setStoredCredentialsHexEncoded( false );
         realm.setCredentialsMatcher( credentialMatcher );
-        
+
         return Arrays.asList( new Realm[]{ realm } );
     }
 

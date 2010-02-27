@@ -48,8 +48,8 @@ public class Qi4jRealm
 
     public Qi4jRealm()
     {
+        super();
         setName( Qi4jRealm.class.getSimpleName() );
-        setCachingEnabled( false );
     }
 
     @Override
@@ -69,7 +69,7 @@ public class Qi4jRealm
     @Override
     protected RoleAssignee getRoleAssignee( PrincipalCollection principals )
     {
-        String username = ( String ) principals.fromRealm( Qi4jRealm.class.getSimpleName() ).iterator().next();
+        String username = ( String ) principals.fromRealm( getName() ).iterator().next();
         UserEntity user = findUserEntityByUsername( username );
         return user;
     }

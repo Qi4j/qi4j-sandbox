@@ -21,16 +21,23 @@
  */
 package org.qi4j.library.shiro.usernamepassword;
 
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.security.SecureRandom;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.codec.Base64;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.config.IniSecurityManagerFactory;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import static org.junit.Assert.fail;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.qi4j.api.common.Visibility;
 import org.qi4j.api.entity.EntityBuilder;
@@ -44,6 +51,9 @@ import org.qi4j.index.rdf.assembly.RdfMemoryStoreAssembler;
 import org.qi4j.library.shiro.domain.Permission;
 import org.qi4j.library.shiro.domain.Role;
 import org.qi4j.library.shiro.domain.RoleAssignment;
+import org.qi4j.library.shiro.domain.SecureHash;
+import org.qi4j.library.shiro.domain.SecureHashFactory;
+import org.qi4j.library.shiro.domain.ShiroDomainAssembler;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
 
@@ -66,7 +76,7 @@ public class UsernamePasswordTest
 
     public static final String LAYER = "Layer 1";
     public static final String MODULE = "Module 1";
-    public static final int PASSWORD_HASH_ITERATIONS = 11;
+    public static final int PASSWORD_HASH_ITERATIONS = 1000; // As per the PKCS5 recommendation
     public static final String TEST_USERNAME = "root";
     public static final String TEST_PASSWORD = "secret";
     public static final String TEST_PERMISSION = "gizmo";
@@ -77,10 +87,8 @@ public class UsernamePasswordTest
     {
         module.layerAssembly().setName( LAYER );
         module.setName( MODULE );
-        module.addEntities( Permission.class,
-                            Role.class,
-                            RoleAssignment.class,
-                            UserEntity.class );
+        new ShiroDomainAssembler().assemble( module );
+        module.addEntities( UserEntity.class );
         module.addObjects( Qi4jRealm.class );
         module.addServices( SecuredService.class );
         module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class ).visibleIn( Visibility.module );
@@ -104,6 +112,9 @@ public class UsernamePasswordTest
         // Create Test User
         UnitOfWork uow = unitOfWorkFactory.newUnitOfWork();
 
+        ServiceReference<SecureHashFactory> secureHashFactoryRef = serviceLocator.findService( SecureHashFactory.class );
+        SecureHashFactory secureHashFactory = secureHashFactoryRef.get();
+
         EntityBuilder<Permission> permissionBuilder = uow.newEntityBuilder( Permission.class );
         Permission permission = permissionBuilder.instance();
         permission.string().set( TEST_PERMISSION );
@@ -119,6 +130,7 @@ public class UsernamePasswordTest
         UserEntity user = userBuilder.instance();
         user.username().set( TEST_USERNAME );
         user.passwordHash().set( new Sha256Hash( TEST_PASSWORD, TEST_USERNAME, PASSWORD_HASH_ITERATIONS ).toBase64() );
+        user.secureHash().set( secureHashFactory.create( TEST_PASSWORD.toCharArray() ) );
         user = userBuilder.newInstance();
 
         EntityBuilder<RoleAssignment> roleAssignmentBuilder = uow.newEntityBuilder( RoleAssignment.class );
@@ -155,6 +167,35 @@ public class UsernamePasswordTest
         secured.doSomethingThatRequiresUser();
         secured.doSomethingThatRequiresPermissions();
         secured.doSomethingThatRequiresRoles();
+    }
+
+    @Ignore
+    @Test
+    public void testPBKDF2asSpecifiedInPKCS5v21()
+            throws IOException
+    {
+
+        byte[] password = "secret".getBytes( Charset.forName( "UTF-8" ) );
+        byte[] salt = random64BitInteger();
+        int iterationCount = 1000;
+
+        byte[] hash = new Sha256Hash( password, salt, iterationCount ).getBytes();
+        String base64Hash = Base64.encodeToString( hash );
+        System.out.println( "Base64 encoded hash: " + base64Hash );
+        String base64Salt = Base64.encodeToString( salt );
+        System.out.println( "Base64 encoded salt: " + base64Salt );
+
+    }
+
+    private byte[] random64BitInteger()
+            throws IOException
+    {
+        Long salt = new SecureRandom().nextLong();
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        DataOutputStream dos = new DataOutputStream( bos );
+        dos.writeLong( salt );
+        dos.flush();
+        return bos.toByteArray();
     }
 
 }
