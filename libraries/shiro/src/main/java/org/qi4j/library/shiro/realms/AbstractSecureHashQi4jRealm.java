@@ -19,54 +19,48 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.realms;
 
-import org.qi4j.api.injection.scope.Structure;
-import org.qi4j.api.query.Query;
-import org.qi4j.api.query.QueryBuilder;
-import org.qi4j.api.query.QueryBuilderFactory;
-import static org.qi4j.api.query.QueryExpressions.*;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.AuthenticationInfo;
+import org.apache.shiro.authc.AuthenticationToken;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.unitofwork.UnitOfWork;
+import org.qi4j.library.shiro.authc.SecureHashAuthenticationInfo;
 import org.qi4j.library.shiro.domain.RoleAssignee;
 import org.qi4j.library.shiro.domain.SecureHashSecurable;
-import org.qi4j.library.shiro.realms.AbstractSecureHashQi4jRealm;
 
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
-public class Qi4jRealm
-        extends AbstractSecureHashQi4jRealm
+public abstract class AbstractSecureHashQi4jRealm
+        extends AbstractQi4jRealm
 {
 
-    @Structure
-    private QueryBuilderFactory qbf;
-
-    public Qi4jRealm()
+    @Override
+    protected final AuthenticationInfo doGetAuthenticationInfo( AuthenticationToken token )
+            throws AuthenticationException
     {
-        super();
-        setName( Qi4jRealm.class.getSimpleName() );
+        UnitOfWork uow = uowf.newUnitOfWork();
+        String username = ( ( UsernamePasswordToken ) token ).getUsername();
+        SecureHashSecurable secured = getSecureHashSecurable( username );
+        if ( secured == null ) {
+            return null;
+        }
+        AuthenticationInfo authc = new SecureHashAuthenticationInfo( username, secured.secureHash().get(), getName() );
+        uow.discard();
+        return authc;
     }
+
+    protected abstract SecureHashSecurable getSecureHashSecurable( String username );
 
     @Override
-    protected SecureHashSecurable getSecureHashSecurable( String username )
+    protected final RoleAssignee getRoleAssignee( PrincipalCollection principals )
     {
-        return findUserEntityByUsername( username );
+        return getRoleAssignee( ( String ) principals.fromRealm( getName() ).iterator().next() );
     }
 
-    @Override
-    protected RoleAssignee getRoleAssignee( String username )
-    {
-        return findUserEntityByUsername( username );
-    }
-
-    private UserEntity findUserEntityByUsername( String username )
-    {
-        UnitOfWork uow = uowf.currentUnitOfWork();
-        QueryBuilder<UserEntity> queryBuilder = qbf.newQueryBuilder( UserEntity.class );
-        UserEntity userTemplate = templateFor( UserEntity.class );
-        queryBuilder = queryBuilder.where( eq( userTemplate.username(), username ) );
-        Query<UserEntity> query = queryBuilder.newQuery( uow ).maxResults( 1 );
-        return query.iterator().next();
-    }
+    protected abstract RoleAssignee getRoleAssignee( String username );
 
 }

@@ -33,10 +33,10 @@ public interface SecureHash
 
     Property<String> hashAlgorithm();
 
-    Property<Integer> iterationCount();
+    Property<Integer> hashIterations();
 
-    Property<String> base64Salt();
+    Property<String> salt();
 
-    Property<String> base64HashedSecret();
+    Property<String> hash();
 
 }

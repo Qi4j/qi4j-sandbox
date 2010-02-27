@@ -35,6 +35,4 @@ public interface UserEntity
 
     Property<String> username();
 
-    Property<String> passwordHash();
-
 }

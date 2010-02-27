@@ -48,6 +48,7 @@ public interface SecureHashFactory
             implements SecureHashFactory
     {
 
+        private static final String DEFAULT_ALGORITHM = Sha256Hash.ALGORITHM_NAME;
         private static final int DEFAULT_ITERATIONS = 1000;
         @Structure
         private ValueBuilderFactory vbf;
@@ -56,12 +57,12 @@ public interface SecureHashFactory
         {
             ValueBuilder<SecureHash> secureHashBuilder = vbf.newValueBuilder( SecureHash.class );
             SecureHash secureHash = secureHashBuilder.prototype();
-            secureHash.hashAlgorithm().set( Sha256Hash.ALGORITHM_NAME );
-            secureHash.iterationCount().set( DEFAULT_ITERATIONS );
+            secureHash.hashAlgorithm().set( DEFAULT_ALGORITHM );
+            secureHash.hashIterations().set( DEFAULT_ITERATIONS );
             String salt = generateSalt();
-            String hash = HashFactory.create( Sha256Hash.ALGORITHM_NAME, secret, salt, DEFAULT_ITERATIONS ).toBase64();
-            secureHash.base64Salt().set( salt );
-            secureHash.base64HashedSecret().set( hash );
+            String hash = HashFactory.create( DEFAULT_ALGORITHM, secret, salt, DEFAULT_ITERATIONS ).toBase64();
+            secureHash.salt().set( salt );
+            secureHash.hash().set( hash );
             return secureHashBuilder.newInstance();
         }
 

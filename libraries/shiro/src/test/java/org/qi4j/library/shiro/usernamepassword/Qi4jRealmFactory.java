@@ -23,10 +23,10 @@ package org.qi4j.library.shiro.usernamepassword;
 
 import java.util.Arrays;
 import java.util.Collection;
-import org.apache.shiro.authc.credential.Sha256CredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.qi4j.api.object.ObjectBuilderFactory;
 import org.qi4j.api.structure.Module;
+import org.qi4j.library.shiro.authc.credential.SecureHashCredentialsMatcher;
 import org.qi4j.library.shiro.realms.AbstractQi4jRealmFactory;
 
 /**
@@ -38,19 +38,10 @@ public class Qi4jRealmFactory
 
     public Collection<Realm> getRealms()
     {
-        // Instanciate the Qi4jRealm
         Module usernamePasswordModule = application.findModule( UsernamePasswordTest.LAYER, UsernamePasswordTest.MODULE );
         ObjectBuilderFactory obf = usernamePasswordModule.objectBuilderFactory();
         Qi4jRealm realm = obf.newObject( Qi4jRealm.class );
-
-        // Set-up the CredentialMatcher
-        Sha256CredentialsMatcher credentialMatcher = new Sha256CredentialsMatcher();
-        credentialMatcher.setHashIterations( UsernamePasswordTest.PASSWORD_HASH_ITERATIONS );
-        // We use salted Base64 encoding, see UsernamePasswordTest.before()
-        credentialMatcher.setHashSalted( true );
-        credentialMatcher.setStoredCredentialsHexEncoded( false );
-        realm.setCredentialsMatcher( credentialMatcher );
-
+        realm.setCredentialsMatcher( new SecureHashCredentialsMatcher() );
         return Arrays.asList( new Realm[]{ realm } );
     }
 

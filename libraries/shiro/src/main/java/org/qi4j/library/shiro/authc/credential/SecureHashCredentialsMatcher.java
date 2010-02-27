@@ -50,9 +50,9 @@ public class SecureHashCredentialsMatcher
 
         String tokenHash = HashFactory.create( secureHashAuthInfo.getSecureHash().hashAlgorithm().get(),
                                                usernamePasswordToken.getPassword(),
-                                               secureHashAuthInfo.getSecureHash().base64Salt().get(),
-                                               secureHashAuthInfo.getSecureHash().iterationCount().get() ).toBase64();
-        String authInfoHash = secureHashAuthInfo.getSecureHash().base64HashedSecret().get();
+                                               secureHashAuthInfo.getSecureHash().salt().get(),
+                                               secureHashAuthInfo.getSecureHash().hashIterations().get() ).toBase64();
+        String authInfoHash = secureHashAuthInfo.getSecureHash().hash().get();
         LOGGER.debug( "tokenHash: {}", tokenHash );
         LOGGER.debug( "authInfoHash: {}", authInfoHash );
 
