@@ -21,17 +21,11 @@
  */
 package org.qi4j.library.shiro.usernamepassword;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.authz.AuthorizationInfo;
-import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.query.Query;
@@ -39,20 +33,16 @@ import org.qi4j.api.query.QueryBuilder;
 import org.qi4j.api.query.QueryBuilderFactory;
 import static org.qi4j.api.query.QueryExpressions.*;
 import org.qi4j.api.unitofwork.UnitOfWork;
-import org.qi4j.api.unitofwork.UnitOfWorkFactory;
-import org.qi4j.library.shiro.domain.Permission;
-import org.qi4j.library.shiro.domain.Role;
-import org.qi4j.library.shiro.domain.RoleAssignment;
+import org.qi4j.library.shiro.domain.RoleAssignee;
+import org.qi4j.library.shiro.realms.AbstractQi4jRealm;
 
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
 public class Qi4jRealm
-        extends AuthorizingRealm
+        extends AbstractQi4jRealm
 {
 
-    @Structure
-    private UnitOfWorkFactory uowf;
     @Structure
     private QueryBuilderFactory qbf;
 
@@ -66,50 +56,22 @@ public class Qi4jRealm
     protected AuthenticationInfo doGetAuthenticationInfo( AuthenticationToken token )
             throws AuthenticationException
     {
-        // Finding UserEntity
-        UsernamePasswordToken upToken = ( UsernamePasswordToken ) token;
         UnitOfWork uow = uowf.newUnitOfWork();
-        UserEntity user = findUserEntityByUsername( upToken.getUsername() );
+        UserEntity user = findUserEntityByUsername( ( ( UsernamePasswordToken ) token ).getUsername() );
         if ( user == null ) {
             return null;
         }
-
-        // Building AuthenticationInfo
         AuthenticationInfo authc = new SimpleAuthenticationInfo( user.username().get(), user.passwordHash().get(), getName() );
-
         uow.discard();
         return authc;
     }
 
     @Override
-    protected AuthorizationInfo doGetAuthorizationInfo( PrincipalCollection principals )
+    protected RoleAssignee getRoleAssignee( PrincipalCollection principals )
     {
-        UnitOfWork uow = uowf.newUnitOfWork();
-
-        // Finding UserEntity
         String username = ( String ) principals.fromRealm( Qi4jRealm.class.getSimpleName() ).iterator().next();
         UserEntity user = findUserEntityByUsername( username );
-        if ( user == null ) {
-            return null;
-        }
-
-        // Loading Roles & Permissions
-        Set<String> roleNames = new LinkedHashSet<String>();
-        Set<String> permissions = new LinkedHashSet<String>();
-        for ( RoleAssignment eachAssignment : user.roleAssignments() ) {
-            Role eachRole = eachAssignment.role().get();
-            roleNames.add( eachRole.name().get() );
-            for ( Permission eachPermission : eachRole.permissions() ) {
-                permissions.add( eachPermission.string().get() );
-            }
-        }
-
-        // Building AuthorizationInfo
-        SimpleAuthorizationInfo authz = new SimpleAuthorizationInfo( roleNames );
-        authz.setStringPermissions( permissions );
-
-        uow.discard();
-        return authz;
+        return user;
     }
 
     private UserEntity findUserEntityByUsername( String username )
@@ -119,8 +81,7 @@ public class Qi4jRealm
         UserEntity userTemplate = templateFor( UserEntity.class );
         queryBuilder = queryBuilder.where( eq( userTemplate.username(), username ) );
         Query<UserEntity> query = queryBuilder.newQuery( uow ).maxResults( 1 );
-        Iterator<UserEntity> it = query.iterator();
-        return it.next();
+        return query.iterator().next();
     }
 
 }
