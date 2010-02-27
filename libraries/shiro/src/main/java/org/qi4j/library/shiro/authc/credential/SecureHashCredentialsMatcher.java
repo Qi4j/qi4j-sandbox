@@ -41,18 +41,15 @@ public class SecureHashCredentialsMatcher
 
     public boolean doCredentialsMatch( AuthenticationToken token, AuthenticationInfo info )
     {
-        LOGGER.debug( "doCredentialsMatch({}, {})", token, info );
-
         UsernamePasswordToken usernamePasswordToken = ( UsernamePasswordToken ) token;
         SecureHashAuthenticationInfo secureHashAuthInfo = ( SecureHashAuthenticationInfo ) info;
-        LOGGER.debug( "usernamePasswordToken: {}", usernamePasswordToken );
-        LOGGER.debug( "secureHashAuthInfo: {}", secureHashAuthInfo );
 
         String tokenHash = HashFactory.create( secureHashAuthInfo.getSecureHash().hashAlgorithm().get(),
                                                usernamePasswordToken.getPassword(),
                                                secureHashAuthInfo.getSecureHash().salt().get(),
                                                secureHashAuthInfo.getSecureHash().hashIterations().get() ).toBase64();
         String authInfoHash = secureHashAuthInfo.getSecureHash().hash().get();
+
         LOGGER.debug( "tokenHash: {}", tokenHash );
         LOGGER.debug( "authInfoHash: {}", authInfoHash );
 

@@ -54,5 +54,9 @@
             <id>apache-snapshots</id>
             <url>http://repository.apache.org/snapshots/</url>
         </repository>
+        <repository>
+            <id>ops4j-snapshots</id>
+            <url>http://repository.ops4j.org/mvn-snapshots</url>
+        </repository>
     </repositories>
 </project>
