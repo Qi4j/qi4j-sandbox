@@ -19,27 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.crypto;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
+import org.apache.shiro.ShiroException;
 
 /**
- * @author Paul Merlin <paul@nosphere.org>
+ * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public final class ShiroDomainAssembler
-        implements Assembler
+public final class CryptoException
+        extends ShiroException
 {
 
-    public void assemble( ModuleAssembly module )
-            throws AssemblyException
+    private static final long serialVersionUID = 1L;
+
+    public CryptoException( String message, Throwable cause )
     {
-        module.addEntities( Role.class,
-                            RoleAssignment.class,
-                            Permission.class );
-        module.addValues( SecureHash.class );
-        module.addServices( SecureHashFactory.class );
+        super( message, cause );
     }
 
 }

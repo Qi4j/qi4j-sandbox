@@ -43,6 +43,10 @@ public class HashFactory
                                                                         Sha384Hash.ALGORITHM_NAME,
                                                                         Sha512Hash.ALGORITHM_NAME };
 
+    private HashFactory()
+    {
+    }
+
     public static Hash create( String algorithmName, Object source )
     {
         return create( algorithmName, source, null );
@@ -59,7 +63,7 @@ public class HashFactory
             throw new IllegalArgumentException( "Algorithm name was null or empty" );
         }
         if ( !Arrays.asList( VALID_ALGORITHM_NAMES ).contains( algorithmName ) ) {
-            throw new IllegalArgumentException( algorithmName + " is not a valid algorithm. Valid ones are : " + VALID_ALGORITHM_NAMES );
+            throw new IllegalArgumentException( algorithmName + " is not a valid algorithm. Valid ones are : " + Arrays.toString( VALID_ALGORITHM_NAMES ) );
         }
         if ( Md2Hash.ALGORITHM_NAME.equals( algorithmName ) ) {
             return new Md2Hash( source, salt, hashIterations );

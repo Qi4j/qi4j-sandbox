@@ -21,7 +21,6 @@
  */
 package org.qi4j.library.shiro.realms;
 
-import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -40,7 +39,6 @@ public abstract class AbstractSecureHashQi4jRealm
 
     @Override
     protected final AuthenticationInfo doGetAuthenticationInfo( AuthenticationToken token )
-            throws AuthenticationException
     {
         UnitOfWork uow = uowf.newUnitOfWork();
         String username = ( ( UsernamePasswordToken ) token ).getUsername();

@@ -27,10 +27,11 @@ import org.qi4j.library.shiro.domain.SecureHash;
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
-public class SecureHashAuthenticationInfo
+public final class SecureHashAuthenticationInfo
         extends SimpleAuthenticationInfo
 {
 
+    private static final long serialVersionUID = 1L;
     private final String username;
     private final SecureHash secureHash;
 

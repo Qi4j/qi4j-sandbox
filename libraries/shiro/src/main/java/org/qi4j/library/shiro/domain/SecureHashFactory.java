@@ -32,6 +32,7 @@ import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.api.value.ValueBuilderFactory;
+import org.qi4j.library.shiro.crypto.CryptoException;
 import org.qi4j.library.shiro.crypto.hash.HashFactory;
 
 /**
@@ -76,7 +77,7 @@ public interface SecureHashFactory
                 dos.flush();
                 return Base64.encodeToString( bos.toByteArray() );
             } catch ( IOException ex ) {
-                throw new RuntimeException( ex.getMessage(), ex );
+                throw new CryptoException( ex.getMessage(), ex );
             }
         }
 

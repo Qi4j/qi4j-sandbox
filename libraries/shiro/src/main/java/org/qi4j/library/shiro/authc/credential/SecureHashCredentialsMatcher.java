@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
-public class SecureHashCredentialsMatcher
+public final class SecureHashCredentialsMatcher
         implements CredentialsMatcher
 {
 
