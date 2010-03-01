@@ -19,27 +19,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.realms;
 
-import org.qi4j.api.object.ObjectBuilderFactory;
-import org.qi4j.api.structure.Module;
-import org.qi4j.library.shiro.realms.AbstractSecureHashQi4jRealm;
-import org.qi4j.library.shiro.realms.AbstractSecureHashQi4jRealmFactory;
+import java.util.Arrays;
+import java.util.Collection;
+import org.apache.shiro.realm.Realm;
+import org.qi4j.library.shiro.authc.credential.SecureHashCredentialsMatcher;
 
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
-public class Qi4jRealmFactory
-        extends AbstractSecureHashQi4jRealmFactory
+public abstract class AbstractSecureHashQi4jRealmFactory
+        extends AbstractQi4jRealmFactory
 {
 
-    @Override
-    protected AbstractSecureHashQi4jRealm getSecureHashRealm()
+    public final Collection<Realm> getRealms()
     {
-        Module usernamePasswordModule = application.findModule( UsernamePasswordTest.LAYER, UsernamePasswordTest.MODULE );
-        ObjectBuilderFactory obf = usernamePasswordModule.objectBuilderFactory();
-        Qi4jRealm realm = obf.newObject( Qi4jRealm.class );
-        return realm;
+        AbstractSecureHashQi4jRealm realm = getSecureHashRealm();
+        realm.setCredentialsMatcher( new SecureHashCredentialsMatcher() );
+        return Arrays.asList( new Realm[]{ realm } );
     }
 
+    protected abstract AbstractSecureHashQi4jRealm getSecureHashRealm();
+
 }
+
