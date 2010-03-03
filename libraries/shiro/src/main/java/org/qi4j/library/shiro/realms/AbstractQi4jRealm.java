@@ -23,8 +23,10 @@ package org.qi4j.library.shiro.realms;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
+import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.injection.scope.Structure;
@@ -34,12 +36,14 @@ import org.qi4j.library.shiro.domain.Permission;
 import org.qi4j.library.shiro.domain.Role;
 import org.qi4j.library.shiro.domain.RoleAssignee;
 import org.qi4j.library.shiro.domain.RoleAssignment;
+import org.qi4j.library.shiro.lifecycle.RealmActivator;
 
 /**
  * @author Paul Merlin <paul@nosphere.org>
  */
 public abstract class AbstractQi4jRealm
         extends AuthorizingRealm
+        implements RealmActivator
 {
 
     @Structure
@@ -49,6 +53,11 @@ public abstract class AbstractQi4jRealm
     {
         super();
         setCachingEnabled( false );
+    }
+
+    public void activateRealm()
+    {
+        SecurityUtils.setSecurityManager( new DefaultSecurityManager( this ) );
     }
 
     @Override

@@ -19,20 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthenticatedException;
 import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.config.Ini;
-import org.apache.shiro.config.Ini.Section;
-import org.apache.shiro.config.IniSecurityManagerFactory;
 import static org.junit.Assert.fail;
 import org.junit.Before;
 import org.junit.Test;
 import org.qi4j.api.common.Visibility;
+import org.qi4j.api.concern.Concerns;
 import org.qi4j.api.entity.EntityBuilder;
+import org.qi4j.api.entity.EntityComposite;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.property.Property;
+import org.qi4j.api.query.Query;
+import org.qi4j.api.query.QueryBuilder;
+import org.qi4j.api.query.QueryBuilderFactory;
+import org.qi4j.api.service.ServiceComposite;
+import static org.qi4j.api.query.QueryExpressions.*;
 import org.qi4j.api.service.ServiceReference;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
@@ -40,11 +47,21 @@ import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.index.rdf.assembly.RdfMemoryStoreAssembler;
+import org.qi4j.library.shiro.annotations.RequiresPermissions;
+import org.qi4j.library.shiro.annotations.RequiresPermissionsConcern;
+import org.qi4j.library.shiro.annotations.RequiresRoles;
+import org.qi4j.library.shiro.annotations.RequiresRolesConcern;
+import org.qi4j.library.shiro.annotations.RequiresUser;
+import org.qi4j.library.shiro.annotations.RequiresUserConcern;
 import org.qi4j.library.shiro.domain.Permission;
 import org.qi4j.library.shiro.domain.Role;
+import org.qi4j.library.shiro.domain.RoleAssignee;
 import org.qi4j.library.shiro.domain.RoleAssignment;
 import org.qi4j.library.shiro.domain.SecureHashFactory;
+import org.qi4j.library.shiro.domain.SecureHashSecurable;
 import org.qi4j.library.shiro.domain.ShiroDomainAssembler;
+import org.qi4j.library.shiro.lifecycle.ShiroLifecycleAssembler;
+import org.qi4j.library.shiro.realms.AbstractSecureHashQi4jRealm;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 import org.qi4j.test.AbstractQi4jTest;
 
@@ -70,13 +87,17 @@ public class UsernamePasswordTest
     public void assemble( ModuleAssembly module )
             throws AssemblyException
     {
-        module.layerAssembly().setName( LAYER );
-        module.setName( MODULE );
-        new ShiroDomainAssembler().assemble( module );
+        // Domain & Custom Realm
         module.addEntities( UserEntity.class );
-        module.addObjects( Qi4jRealm.class );
         module.addServices( SecuredService.class );
-        module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class ).visibleIn( Visibility.module );
+        module.addObjects( CustomRealm.class ); // Indirectly implements RealmActivator, used by the ShiroLifecycleService
+
+        // Shiro Domain & Lifecycle
+        new ShiroDomainAssembler().assemble( module );
+        new ShiroLifecycleAssembler().assemble( module );
+
+        // EntityStore & co
+        module.addServices( MemoryEntityStoreService.class, UuidIdentityGeneratorService.class );
         new RdfMemoryStoreAssembler( null, Visibility.module, Visibility.module ).assemble( module );
     }
 
@@ -84,15 +105,6 @@ public class UsernamePasswordTest
     public void before()
             throws UnitOfWorkCompletionException
     {
-        // Qi4jRealmFactory is instanciated by Shiro and need a reference to the qi4j Application
-        Qi4jRealmFactory.setQi4jApplication( application );
-
-        // Setup Shiro
-        Ini ini = new Ini();
-        Section main = ini.addSection( "main" );
-        main.put( Qi4jRealmFactory.class.getSimpleName(), Qi4jRealmFactory.class.getName() );
-        SecurityUtils.setSecurityManager( new IniSecurityManagerFactory( ini ).getInstance() );
-
         // Create Test User
         UnitOfWork uow = unitOfWorkFactory.newUnitOfWork();
 
@@ -150,6 +162,89 @@ public class UsernamePasswordTest
         secured.doSomethingThatRequiresUser();
         secured.doSomethingThatRequiresPermissions();
         secured.doSomethingThatRequiresRoles();
+    }
+
+    public interface UserEntity
+            extends RoleAssignee, SecureHashSecurable, EntityComposite
+    {
+
+        Property<String> username();
+
+    }
+
+    @Mixins( SecuredService.Mixin.class )
+    @Concerns( { RequiresUserConcern.class, RequiresPermissionsConcern.class, RequiresRolesConcern.class } )
+    public interface SecuredService
+            extends ServiceComposite
+    {
+
+        @RequiresUser
+        void doSomethingThatRequiresUser();
+
+        @RequiresPermissions( UsernamePasswordTest.TEST_PERMISSION )
+        void doSomethingThatRequiresPermissions();
+
+        @RequiresRoles( UsernamePasswordTest.TEST_ROLE )
+        void doSomethingThatRequiresRoles();
+
+        abstract class Mixin
+                implements SecuredService
+        {
+
+            public void doSomethingThatRequiresUser()
+            {
+                System.out.println( "Doing something that requires a valid user" );
+            }
+
+            public void doSomethingThatRequiresPermissions()
+            {
+                System.out.println( "Doing something that requires permissions" );
+            }
+
+            public void doSomethingThatRequiresRoles()
+            {
+                System.out.println( "Doing something that requires roles" );
+            }
+
+        }
+
+    }
+
+    public static class CustomRealm
+            extends AbstractSecureHashQi4jRealm
+    {
+
+        @Structure
+        private QueryBuilderFactory qbf;
+
+        public CustomRealm()
+        {
+            super();
+            setName( CustomRealm.class.getSimpleName() );
+        }
+
+        @Override
+        protected SecureHashSecurable getSecureHashSecurable( String username )
+        {
+            return findUserEntityByUsername( username );
+        }
+
+        @Override
+        protected RoleAssignee getRoleAssignee( String username )
+        {
+            return findUserEntityByUsername( username );
+        }
+
+        private UserEntity findUserEntityByUsername( String username )
+        {
+            UnitOfWork uow = uowf.currentUnitOfWork();
+            QueryBuilder<UserEntity> queryBuilder = qbf.newQueryBuilder( UserEntity.class );
+            UserEntity userTemplate = templateFor( UserEntity.class );
+            queryBuilder = queryBuilder.where( eq( userTemplate.username(), username ) );
+            Query<UserEntity> query = queryBuilder.newQuery( uow ).maxResults( 1 );
+            return query.iterator().next();
+        }
+
     }
 
 }

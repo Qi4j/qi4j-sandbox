@@ -19,30 +19,40 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.usernamepassword;
+package org.qi4j.library.shiro.lifecycle;
 
-import java.util.Arrays;
-import java.util.Collection;
-import org.apache.shiro.realm.Realm;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.object.ObjectBuilderFactory;
-import org.qi4j.api.structure.Module;
-import org.qi4j.library.shiro.authc.credential.SecureHashCredentialsMatcher;
-import org.qi4j.library.shiro.realms.AbstractQi4jRealmFactory;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.api.service.ServiceComposite;
 
 /**
- * @author Paul Merlin <paul@nosphere.org>
+ * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public class Qi4jRealmFactory
-        extends AbstractQi4jRealmFactory
+@Mixins( ShiroLifecycleService.Mixin.class )
+public interface ShiroLifecycleService
+        extends Activatable, ServiceComposite
 {
 
-    public Collection<Realm> getRealms()
+    abstract class Mixin
+            implements ShiroLifecycleService
     {
-        Module usernamePasswordModule = application.findModule( UsernamePasswordTest.LAYER, UsernamePasswordTest.MODULE );
-        ObjectBuilderFactory obf = usernamePasswordModule.objectBuilderFactory();
-        Qi4jRealm realm = obf.newObject( Qi4jRealm.class );
-        realm.setCredentialsMatcher( new SecureHashCredentialsMatcher() );
-        return Arrays.asList( new Realm[]{ realm } );
+
+        @Structure
+        private ObjectBuilderFactory obf;
+
+        public void activate()
+                throws Exception
+        {
+            obf.newObject( RealmActivator.class ).activateRealm();
+        }
+
+        public void passivate()
+                throws Exception
+        {
+        }
+
     }
 
 }
