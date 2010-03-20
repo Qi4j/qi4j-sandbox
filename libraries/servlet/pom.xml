@@ -9,7 +9,6 @@
     <groupId>org.qi4j.library</groupId>
     <artifactId>qi4j-lib-servlet</artifactId>
     <name>Qi4j Library - Servlet</name>
-    <version>1.1-SNAPSHOT</version>
     <packaging>bundle</packaging>
 
     <dependencies>
@@ -36,22 +35,6 @@
             <artifactId>logback-classic</artifactId>
             <version>0.9.15</version>
             <scope>optional</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.qi4j.core</groupId>
-            <artifactId>qi4j-core-testsupport</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.qi4j.core</groupId>
-            <artifactId>qi4j-core-runtime</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.qi4j.extension</groupId>
-            <artifactId>qi4j-indexing-rdf</artifactId>
-            <version>1.1-SNAPSHOT</version>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <repositories>
