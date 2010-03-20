@@ -58,3 +58,5 @@ libraries/thread/qi4j-lib-thread.iml
 libraries/unitofwork/qi4j-lib-unitofwork.iml
 libraries/validation/qi4j-lib-validation.iml
 qi4j-sandbox.iml
+libraries/shiro/target
+libraries/servlet/target
