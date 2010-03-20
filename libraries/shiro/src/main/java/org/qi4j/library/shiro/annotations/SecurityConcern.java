@@ -34,6 +34,8 @@ import org.apache.shiro.util.PermissionUtils;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
 import org.qi4j.api.injection.scope.Invocation;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * FIXME Do not work because of {@link http://issues.ops4j.org/browse/QI-241 QI-241}.
@@ -50,6 +52,7 @@ public class SecurityConcern
         implements InvocationHandler
 {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger( SecurityConcern.class );
     @Invocation
     private RequiresAuthentication requiresAuthentication;
     @Invocation
@@ -65,8 +68,18 @@ public class SecurityConcern
             throws Throwable
     {
         Subject subject = SecurityUtils.getSubject();
+        handleRequiresGuest( subject );
+        handleRequiresUser( subject );
+        handleRequiresAuthentication( subject );
+        handleRequiresRoles( subject );
+        handleRequiresPermissions( subject );
+        return next.invoke( proxy, method, args );
+    }
+
+    private void handleRequiresGuest( Subject subject )
+    {
         if ( requiresGuest != null ) {
-            System.err.println( "SecurityConcern::RequiresGuest" );
+            LOGGER.debug( "SecurityConcern::RequiresGuest" );
             if ( subject.getPrincipal() != null ) {
                 throw new UnauthenticatedException( "Attempting to perform a guest-only operation.  The current Subject is "
                         + "not a guest (they have been authenticated or remembered from a previous login).  Access "
@@ -74,28 +87,40 @@ public class SecurityConcern
 
             }
         } else {
-            System.err.println( "SecurityConcern::RequiresGuest: not concerned" );
+            LOGGER.debug( "SecurityConcern::RequiresGuest: not concerned" );
         }
+    }
+
+    private void handleRequiresUser( Subject subject )
+    {
         if ( requiresUser != null ) {
-            System.err.println( "SecurityConcern::RequiresUser" );
+            LOGGER.debug( "SecurityConcern::RequiresUser" );
             if ( subject.getPrincipal() == null ) {
                 throw new UnauthenticatedException( "Attempting to perform a user-only operation.  The current Subject is "
                         + "not a user (they haven't been authenticated or remembered from a previous login).  "
                         + "Access denied." );
             }
         } else {
-            System.err.println( "SecurityConcern::RequiresUser: not concerned" );
+            LOGGER.debug( "SecurityConcern::RequiresUser: not concerned" );
         }
+    }
+
+    private void handleRequiresAuthentication( Subject subject )
+    {
         if ( requiresAuthentication != null ) {
-            System.err.println( "SecurityConcern::RequiresAuthentication" );
+            LOGGER.debug( "SecurityConcern::RequiresAuthentication" );
             if ( !subject.isAuthenticated() ) {
                 throw new UnauthenticatedException( "The current Subject is not authenticated.  Access denied." );
             }
         } else {
-            System.err.println( "SecurityConcern::RequiresAuthentication: not concerned" );
+            LOGGER.debug( "SecurityConcern::RequiresAuthentication: not concerned" );
         }
+    }
+
+    private void handleRequiresRoles( Subject subject )
+    {
         if ( requiresRoles != null ) {
-            System.err.println( "SecurityConcern::RequiresRoles" );
+            LOGGER.debug( "SecurityConcern::RequiresRoles" );
             String roleId = requiresRoles.value();
             String[] roles = roleId.split( "," );
             if ( roles.length == 1 ) {
@@ -113,10 +138,15 @@ public class SecurityConcern
                 }
             }
         } else {
-            System.err.println( "SecurityConcern::RequiresRoles: not concerned" );
+            LOGGER.debug( "SecurityConcern::RequiresRoles: not concerned" );
         }
+
+    }
+
+    private void handleRequiresPermissions( Subject subject )
+    {
         if ( requiresPermissions != null ) {
-            System.err.println( "SecurityConcern::RequiresPermissions" );
+            LOGGER.debug( "SecurityConcern::RequiresPermissions" );
             String permsString = requiresPermissions.value();
             Set<String> permissions = PermissionUtils.toPermissionStrings( permsString );
             if ( permissions.size() == 1 ) {
@@ -136,9 +166,9 @@ public class SecurityConcern
 
             }
         } else {
-            System.err.println( "SecurityConcern::RequiresPermissions: not concerned" );
+            LOGGER.debug( "SecurityConcern::RequiresPermissions: not concerned" );
         }
-        return next.invoke( proxy, method, args );
+
     }
 
 }
