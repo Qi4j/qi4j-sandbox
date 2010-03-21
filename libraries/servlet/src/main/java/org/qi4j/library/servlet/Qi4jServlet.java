@@ -32,16 +32,15 @@ public class Qi4jServlet
         extends HttpServlet
 {
 
+    private static final long serialVersionUID = 1L;
     public static final String CTX_APP_ATTR = "qi4j-application-servlet-context-attribute";
 
     public static Application application( ServletContext servletContext )
     {
-        Object obj = servletContext.getAttribute( CTX_APP_ATTR );
-        Application application = ( Application ) obj; // TODO try/catch and find a suitable Qi4j exception
-        return application;
+        return ( Application ) servletContext.getAttribute( CTX_APP_ATTR ); // TODO try/catch and find a suitable Qi4j exception
     }
 
-    private final Application application;
+    protected final Application application;
 
     public Qi4jServlet()
     {

@@ -25,6 +25,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import org.qi4j.api.Qi4j;
+import org.qi4j.api.common.InvalidApplicationException;
 import org.qi4j.api.structure.Application;
 import org.qi4j.bootstrap.ApplicationAssembler;
 import org.qi4j.bootstrap.Energy4Java;
@@ -70,7 +71,8 @@ public abstract class AbstractQi4jServletBootstrap
 
             LOGGER.debug( "Instanciating and activating Application" );
             application = applicationModel.newInstance( qi4j.spi() );
-            api = spi = qi4j.spi();
+            spi = qi4j.spi();
+            api = spi;
             beforeApplicationActivation( application );
             application.activate();
             afterApplicationActivation( application );
@@ -79,26 +81,22 @@ public abstract class AbstractQi4jServletBootstrap
             context.setAttribute( Qi4jServlet.CTX_APP_ATTR, application );
 
         } catch ( Exception ex ) {
-            ex.printStackTrace();
             if ( application != null ) {
                 try {
                     application.passivate();
                 } catch ( Exception ex1 ) {
-                    new Exception( "Application not null and could not passivate it.", ex1 ).printStackTrace();
+                    LOGGER.warn( "Application not null and could not passivate it.", ex1 );
                 }
             }
-            LOGGER.error( ex.getMessage(), ex );
-            throw new InternalError( "Unexpected error during ServletContext initialization, see previous log for errors." );
+            throw new InvalidApplicationException( "Unexpected error during ServletContext initialization, see previous log for errors.", ex );
         }
     }
 
     protected void beforeApplicationActivation( Application app )
-            throws Exception
     {
     }
 
     protected void afterApplicationActivation( Application app )
-            throws Exception
     {
     }
 
@@ -130,7 +128,6 @@ public abstract class AbstractQi4jServletBootstrap
                 application.passivate();
             }
         } catch ( Exception ex ) {
-            ex.printStackTrace();
             LOGGER.warn( "Unable to passivate Qi4j Application.", ex );
         }
     }
