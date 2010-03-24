@@ -19,54 +19,33 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.annotations;
+package org.qi4j.library.shiro.concerns;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.util.Set;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.subject.Subject;
-import org.apache.shiro.util.PermissionUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
 import org.qi4j.api.common.AppliesTo;
 import org.qi4j.api.concern.ConcernOf;
-import org.qi4j.api.injection.scope.Invocation;
 
 /**
  * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
 @Deprecated
-@AppliesTo( RequiresPermissions.class )
-public class RequiresPermissionsConcern
+@AppliesTo( RequiresUser.class )
+public class RequiresUserConcern
         extends ConcernOf<InvocationHandler>
         implements InvocationHandler
 {
 
-    @Invocation
-    private RequiresPermissions requiresPermissions;
-
     public Object invoke( Object proxy, Method method, Object[] args )
             throws Throwable
     {
-        String permsString = requiresPermissions.value();
-        Set<String> permissions = PermissionUtils.toPermissionStrings( permsString );
-        Subject subject = SecurityUtils.getSubject();
-        if ( permissions.size() == 1 ) {
-            if ( !subject.isPermitted( permissions.iterator().next() ) ) {
-                String msg = "Calling Subject does not have required permission [" + permsString + "].  "
-                        + "Method invocation denied.";
-                throw new UnauthorizedException( msg );
-            }
-        } else {
-            String[] permStrings = new String[ permissions.size() ];
-            permStrings = permissions.toArray( permStrings );
-            if ( !subject.isPermittedAll( permStrings ) ) {
-                String msg = "Calling Subject does not have required permissions [" + permsString + "].  "
-                        + "Method invocation denied.";
-                throw new UnauthorizedException( msg );
-            }
-
+        if ( SecurityUtils.getSubject().getPrincipal() == null ) {
+            throw new UnauthenticatedException( "Attempting to perform a user-only operation.  The current Subject is "
+                    + "not a user (they haven't been authenticated or remembered from a previous login).  "
+                    + "Access denied." );
         }
         return next.invoke( proxy, method, args );
     }

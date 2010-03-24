@@ -19,14 +19,36 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.lifecycle;
+package org.qi4j.library.shiro.concerns;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.UnauthenticatedException;
+import org.qi4j.api.common.AppliesTo;
+import org.qi4j.api.concern.ConcernOf;
 
 /**
+ * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public interface RealmActivator
+@Deprecated
+@AppliesTo( RequiresGuest.class )
+public class RequiresGuestConcern
+        extends ConcernOf<InvocationHandler>
+        implements InvocationHandler
 {
 
-    void activateRealm();
+    public Object invoke( Object proxy, Method method, Object[] args )
+            throws Throwable
+    {
+        if ( SecurityUtils.getSubject().getPrincipal() != null ) {
+            throw new UnauthenticatedException( "Attempting to perform a guest-only operation.  The current Subject is "
+                    + "not a guest (they have been authenticated or remembered from a previous login).  Access "
+                    + "denied." );
+
+        }
+        return next.invoke( proxy, method, args );
+    }
 
 }

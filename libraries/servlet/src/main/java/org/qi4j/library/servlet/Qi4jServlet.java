@@ -21,7 +21,7 @@
  */
 package org.qi4j.library.servlet;
 
-import javax.servlet.ServletContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import org.qi4j.api.structure.Application;
 
@@ -33,19 +33,19 @@ public class Qi4jServlet
 {
 
     private static final long serialVersionUID = 1L;
-    public static final String CTX_APP_ATTR = "qi4j-application-servlet-context-attribute";
-
-    public static Application application( ServletContext servletContext )
-    {
-        return ( Application ) servletContext.getAttribute( CTX_APP_ATTR ); // TODO try/catch and find a suitable Qi4j exception
-    }
-
-    protected final Application application;
+    protected Application application;
 
     public Qi4jServlet()
     {
         super();
-        application = Qi4jServlet.application( getServletContext() );
+    }
+
+    @Override
+    public void init()
+            throws ServletException
+    {
+        super.init();
+        application = Qi4jServletSupport.application( getServletContext() );
     }
 
 }

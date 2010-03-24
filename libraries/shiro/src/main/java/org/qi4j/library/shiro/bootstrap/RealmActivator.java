@@ -19,28 +19,11 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.realms;
+package org.qi4j.library.shiro.bootstrap;
 
-import java.util.Arrays;
-import java.util.Collection;
-import org.apache.shiro.realm.Realm;
-import org.qi4j.library.shiro.authc.SecureHashCredentialsMatcher;
-
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
-public abstract class AbstractSecureHashQi4jRealmFactory
-        extends AbstractQi4jRealmFactory
+public interface RealmActivator
 {
 
-    public final Collection<Realm> getRealms()
-    {
-        AbstractSecureHashQi4jRealm realm = getSecureHashRealm();
-        realm.setCredentialsMatcher( new SecureHashCredentialsMatcher() );
-        return Arrays.asList( new Realm[]{ realm } );
-    }
-
-    protected abstract AbstractSecureHashQi4jRealm getSecureHashRealm();
+    void activateRealm();
 
 }
-

@@ -19,40 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.lifecycle;
+package org.qi4j.library.shiro.concerns;
 
-import org.qi4j.api.injection.scope.Structure;
-import org.qi4j.api.mixin.Mixins;
-import org.qi4j.api.object.ObjectBuilderFactory;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.api.service.ServiceComposite;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.qi4j.api.injection.InjectionScope;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-@Mixins( ShiroLifecycleService.Mixin.class )
-public interface ShiroLifecycleService
-        extends Activatable, ServiceComposite
+@Target( ElementType.METHOD )
+@Retention( RetentionPolicy.RUNTIME )
+@Documented
+@InjectionScope
+public @interface RequiresGuest
 {
-
-    abstract class Mixin
-            implements ShiroLifecycleService
-    {
-
-        @Structure
-        private ObjectBuilderFactory obf;
-
-        public void activate()
-                throws Exception
-        {
-            obf.newObject( RealmActivator.class ).activateRealm();
-        }
-
-        public void passivate()
-                throws Exception
-        {
-        }
-
-    }
-
 }

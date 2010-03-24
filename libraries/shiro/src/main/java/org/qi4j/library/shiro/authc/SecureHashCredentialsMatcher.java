@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.authc.credential;
+package org.qi4j.library.shiro.authc;
 
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.qi4j.library.shiro.authc.SecureHashAuthenticationInfo;
-import org.qi4j.library.shiro.crypto.hash.HashFactory;
+import org.qi4j.library.shiro.crypto.HashFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

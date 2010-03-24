@@ -27,7 +27,7 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.library.shiro.authc.SecureHashAuthenticationInfo;
-import org.qi4j.library.shiro.authc.credential.SecureHashCredentialsMatcher;
+import org.qi4j.library.shiro.authc.SecureHashCredentialsMatcher;
 import org.qi4j.library.shiro.domain.RoleAssignee;
 import org.qi4j.library.shiro.domain.SecureHashSecurable;
 

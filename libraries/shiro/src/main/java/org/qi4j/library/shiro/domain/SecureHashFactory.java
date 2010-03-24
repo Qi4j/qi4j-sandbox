@@ -33,7 +33,7 @@ import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.value.ValueBuilder;
 import org.qi4j.api.value.ValueBuilderFactory;
 import org.qi4j.library.shiro.crypto.CryptoException;
-import org.qi4j.library.shiro.crypto.hash.HashFactory;
+import org.qi4j.library.shiro.crypto.HashFactory;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>

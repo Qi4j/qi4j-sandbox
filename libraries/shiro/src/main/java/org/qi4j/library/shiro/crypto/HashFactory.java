@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.crypto.hash;
+package org.qi4j.library.shiro.crypto;
 
 import java.util.Arrays;
 import org.apache.shiro.crypto.hash.Hash;

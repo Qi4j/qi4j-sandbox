@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.lifecycle;
+package org.qi4j.library.shiro.servlet;
 
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
@@ -28,14 +28,14 @@ import org.qi4j.bootstrap.ModuleAssembly;
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public class ShiroLifecycleAssembler
+public class ShiroServletLifecycleAssembler
         implements Assembler
 {
 
     public void assemble( ModuleAssembly module )
             throws AssemblyException
     {
-        module.addServices( ShiroLifecycleService.class ).instantiateOnStartup();
+        throw new UnsupportedOperationException( "Not supported yet." );
     }
 
 }

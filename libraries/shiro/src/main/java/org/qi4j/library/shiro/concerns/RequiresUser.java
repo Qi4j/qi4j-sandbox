@@ -19,28 +19,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.realms;
+package org.qi4j.library.shiro.concerns;
 
-import java.util.Arrays;
-import java.util.Collection;
-import org.apache.shiro.realm.Realm;
-import org.qi4j.library.shiro.authc.SecureHashCredentialsMatcher;
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+import org.qi4j.api.injection.InjectionScope;
 
 /**
- * @author Paul Merlin <paul@nosphere.org>
+ * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public abstract class AbstractSecureHashQi4jRealmFactory
-        extends AbstractQi4jRealmFactory
+@Target( ElementType.METHOD )
+@Retention( RetentionPolicy.RUNTIME )
+@Documented
+@InjectionScope
+public @interface RequiresUser
 {
-
-    public final Collection<Realm> getRealms()
-    {
-        AbstractSecureHashQi4jRealm realm = getSecureHashRealm();
-        realm.setCredentialsMatcher( new SecureHashCredentialsMatcher() );
-        return Arrays.asList( new Realm[]{ realm } );
-    }
-
-    protected abstract AbstractSecureHashQi4jRealm getSecureHashRealm();
-
 }
-

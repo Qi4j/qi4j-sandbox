@@ -36,11 +36,8 @@ import org.qi4j.library.shiro.domain.Permission;
 import org.qi4j.library.shiro.domain.Role;
 import org.qi4j.library.shiro.domain.RoleAssignee;
 import org.qi4j.library.shiro.domain.RoleAssignment;
-import org.qi4j.library.shiro.lifecycle.RealmActivator;
+import org.qi4j.library.shiro.bootstrap.RealmActivator;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public abstract class AbstractQi4jRealm
         extends AuthorizingRealm
         implements RealmActivator

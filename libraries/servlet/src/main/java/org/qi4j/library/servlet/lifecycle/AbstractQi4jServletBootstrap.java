@@ -34,6 +34,7 @@ import org.qi4j.bootstrap.Energy4Java;
 //import org.qi4j.envisage.model.descriptor.LayerDetailDescriptor;
 //import org.qi4j.envisage.model.descriptor.ModuleDetailDescriptor;
 import org.qi4j.library.servlet.Qi4jServlet;
+import org.qi4j.library.servlet.Qi4jServletSupport;
 import org.qi4j.spi.Qi4jSPI;
 import org.qi4j.spi.structure.ApplicationModelSPI;
 import org.qi4j.spi.structure.ApplicationSPI;
@@ -41,6 +42,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * We set the Qi4j Application as attribute on the ServletContext so they it is bound to the webapp lifecycle.
+ *
+ * Servlet specification states:
+ *
+ *      In cases where the container is distributed over many virtual machines, a Web application will have an
+ *      instance of the ServletContext for each JVM.
+ *
+ *      Context attributes are local to the JVM in which they were created. This prevents ServletContext attributes
+ *      from being a shared memory store in a distributed container. When information needs to be shared between
+ *      servlets running in a distributed environment, the information should be placed into a session, stored in a
+ *      database, or set in an Enterprise JavaBeans component.
+ *
  * @author Paul Merlin <paul@nosphere.org>
  */
 public abstract class AbstractQi4jServletBootstrap
@@ -78,7 +91,7 @@ public abstract class AbstractQi4jServletBootstrap
             afterApplicationActivation( application );
 
             LOGGER.debug( "Storing Application in ServletContext" );
-            context.setAttribute( Qi4jServlet.CTX_APP_ATTR, application );
+            context.setAttribute( Qi4jServletSupport.APP_IN_CTX, application );
 
         } catch ( Exception ex ) {
             if ( application != null ) {

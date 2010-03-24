@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.annotations;
+package org.qi4j.library.shiro.concerns;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;

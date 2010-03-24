@@ -19,29 +19,27 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.annotations;
+package org.qi4j.library.servlet;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-import org.qi4j.api.injection.InjectionScope;
+import javax.servlet.Filter;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import org.qi4j.api.structure.Application;
 
 /**
- * @author Paul Merlin <p.merlin@nosphere.org>
+ * @author Paul Merlin <paul@nosphere.org>
  */
-@Target( ElementType.METHOD )
-@Retention( RetentionPolicy.RUNTIME )
-@Documented
-@InjectionScope
-public @interface RequiresRoles
+public abstract class Qi4jFilter
+        implements Filter
 {
 
-    /**
-     * A single String role name or multiple comma-delimitted role names required in order for the method
-     * invocation to be allowed.
-     */
-    String value();
+    private static final long serialVersionUID = 1L;
+    protected Application application;
+
+    public void init( FilterConfig filterConfig )
+            throws ServletException
+    {
+        application = Qi4jServletSupport.application( filterConfig.getServletContext() );
+    }
 
 }

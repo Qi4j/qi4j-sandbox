@@ -19,23 +19,26 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.lifecycle;
+package org.qi4j.library.servlet;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
+import javax.servlet.ServletContext;
+import org.qi4j.api.structure.Application;
 
 /**
  * @author Paul Merlin <p.merlin@nosphere.org>
  */
-public class ShiroWebLifecycleAssembler
-        implements Assembler
+public final class Qi4jServletSupport
 {
 
-    public void assemble( ModuleAssembly module )
-            throws AssemblyException
+    public static final String APP_IN_CTX = "qi4j-application-servlet-context-attribute";
+
+    public static Application application( ServletContext servletContext )
     {
-        throw new UnsupportedOperationException( "Not supported yet." );
+        return ( Application ) servletContext.getAttribute( APP_IN_CTX ); // TODO try/catch and find a suitable Qi4j exception
+    }
+
+    private Qi4jServletSupport()
+    {
     }
 
 }

@@ -19,36 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.annotations;
+package org.qi4j.library.shiro;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authz.UnauthenticatedException;
-import org.qi4j.api.common.AppliesTo;
-import org.qi4j.api.concern.ConcernOf;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.library.shiro.bootstrap.ShiroLifecycleService;
 
-/**
- * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-@Deprecated
-@AppliesTo( RequiresGuest.class )
-public class RequiresGuestConcern
-        extends ConcernOf<InvocationHandler>
-        implements InvocationHandler
+public class ShiroAssembler
+        implements Assembler
 {
 
-    public Object invoke( Object proxy, Method method, Object[] args )
-            throws Throwable
+    public void assemble( ModuleAssembly module )
+            throws AssemblyException
     {
-        if ( SecurityUtils.getSubject().getPrincipal() != null ) {
-            throw new UnauthenticatedException( "Attempting to perform a guest-only operation.  The current Subject is "
-                    + "not a guest (they have been authenticated or remembered from a previous login).  Access "
-                    + "denied." );
-
-        }
-        return next.invoke( proxy, method, args );
+        module.addServices( ShiroLifecycleService.class ).instantiateOnStartup();
     }
 
 }
