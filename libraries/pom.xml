@@ -19,5 +19,7 @@
     <module>thread</module>
     <module>unitofwork</module>
     <module>validation</module>
+    <module>servlet</module>
+    <module>shiro</module>
   </modules>
 </project>
