@@ -21,7 +21,6 @@
  */
 package org.qi4j.library.shiro;
 
-import org.qi4j.api.structure.Application;
 import org.qi4j.library.shiro.tests.username.SecuredService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -46,20 +45,10 @@ public class UsernamePasswordTest
         extends AbstractQi4jTest
 {
 
-    public static final String LAYER = "Layer 1";
-    public static final String MODULE = "Module 1";
-
     public void assemble( ModuleAssembly module )
             throws AssemblyException
     {
         new UsernameTestAssembler().assemble( module );
-    }
-
-    @Override
-    protected void initApplication( Application app )
-            throws Exception
-    {
-        super.initApplication( app );
     }
 
     @Test

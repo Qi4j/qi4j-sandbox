@@ -35,13 +35,13 @@ import org.qi4j.api.structure.Module;
 import org.qi4j.api.util.NullArgumentException;
 import org.qi4j.library.servlet.Qi4jServletSupport;
 
-public class ShiroServletFilter
+public class Qi4jShiroServletFilter
         extends AbstractShiroFilter
 {
 
-    public static final String LAYER = "layer";
-    public static final String MODULE = "module";
-    public static final String FILTER_CHAINS = "filterChains";
+    public static final String REALM_LAYER_PARAM = "realm-layer";
+    public static final String REALM_MODULE_PARAM = "realm-module";
+    public static final String FILTER_CHAINS_PARAM = "filterChains";
 
     @Override
     public void init()
@@ -54,11 +54,11 @@ public class ShiroServletFilter
 
     private void applySecurityManager( Application application )
     {
-        String layerName = getFilterConfig().getInitParameter( LAYER );
-        NullArgumentException.validateNotEmpty( LAYER, layerName );
+        String layerName = getFilterConfig().getInitParameter( REALM_LAYER_PARAM );
+        NullArgumentException.validateNotEmpty( REALM_LAYER_PARAM, layerName );
 
-        String moduleName = getFilterConfig().getInitParameter( MODULE );
-        NullArgumentException.validateNotEmpty( MODULE, moduleName );
+        String moduleName = getFilterConfig().getInitParameter( REALM_MODULE_PARAM );
+        NullArgumentException.validateNotEmpty( REALM_MODULE_PARAM, moduleName );
 
         Module module = application.findModule( layerName, moduleName );
         Realm realm = module.objectBuilderFactory().newObject( Realm.class );
@@ -69,8 +69,8 @@ public class ShiroServletFilter
             throws JSONException
     {
 
-        String filterChainsConfig = getFilterConfig().getInitParameter( FILTER_CHAINS );
-        NullArgumentException.validateNotEmpty( FILTER_CHAINS, filterChainsConfig );
+        String filterChainsConfig = getFilterConfig().getInitParameter( FILTER_CHAINS_PARAM );
+        NullArgumentException.validateNotEmpty( FILTER_CHAINS_PARAM, filterChainsConfig );
 
         JSONObject filterChainsJson = new JSONObject( filterChainsConfig );
 
