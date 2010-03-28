@@ -19,23 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.servlet;
+package org.qi4j.library.shiro.domain.securehash;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.api.property.Property;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public class ShiroServletLifecycleAssembler
-        implements Assembler
+public interface SecureHashSecurable
 {
 
-    public void assemble( ModuleAssembly module )
-            throws AssemblyException
-    {
-        throw new UnsupportedOperationException( "Not supported yet." );
-    }
+    Property<SecureHash> secureHash();
 
 }

@@ -26,17 +26,19 @@ import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.unitofwork.UnitOfWork;
+import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.library.shiro.authc.SecureHashAuthenticationInfo;
 import org.qi4j.library.shiro.authc.SecureHashCredentialsMatcher;
-import org.qi4j.library.shiro.domain.RoleAssignee;
-import org.qi4j.library.shiro.domain.SecureHashSecurable;
+import org.qi4j.library.shiro.domain.permissions.RoleAssignee;
+import org.qi4j.library.shiro.domain.securehash.SecureHashSecurable;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public abstract class AbstractSecureHashQi4jRealm
         extends AbstractQi4jRealm
 {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger( AbstractSecureHashQi4jRealm.class );
 
     public AbstractSecureHashQi4jRealm()
     {
@@ -47,15 +49,25 @@ public abstract class AbstractSecureHashQi4jRealm
     @Override
     protected final AuthenticationInfo doGetAuthenticationInfo( AuthenticationToken token )
     {
-        UnitOfWork uow = uowf.newUnitOfWork();
-        String username = ( ( UsernamePasswordToken ) token ).getUsername();
-        SecureHashSecurable secured = getSecureHashSecurable( username );
-        if ( secured == null ) {
+        try {
+
+            UnitOfWork uow = uowf.newUnitOfWork();
+
+            String username = ( ( UsernamePasswordToken ) token ).getUsername();
+            SecureHashSecurable secured = getSecureHashSecurable( username );
+            if ( secured == null ) {
+                return null;
+            }
+
+            AuthenticationInfo authc = new SecureHashAuthenticationInfo( username, secured.secureHash().get(), getName() );
+
+            uow.complete();
+            return authc;
+
+        } catch ( UnitOfWorkCompletionException ex ) {
+            LOGGER.error( "Unable to get AuthenticationInfo", ex );
             return null;
         }
-        AuthenticationInfo authc = new SecureHashAuthenticationInfo( username, secured.secureHash().get(), getName() );
-        uow.discard();
-        return authc;
     }
 
     protected abstract SecureHashSecurable getSecureHashSecurable( String username );

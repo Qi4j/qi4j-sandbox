@@ -19,16 +19,35 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.authc;
 
-import org.qi4j.api.property.Property;
+import java.security.cert.TrustAnchor;
+import java.security.cert.X509Certificate;
+import java.util.HashSet;
+import java.util.Set;
+import org.apache.shiro.authc.SimpleAuthenticationInfo;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface SecureHashSecurable
+public class X509AuthenticationInfo
+        extends SimpleAuthenticationInfo
 {
 
-    Property<SecureHash> secureHash();
+    private static final long serialVersionUID = 1L;
+    private final Set<X509Certificate> grantedIssuers;
+
+    public X509AuthenticationInfo( X509Certificate clientCert, Set<X509Certificate> grantedIssuers, String realmName )
+    {
+        super( clientCert, null, realmName );
+        this.grantedIssuers = grantedIssuers;
+    }
+
+    public Set<TrustAnchor> getGrantedTrustAnchors()
+    {
+        Set<TrustAnchor> trustAnchors = new HashSet<TrustAnchor>();
+        for ( X509Certificate eachCert : grantedIssuers ) {
+            trustAnchors.add( new TrustAnchor( eachCert, eachCert.getExtensionValue( "2.5.29.30" ) ) ); // NamedConstraints
+        }
+        return trustAnchors;
+
+    }
 
 }

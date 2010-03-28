@@ -25,14 +25,10 @@ import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
-import org.qi4j.library.shiro.authc.SecureHashAuthenticationInfo;
 import org.qi4j.library.shiro.crypto.HashFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public final class SecureHashCredentialsMatcher
         implements CredentialsMatcher
 {

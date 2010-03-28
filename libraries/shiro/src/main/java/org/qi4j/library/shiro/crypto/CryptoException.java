@@ -23,9 +23,6 @@ package org.qi4j.library.shiro.crypto;
 
 import org.apache.shiro.ShiroException;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
 public final class CryptoException
         extends ShiroException
 {

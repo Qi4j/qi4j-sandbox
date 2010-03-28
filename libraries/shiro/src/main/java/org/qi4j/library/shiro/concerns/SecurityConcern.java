@@ -39,8 +39,6 @@ import org.slf4j.LoggerFactory;
 
 /**
  * FIXME Do not work because of {@link http://issues.ops4j.org/browse/QI-241 QI-241}.
- * 
- * @author Paul Merlin <paul@nosphere.org>
  */
 @AppliesTo( { RequiresAuthentication.class,
               RequiresGuest.class,

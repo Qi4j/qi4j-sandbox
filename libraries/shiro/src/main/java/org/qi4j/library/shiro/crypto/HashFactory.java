@@ -30,9 +30,6 @@ import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.crypto.hash.Sha384Hash;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public class HashFactory
 {
 

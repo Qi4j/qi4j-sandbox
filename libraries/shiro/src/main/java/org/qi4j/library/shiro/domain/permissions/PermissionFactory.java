@@ -19,16 +19,38 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.permissions;
 
-import org.qi4j.api.entity.association.ManyAssociation;
+import org.qi4j.api.entity.EntityBuilder;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.api.unitofwork.UnitOfWork;
+import org.qi4j.api.unitofwork.UnitOfWorkFactory;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface RoleAssignee
+@Mixins( PermissionFactory.Mixin.class )
+public interface PermissionFactory
+        extends ServiceComposite
 {
 
-    ManyAssociation<RoleAssignment> roleAssignments();
+    Permission create( String permissionString );
+
+    abstract class Mixin
+            implements PermissionFactory
+    {
+
+        @Structure
+        private UnitOfWorkFactory uowf;
+
+        public Permission create( String permissionString )
+        {
+            UnitOfWork uow = uowf.currentUnitOfWork();
+            EntityBuilder<Permission> permissionBuilder = uow.newEntityBuilder( Permission.class );
+            Permission permission = permissionBuilder.instance();
+            permission.string().set( permissionString );
+            return permissionBuilder.newInstance();
+        }
+
+    }
 
 }

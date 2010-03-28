@@ -7,10 +7,12 @@
         </layout>
     </appender>
 
-    <root level="debug">
+    <root level="info">
         <appender-ref ref="stdout" />
     </root>
 
+    <logger name="org.qi4j.library.shiro" level="trace"/>
     <logger name="org.apache.shiro" level="trace"/>
+    <logger name="org.apache.shiro.util.ThreadContext" level="info"/>
 
 </configuration>

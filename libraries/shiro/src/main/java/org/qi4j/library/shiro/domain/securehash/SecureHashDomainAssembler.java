@@ -19,21 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.securehash;
 
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.entity.association.ManyAssociation;
-import org.qi4j.api.property.Property;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface Role
-        extends EntityComposite
+public final class SecureHashDomainAssembler
+        implements Assembler
 {
 
-    Property<String> name();
-
-    ManyAssociation<Permission> permissions();
+    public void assemble( ModuleAssembly module )
+            throws AssemblyException
+    {
+        module.addValues( SecureHash.class );
+        module.addServices( SecureHashFactory.class );
+    }
 
 }

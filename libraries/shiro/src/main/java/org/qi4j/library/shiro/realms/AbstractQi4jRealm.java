@@ -31,18 +31,22 @@ import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.unitofwork.UnitOfWork;
+import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.api.unitofwork.UnitOfWorkFactory;
-import org.qi4j.library.shiro.domain.Permission;
-import org.qi4j.library.shiro.domain.Role;
-import org.qi4j.library.shiro.domain.RoleAssignee;
-import org.qi4j.library.shiro.domain.RoleAssignment;
+import org.qi4j.library.shiro.domain.permissions.Permission;
+import org.qi4j.library.shiro.domain.permissions.Role;
+import org.qi4j.library.shiro.domain.permissions.RoleAssignee;
+import org.qi4j.library.shiro.domain.permissions.RoleAssignment;
 import org.qi4j.library.shiro.bootstrap.RealmActivator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class AbstractQi4jRealm
         extends AuthorizingRealm
         implements RealmActivator
 {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger( AbstractQi4jRealm.class );
     @Structure
     protected UnitOfWorkFactory uowf;
 
@@ -60,29 +64,36 @@ public abstract class AbstractQi4jRealm
     @Override
     protected final AuthorizationInfo doGetAuthorizationInfo( PrincipalCollection principals )
     {
-        UnitOfWork uow = uowf.newUnitOfWork();
-        RoleAssignee roleAssignee = getRoleAssignee( principals );
-        if ( roleAssignee == null ) {
+        try {
+
+            UnitOfWork uow = uowf.newUnitOfWork();
+
+            RoleAssignee roleAssignee = getRoleAssignee( principals );
+            if ( roleAssignee == null ) {
+                return null;
+            }
+
+            Set<String> roleNames = new LinkedHashSet<String>();
+            Set<String> permissions = new LinkedHashSet<String>();
+            for ( RoleAssignment eachAssignment : roleAssignee.roleAssignments() ) {
+                Role eachRole = eachAssignment.role().get();
+                roleNames.add( eachRole.name().get() );
+                for ( Permission eachPermission : eachRole.permissions() ) {
+                    permissions.add( eachPermission.string().get() );
+                }
+            }
+
+            // Building AuthorizationInfo
+            SimpleAuthorizationInfo authz = new SimpleAuthorizationInfo( roleNames );
+            authz.setStringPermissions( permissions );
+
+            uow.complete();
+            return authz;
+
+        } catch ( UnitOfWorkCompletionException ex ) {
+            LOGGER.error( "Unable to get AuthorizationInfo", ex );
             return null;
         }
-
-        // Loading Roles & Permissions
-        Set<String> roleNames = new LinkedHashSet<String>();
-        Set<String> permissions = new LinkedHashSet<String>();
-        for ( RoleAssignment eachAssignment : roleAssignee.roleAssignments() ) {
-            Role eachRole = eachAssignment.role().get();
-            roleNames.add( eachRole.name().get() );
-            for ( Permission eachPermission : eachRole.permissions() ) {
-                permissions.add( eachPermission.string().get() );
-            }
-        }
-
-        // Building AuthorizationInfo
-        SimpleAuthorizationInfo authz = new SimpleAuthorizationInfo( roleNames );
-        authz.setStringPermissions( permissions );
-
-        uow.discard();
-        return authz;
     }
 
     protected abstract RoleAssignee getRoleAssignee( PrincipalCollection principals );

@@ -24,9 +24,6 @@ package org.qi4j.library.shiro.realms;
 import org.apache.shiro.realm.RealmFactory;
 import org.qi4j.api.structure.Application;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public abstract class AbstractQi4jRealmFactory
         implements RealmFactory
 {

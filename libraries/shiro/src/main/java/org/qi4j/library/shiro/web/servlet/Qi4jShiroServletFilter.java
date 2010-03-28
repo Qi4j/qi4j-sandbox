@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.servlet;
+package org.qi4j.library.shiro.web.servlet;
 
 import java.util.Iterator;
 import org.apache.shiro.config.Ini;
@@ -34,6 +34,7 @@ import org.qi4j.api.structure.Application;
 import org.qi4j.api.structure.Module;
 import org.qi4j.api.util.NullArgumentException;
 import org.qi4j.library.servlet.Qi4jServletSupport;
+import org.qi4j.library.shiro.web.filter.authc.X509AuthenticationFilter;
 
 public class Qi4jShiroServletFilter
         extends AbstractShiroFilter
@@ -82,7 +83,10 @@ public class Qi4jShiroServletFilter
             urls.put( eachUrl, ( String ) filterChainsJson.get( eachUrl ) );
         }
 
-        ini.addSection( "filters" ).put( "authcBasic.applicationName", application.name() );
+        Section filters = ini.addSection( "filters" );
+        filters.put( "authcBasic.applicationName", application.name() );
+        filters.put( "authcX509", X509AuthenticationFilter.class.getName() );
+
 
         IniFilterChainResolverFactory filterChainResolverFactory = new IniFilterChainResolverFactory( ini );
         filterChainResolverFactory.setFilterConfig( getFilterConfig() );

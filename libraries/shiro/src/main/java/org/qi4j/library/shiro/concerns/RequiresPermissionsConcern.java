@@ -34,7 +34,6 @@ import org.qi4j.api.injection.scope.Invocation;
 
 /**
  * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
- * @author Paul Merlin <p.merlin@nosphere.org>
  */
 @Deprecated
 @AppliesTo( RequiresPermissions.class )

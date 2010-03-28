@@ -28,9 +28,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import org.qi4j.api.injection.InjectionScope;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
 @Target( ElementType.METHOD )
 @Retention( RetentionPolicy.RUNTIME )
 @Documented

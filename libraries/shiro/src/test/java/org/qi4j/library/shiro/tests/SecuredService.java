@@ -1,4 +1,4 @@
-package org.qi4j.library.shiro.tests.username;
+package org.qi4j.library.shiro.tests;
 
 import org.qi4j.api.concern.Concerns;
 import org.qi4j.api.mixin.Mixins;
@@ -9,6 +9,7 @@ import org.qi4j.library.shiro.concerns.RequiresRoles;
 import org.qi4j.library.shiro.concerns.RequiresRolesConcern;
 import org.qi4j.library.shiro.concerns.RequiresUser;
 import org.qi4j.library.shiro.concerns.RequiresUserConcern;
+import org.qi4j.library.shiro.tests.username.UsernameFixtures;
 
 @Mixins( value = SecuredService.Mixin.class )
 @Concerns( value = { RequiresUserConcern.class, RequiresPermissionsConcern.class, RequiresRolesConcern.class } )

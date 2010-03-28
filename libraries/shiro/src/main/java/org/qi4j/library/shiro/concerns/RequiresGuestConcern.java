@@ -30,7 +30,6 @@ import org.qi4j.api.concern.ConcernOf;
 
 /**
  * @deprecated Use {@link SecurityConcern} instead once QI-241 is resolved.
- * @author Paul Merlin <p.merlin@nosphere.org>
  */
 @Deprecated
 @AppliesTo( RequiresGuest.class )

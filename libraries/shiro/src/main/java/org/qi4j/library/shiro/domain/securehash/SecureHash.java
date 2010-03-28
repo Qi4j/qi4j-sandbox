@@ -19,20 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.securehash;
 
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.entity.association.Association;
+import org.qi4j.api.property.Property;
+import org.qi4j.api.value.ValueComposite;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface RoleAssignment
-        extends EntityComposite
+public interface SecureHash
+        extends ValueComposite
 {
 
-    Association<Role> role();
+    Property<String> hashAlgorithm();
 
-    Association<RoleAssignee> assignee();
+    Property<Integer> hashIterations();
+
+    Property<String> salt();
+
+    Property<String> hash();
 
 }

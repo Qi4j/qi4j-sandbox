@@ -21,7 +21,7 @@
  */
 package org.qi4j.library.shiro;
 
-import org.qi4j.library.shiro.tests.username.SecuredService;
+import org.qi4j.library.shiro.tests.SecuredService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.UnauthenticatedException;

@@ -21,6 +21,7 @@
  */
 package org.qi4j.library.shiro.tests.username;
 
+import org.qi4j.library.shiro.tests.SecuredService;
 import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
@@ -28,7 +29,8 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.index.rdf.assembly.RdfMemoryStoreAssembler;
 import org.qi4j.library.shiro.ShiroAssembler;
-import org.qi4j.library.shiro.domain.ShiroDomainAssembler;
+import org.qi4j.library.shiro.domain.permissions.PermissionsDomainAssembler;
+import org.qi4j.library.shiro.domain.securehash.SecureHashDomainAssembler;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
 public class UsernameTestAssembler
@@ -41,10 +43,11 @@ public class UsernameTestAssembler
         // Domain & Custom Realm
         module.addEntities( UserEntity.class );
         module.addServices( SecuredService.class );
-        module.addObjects( CustomRealm.class ); // Indirectly implements RealmActivator, used by the ShiroLifecycleService
+        module.addObjects( UsernamePasswordRealm.class ); // Indirectly implements RealmActivator, used by the ShiroLifecycleService
 
         // Shiro Domain & Lifecycle
-        new ShiroDomainAssembler().assemble( module );
+        new PermissionsDomainAssembler().assemble( module );
+        new SecureHashDomainAssembler().assemble( module );
         new ShiroAssembler().assemble( module );
 
         // EntityStore & co

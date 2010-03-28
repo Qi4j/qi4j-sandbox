@@ -19,7 +19,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.securehash;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -35,9 +35,6 @@ import org.qi4j.api.value.ValueBuilderFactory;
 import org.qi4j.library.shiro.crypto.CryptoException;
 import org.qi4j.library.shiro.crypto.HashFactory;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
 @Mixins( SecureHashFactory.Mixin.class )
 public interface SecureHashFactory
         extends ServiceComposite

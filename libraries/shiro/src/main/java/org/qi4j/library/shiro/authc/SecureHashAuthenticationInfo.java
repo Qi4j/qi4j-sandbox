@@ -22,11 +22,8 @@
 package org.qi4j.library.shiro.authc;
 
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
-import org.qi4j.library.shiro.domain.SecureHash;
+import org.qi4j.library.shiro.domain.securehash.SecureHash;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public final class SecureHashAuthenticationInfo
         extends SimpleAuthenticationInfo
 {

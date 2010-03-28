@@ -19,24 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.x509;
 
-import org.qi4j.api.property.Property;
-import org.qi4j.api.value.ValueComposite;
+import org.qi4j.bootstrap.Assembler;
+import org.qi4j.bootstrap.AssemblyException;
+import org.qi4j.bootstrap.ModuleAssembly;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface SecureHash
-        extends ValueComposite
+public class X509DomainAssembler
+        implements Assembler
 {
 
-    Property<String> hashAlgorithm();
-
-    Property<Integer> hashIterations();
-
-    Property<String> salt();
-
-    Property<String> hash();
+    public void assemble( ModuleAssembly module )
+            throws AssemblyException
+    {
+        module.addEntities( X509Light.class );
+        module.addServices( X509LightFactory.class );
+    }
 
 }

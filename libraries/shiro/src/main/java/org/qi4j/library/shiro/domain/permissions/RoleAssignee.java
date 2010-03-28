@@ -19,18 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.permissions;
 
-import org.qi4j.api.entity.EntityComposite;
-import org.qi4j.api.property.Property;
+import org.qi4j.api.common.UseDefaults;
+import org.qi4j.api.entity.association.ManyAssociation;
 
-/**
- * @author Paul Merlin <p.merlin@nosphere.org>
- */
-public interface Permission
-        extends EntityComposite
+public interface RoleAssignee
 {
 
-    Property<String> string();
+    @UseDefaults
+    ManyAssociation<RoleAssignment> roleAssignments();
 
 }

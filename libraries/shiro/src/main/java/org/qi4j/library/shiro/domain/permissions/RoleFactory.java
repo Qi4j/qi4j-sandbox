@@ -19,27 +19,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package org.qi4j.library.shiro.domain;
+package org.qi4j.library.shiro.domain.permissions;
 
-import org.qi4j.bootstrap.Assembler;
-import org.qi4j.bootstrap.AssemblyException;
-import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.api.entity.EntityBuilder;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.api.unitofwork.UnitOfWork;
+import org.qi4j.api.unitofwork.UnitOfWorkFactory;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
-public final class ShiroDomainAssembler
-        implements Assembler
+@Mixins( RoleFactory.Mixin.class )
+public interface RoleFactory
+        extends ServiceComposite
 {
 
-    public void assemble( ModuleAssembly module )
-            throws AssemblyException
+    Role create( String name, Iterable<Permission> permissions );
+
+    abstract class Mixin
+            implements RoleFactory
     {
-        module.addEntities( Role.class,
-                            RoleAssignment.class,
-                            Permission.class );
-        module.addValues( SecureHash.class );
-        module.addServices( SecureHashFactory.class );
+
+        @Structure
+        private UnitOfWorkFactory uowf;
+
+        public Role create( String name, Iterable<Permission> permissions )
+        {
+            UnitOfWork uow = uowf.currentUnitOfWork();
+            EntityBuilder<Role> roleBuilder = uow.newEntityBuilder( Role.class );
+            Role role = roleBuilder.instance();
+            role.name().set( name );
+            for ( Permission eachPermission : permissions ) {
+                role.permissions().add( eachPermission );
+            }
+            return roleBuilder.newInstance();
+        }
+
     }
 
 }

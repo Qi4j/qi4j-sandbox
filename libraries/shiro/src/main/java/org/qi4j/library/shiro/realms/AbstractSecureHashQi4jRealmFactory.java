@@ -26,9 +26,6 @@ import java.util.Collection;
 import org.apache.shiro.realm.Realm;
 import org.qi4j.library.shiro.authc.SecureHashCredentialsMatcher;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 public abstract class AbstractSecureHashQi4jRealmFactory
         extends AbstractQi4jRealmFactory
 {

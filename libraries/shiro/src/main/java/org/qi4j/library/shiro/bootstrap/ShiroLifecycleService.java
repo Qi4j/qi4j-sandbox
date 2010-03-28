@@ -21,6 +21,8 @@
  */
 package org.qi4j.library.shiro.bootstrap;
 
+import java.security.Security;
+import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.mixin.Mixins;
 import org.qi4j.api.object.ObjectBuilderFactory;
@@ -42,6 +44,9 @@ public interface ShiroLifecycleService
         public void activate()
                 throws Exception
         {
+            if ( Security.getProvider( BouncyCastleProvider.PROVIDER_NAME ) == null ) {
+                Security.addProvider( new BouncyCastleProvider() );
+            }
             obf.newObject( RealmActivator.class ).activateRealm();
         }
 

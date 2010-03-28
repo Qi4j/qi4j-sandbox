@@ -21,6 +21,7 @@
  */
 package org.qi4j.library.shiro.tests.username;
 
+import java.util.Arrays;
 import org.qi4j.api.entity.EntityBuilder;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.Structure;
@@ -29,14 +30,12 @@ import org.qi4j.api.service.Activatable;
 import org.qi4j.api.service.ServiceComposite;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkFactory;
-import org.qi4j.library.shiro.domain.Permission;
-import org.qi4j.library.shiro.domain.Role;
-import org.qi4j.library.shiro.domain.RoleAssignment;
-import org.qi4j.library.shiro.domain.SecureHashFactory;
+import org.qi4j.library.shiro.domain.permissions.Permission;
+import org.qi4j.library.shiro.domain.permissions.PermissionFactory;
+import org.qi4j.library.shiro.domain.permissions.Role;
+import org.qi4j.library.shiro.domain.permissions.RoleFactory;
+import org.qi4j.library.shiro.domain.securehash.SecureHashFactory;
 
-/**
- * @author Paul Merlin <paul@nosphere.org>
- */
 @Mixins( UsernameFixtures.Mixin.class )
 public interface UsernameFixtures
         extends ServiceComposite, Activatable
@@ -54,6 +53,10 @@ public interface UsernameFixtures
         @Structure
         private UnitOfWorkFactory uowf;
         @Service
+        private PermissionFactory permissionFactory;
+        @Service
+        private RoleFactory roleFactory;
+        @Service
         private SecureHashFactory hashFactory;
 
         public void activate()
@@ -62,16 +65,8 @@ public interface UsernameFixtures
             // Create Test User
             UnitOfWork uow = uowf.newUnitOfWork();
 
-            EntityBuilder<Permission> permissionBuilder = uow.newEntityBuilder( Permission.class );
-            Permission permission = permissionBuilder.instance();
-            permission.string().set( PERMISSION );
-            permission = permissionBuilder.newInstance();
-
-            EntityBuilder<Role> roleBuilder = uow.newEntityBuilder( Role.class );
-            Role role = roleBuilder.instance();
-            role.name().set( ROLE );
-            role.permissions().add( permission );
-            role = roleBuilder.newInstance();
+            Permission permission = permissionFactory.create( PERMISSION );
+            Role role = roleFactory.create( ROLE, Arrays.asList( new Permission[]{ permission } ) );
 
             EntityBuilder<UserEntity> userBuilder = uow.newEntityBuilder( UserEntity.class );
             UserEntity user = userBuilder.instance();
@@ -79,12 +74,7 @@ public interface UsernameFixtures
             user.secureHash().set( hashFactory.create( PASSWORD ) );
             user = userBuilder.newInstance();
 
-            EntityBuilder<RoleAssignment> roleAssignmentBuilder = uow.newEntityBuilder( RoleAssignment.class );
-            RoleAssignment roleAssignment = roleAssignmentBuilder.instance();
-            roleAssignment.role().set( role );
-            user.roleAssignments().add( roleAssignment );
-            roleAssignment.assignee().set( user );
-            roleAssignment = roleAssignmentBuilder.newInstance();
+            role.assignTo( user );
 
             uow.complete();
         }
