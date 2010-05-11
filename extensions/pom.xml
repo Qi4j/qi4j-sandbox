@@ -20,5 +20,6 @@
     <module>entitystore-rmi</module>
     <module>entitystore-s3</module>
     <module>entitystore-swift</module>
+    <module>indexing-sql2</module>
   </modules>
 </project>
