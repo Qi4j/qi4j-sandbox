@@ -12,7 +12,8 @@
  *
  */
 
-package org.qi4j.index.sql.startup;
+
+package org.qi4j.library.sql.postgresql.internal;
 
 /**
  * This is helper class to contain all of most of the SQL constants used throughout the SQL Indexing. 

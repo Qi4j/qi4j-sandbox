@@ -13,29 +13,30 @@
  */
 
 
-package org.qi4j.index.sql.common;
+package org.qi4j.library.sql.common;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.qi4j.api.common.QualifiedName;
 
-
-
 /**
- * Implementation of the {@link QNameInfo}. See {@link #fromProperty(QualifiedName, List, String, Type, String)}, {@link #fromAssociation(QualifiedName, String, Type)} and {@link #fromManyAssociation(QualifiedName, String, Type)} methods in order to instantiate this class.
+ * A helper interface to encapsulate information about qualified name and how it appears in database.
+ *  
+ * See {@link #fromProperty(QualifiedName, List, String, Type, String)}, {@link #fromAssociation(QualifiedName, String, Type)} and {@link #fromManyAssociation(QualifiedName, String, Type)} methods in order to instantiate this class.
  * 
  * @author Stanislav Muhametsin
  */
-public class QNameInfoImpl implements QNameInfo
+public final class QNameInfo
 {
+   /**
+    * Currently all possible types of qualified names: {@link #PROPERTY} for properties, {@link #ASSOCIATION} for associations, and {@link #MANY_ASSOCIATION} for many-associations.
+    */
+   public enum QNameType { PROPERTY, ASSOCIATION, MANY_ASSOCIATION };
    
    private static final List<Class<?>> EMPTY_COLL_CLASSES = new ArrayList<Class<?>>();
    
@@ -56,7 +57,7 @@ public class QNameInfoImpl implements QNameInfo
    
    private final Set<String> _entityTypesUsingThisQName;
    
-   private QNameInfoImpl(
+   private QNameInfo(
          QualifiedName qName, //
          QNameType qNameType, //
          List<Class<?>> collectionClasses, //
@@ -87,65 +88,59 @@ public class QNameInfoImpl implements QNameInfo
       this._entityTypesUsingThisQName = new HashSet<String>();
    }
    
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getCollectionDepth()
+   /**
+    * If qualified name represented by this interface is a property with collection as type, returns the {@code amount of nested collections + 1}.
+    * That is, assuming {@code X} is not a collection, for type {@code Property<Set<X>>} this returns {@code 1}, for {@code Property<Set<Set<X>>>} this returns {@code 2}, etc.
+    * If qualified name represented by this interface is not a property or a property with no collection type, this method returns {@code 0}.
+    * @return The collection depth ({@code > 0}) of qualified name, if this interface represents qualified name with collection property; {@code 0} otherwise.
     */
-   @Override
    public Integer getCollectionDepth()
    {
       return this._collectionClasses.size();
    }
    
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getReferencedQNames()
+   /**
+    * Returns the non-collection type of this qualified name. That is, for {@code Property<X>} this returns {@code X} if {@code X}
+    * is not a collection type, and for {@code Property<Set<Y>>} this returns {@code Y} if {@code Y} is not a collection type.
+    * @return The non-collection type of this qualified name.
     */
-   
-   public void addEntityTypeUsingThisQName(String entityType)
-   {
-      this._entityTypesUsingThisQName.add(entityType);
-   }
-   
-   
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getFinalType()
-    */
-   @Override
    public Type getFinalType()
    {
       return this._finalType;
    }
    
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getQName()
+   /**
+    * Gets the qualified name this interface represents.
+    * @return The qualified name this interface represents.
+    * @see QualifiedName
     */
-   @Override
    public QualifiedName getQName()
    {
       return this._qName;
    }
    
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getTableName(java.lang.Integer)
+   /**
+    * Gets the table name in database, used to store values of the qualified name this interface represents.
+    * @return The table name in database, used to store values of the qualified name this interface represents.
     */
-   @Override
    public String getTableName()
    {
       return this._tableName;
    }
 
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#isFinalTypePrimitive()
+   /**
+    * Returns whether the final (non-collection) type of this qualified name is not seen as value composite. Always returns {@code false} for qualified names of type {@link QNameType#ASSOCIATION} and {@link QNameType#MANY_ASSOCIATION}. 
+    * @return {@code true} if {@link #getFinalType()} is not seen as value composite type; {@code false} otherwise.
     */
-   @Override
    public Boolean isFinalTypePrimitive()
    {
       return this._isFinalTypePrimitive;
    }
    
-   /* (non-Javadoc)
-    * @see org.qi4j.library.sql.jdbc.QNameInfo#getQNameType()
+   /**
+    * Gets the type of represented qualified name: either {@link QNameType#PROPERTY} for properties, {@link QNameType#ASSOCIATION} for associations, or {@link QNameType#MANY_ASSOCIATION} for many-associations.
+    * @return The type of represented qualified name: either {@link QNameType#PROPERTY}, {@link QNameType#ASSOCIATION}, or {@link QNameType#MANY_ASSOCIATION}.
     */
-   @Override
    public QNameType getQNameType()
    {
       return this._qNameType;
@@ -166,7 +161,7 @@ public class QNameInfoImpl implements QNameInfo
          Type finalType
          )
    {
-      return new QNameInfoImpl(
+      return new QNameInfo(
             qName,
             QNameType.PROPERTY,
             collectionClasses,
@@ -188,7 +183,7 @@ public class QNameInfoImpl implements QNameInfo
          Type assoTargetType //
          )
    {
-      return new QNameInfoImpl(
+      return new QNameInfo(
             qName,
             QNameType.ASSOCIATION,
             null,
@@ -210,7 +205,7 @@ public class QNameInfoImpl implements QNameInfo
          Type assoTargetType
          )
    {
-      return new QNameInfoImpl(
+      return new QNameInfo(
             qName,
             QNameType.MANY_ASSOCIATION,
             null,
@@ -220,3 +215,4 @@ public class QNameInfoImpl implements QNameInfo
    }
    
 }
+

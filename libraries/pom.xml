@@ -21,5 +21,6 @@
     <module>validation</module>
     <module>servlet</module>
     <module>shiro</module>
+    <module>sql</module>
   </modules>
 </project>

@@ -12,18 +12,20 @@
  *
  */
 
-package org.qi4j.index.sql;
+
+package org.qi4j.library.sql.postgresql;
 
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.configuration.ConfigurationComposite;
 import org.qi4j.api.property.Property;
+import org.qi4j.library.sql.postgresql.internal.PostgreSQLAppStartup;
 
 /**
- * This class represents a configuration to entitystore using RDBMS through JDBC.
+ * This class represents a configuration to entitystore using PostgreSQL RDBMS through JDBC.
  * 
  * @author Stanislav Muhametsin
  */
-public interface RDBConfiguration extends ConfigurationComposite
+public interface PostgreSQLConfiguration extends ConfigurationComposite
 {
    /**
     * The connection string to use when creating JDBC connection to RDBMS.
@@ -31,7 +33,7 @@ public interface RDBConfiguration extends ConfigurationComposite
    Property<String> connectionString();
    
    /**
-    * The schema name to use to create/find tables. 
+    * The schema name to use to create/find tables. Defaults to {@value PostgreSQLAppStartup#DEFAULT_SCHEMA_NAME}.
     */
    @Optional
    Property<String> schemaName();

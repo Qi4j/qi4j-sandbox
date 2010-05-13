@@ -13,7 +13,7 @@
  */
 
 
-package org.qi4j.index.sql.common;
+package org.qi4j.library.sql.common;
 
 import org.qi4j.spi.entity.EntityDescriptor;
 
@@ -22,44 +22,34 @@ import org.qi4j.spi.entity.EntityDescriptor;
  *
  * @author Stanislav Muhametsin
  */
-public interface EntityTypeInfo
+public final class EntityTypeInfo
 {
+   private Integer _entityTypeID;
+   
+   private EntityDescriptor _entityDescriptor;
+   
+   public EntityTypeInfo(EntityDescriptor entityDescriptor, Integer entityTypeID)
+   {
+      this._entityTypeID = entityTypeID;
+      this._entityDescriptor = entityDescriptor;
+   }
    
    /**
     * Gets the primary key of this entity type, as it is stored in database in entity type lookup table.
     * @return The primary key of this entity type, as it is stored in database in entity type lookup table.
     */
-   Integer getEntityTypePK();
+   public Integer getEntityTypePK()
+   {
+      return this._entityTypeID;
+   }
    
    /**
     * Gets the entity descriptor of this entity type.
     * @return The entity descripotor of this entity type.
     */
-   EntityDescriptor getEntityDescriptor();
-   
-   public class EntityTypeInfoImpl implements EntityTypeInfo
+   public EntityDescriptor getEntityDescriptor()
    {
-      
-      private Integer _entityTypeID;
-      
-      private EntityDescriptor _entityDescriptor;
-      
-      public EntityTypeInfoImpl(EntityDescriptor entityDescriptor, Integer entityTypeID)
-      {
-         this._entityTypeID = entityTypeID;
-         this._entityDescriptor = entityDescriptor;
-      }
-      
-      @Override
-      public Integer getEntityTypePK()
-      {
-         return this._entityTypeID;
-      }
-      
-      @Override
-      public EntityDescriptor getEntityDescriptor()
-      {
-         return this._entityDescriptor;
-      }
+      return this._entityDescriptor;
    }
+
 }

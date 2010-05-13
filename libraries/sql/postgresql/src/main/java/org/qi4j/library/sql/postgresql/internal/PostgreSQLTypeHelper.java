@@ -12,15 +12,14 @@
  *
  */
 
-package org.qi4j.index.sql.common;
 
-import java.lang.reflect.Array;
+package org.qi4j.library.sql.postgresql.internal;
+
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.sql.Types;
 import java.util.Date;
 
 import org.qi4j.api.common.Optional;
@@ -33,8 +32,8 @@ import org.qi4j.api.mixin.Mixins;
  * 
  * @author Stanislav Muhametsin
  */
-@Mixins( { SQLTypeHelper.SQLTypeHelperMixin.class })
-public interface SQLTypeHelper
+@Mixins( { PostgreSQLTypeHelper.SQLTypeHelperMixin.class })
+public interface PostgreSQLTypeHelper
 {
    
    /**
@@ -47,13 +46,15 @@ public interface SQLTypeHelper
     */
    void addPrimitiveToPS(PreparedStatement ps, Integer index, @Optional Object primitive, Type primitiveType) throws SQLException;
    
-   public class SQLTypeHelperMixin implements SQLTypeHelper
+   Integer getSQLType(Object primitive);
+   
+   public class SQLTypeHelperMixin implements PostgreSQLTypeHelper
    {
       
       @This
-      private SQLIndexingState _state;
+      private PostgreSQLDBState _state;
       
-      public Object processJavaPrimitiveBeforeUsingInStatement(Object primitive, Type primtiveType)
+      public Object processJavaPrimitiveBeforeUsingInStatement(Object primitive)
       {
          if (primitive != null)
          {
@@ -80,12 +81,28 @@ public interface SQLTypeHelper
       @Override
       public void addPrimitiveToPS(PreparedStatement ps, Integer index, Object primitive, Type primitiveType) throws SQLException
       {
-         primitive = processJavaPrimitiveBeforeUsingInStatement(primitive, primitiveType);
+         primitive = processJavaPrimitiveBeforeUsingInStatement(primitive);
+         Integer sqlType = this.getSQLType(primitive, primitiveType);
+         ps.setObject(index, primitive, sqlType);
+      }
+      
+      @Override
+      public Integer getSQLType(Object primitive)
+      {
+         primitive = processJavaPrimitiveBeforeUsingInStatement(primitive);
+
+         return this.getSQLType(primitive, primitive.getClass());
+      }
+      
+      private Integer getSQLType(Object primitive, Type primitiveType)
+      {
          if (primitiveType instanceof ParameterizedType)
          {
             primitiveType = ((ParameterizedType) primitiveType).getRawType();
          }
+         
          Class<?> primitiveClass = (Class<?>) primitiveType;
+
          if (Enum.class.isAssignableFrom(primitiveClass))
          {
             primitiveClass = Enum.class;
@@ -95,8 +112,8 @@ public interface SQLTypeHelper
          {
             throw new InternalError("Could not find mapping from " + primitiveClass + " to SQL type.");
          }
-
-         ps.setObject(index, primitive, sqlType);
+         
+         return sqlType;
       }
    }
 }

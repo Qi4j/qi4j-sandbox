@@ -13,7 +13,7 @@
  */
 
 
-package org.qi4j.index.sql.common;
+package org.qi4j.library.sql.postgresql.internal;
 
 import java.sql.Connection;
 import java.sql.Types;
@@ -23,10 +23,8 @@ import java.util.Set;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.common.QualifiedName;
 import org.qi4j.api.property.Property;
-import org.qi4j.index.sql.indexing.SQLIndexing;
-import org.qi4j.index.sql.query.SQLQuery;
-import org.qi4j.index.sql.query.SQLQueryParser;
-import org.qi4j.index.sql.startup.SQLStartup;
+import org.qi4j.library.sql.common.EntityTypeInfo;
+import org.qi4j.library.sql.common.QNameInfo;
 
 /**
  * The state-type interface containing some important database-related data, in order to create proper SQL statements in
@@ -34,7 +32,7 @@ import org.qi4j.index.sql.startup.SQLStartup;
  *
  * @author Stanislav Muhametsin
  */
-public interface SQLIndexingState
+public interface PostgreSQLDBState
 {
    /**
     * The schema name where all the required tables are located.

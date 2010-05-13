@@ -13,26 +13,26 @@
  */
 
 
-package org.qi4j.index.sql.assembly;
+package org.qi4j.library.sql.postgresql.assembly;
 
 import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
-import org.qi4j.index.sql.SQLIndexingEngineService;
+import org.qi4j.library.sql.postgresql.PostgreSQLService;
 
 /**
  * This is the assembler class in order to use SQL indexing in your application.
  *
  * @author Stanislav Muhametsin
  */
-public class SQLIndexingAssembler implements Assembler
+public class PostgreSQLAssembler implements Assembler
 {
    
    /**
     * The default name for the service.
     */
-   public static final String DEFAULT_SERVICE_NAME = "sql_indexing";
+   public static final String DEFAULT_SERVICE_NAME = "pgsql_lib";
    
    /**
     * The default visibility for the service.
@@ -44,17 +44,17 @@ public class SQLIndexingAssembler implements Assembler
    
    private String _serviceName;
    
-   public SQLIndexingAssembler()
+   public PostgreSQLAssembler()
    {
       this(DEFAULT_VISIBILTY);
    }
    
-   public SQLIndexingAssembler(Visibility entityStoreVisibility)
+   public PostgreSQLAssembler(Visibility entityStoreVisibility)
    {
       this(entityStoreVisibility, DEFAULT_SERVICE_NAME);
    }
    
-   public SQLIndexingAssembler(Visibility entityStoreVisibility, String serviceName)
+   public PostgreSQLAssembler(Visibility entityStoreVisibility, String serviceName)
    {
       this._esVisiblity = entityStoreVisibility;
       this._serviceName = serviceName;
@@ -63,7 +63,7 @@ public class SQLIndexingAssembler implements Assembler
    @Override
    public void assemble(ModuleAssembly module) throws AssemblyException
    {
-      module.addServices(SQLIndexingEngineService.class).identifiedBy(this._serviceName).visibleIn(this._esVisiblity);
+      module.addServices(PostgreSQLService.class).identifiedBy(this._serviceName).visibleIn(this._esVisiblity).instantiateOnStartup();
    }
    
 }
