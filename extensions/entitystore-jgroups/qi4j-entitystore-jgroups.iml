@@ -10,14 +10,14 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" exported="" name="Maven: org.qi4j.core:qi4j-core-spi:1.0-RC3-SNAPSHOT" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.qi4j.core:qi4j-core-api:1.0-RC3-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-testsupport:1.0-RC3-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-bootstrap:1.0-RC3-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.5" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-runtime:1.0-RC3-SNAPSHOT" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: cglib:cglib-nodep:2.1_3" level="project" />
-    <orderEntry type="library" exported="" name="Maven: org.qi4j.library:qi4j-lib-locking:1.0-RC3-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.qi4j.core:qi4j-core-spi:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.qi4j.core:qi4j-core-api:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-testsupport:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-bootstrap:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: junit:junit:4.4" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.qi4j.core:qi4j-core-runtime:1.1-SNAPSHOT" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: cglib:cglib-nodep:2.2" level="project" />
+    <orderEntry type="library" exported="" name="Maven: org.qi4j.library:qi4j-lib-locking:1.1-SNAPSHOT" level="project" />
     <orderEntry type="library" exported="" name="Maven: jgroups:jgroups:2.6.2" level="project" />
     <orderEntry type="library" exported="" name="Maven: commons-logging:commons-logging:1.1" level="project" />
     <orderEntry type="library" exported="" name="Maven: log4j:log4j:1.2.12" level="project" />

@@ -105,13 +105,15 @@ public class JndiEntityStoreMixin
         setup = null;
     }
 
-    public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, Module module )
-    {
-        return new JndiUow( setup, usecase, module );
-    }
+   public EntityStoreUnitOfWork newUnitOfWork( Usecase usecase, ModuleSPI module )
+   {
+      return new JndiUow( setup, usecase, module );
+   }
 
-    public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, Module moduleInstance )
-    {
-        return null;
-    }
+   public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, ModuleSPI module )
+   {
+      JndiUow uow = new JndiUow(setup, Usecase.DEFAULT, module);
+      // TODO Actual iteration
+      return uow;
+   }
 }

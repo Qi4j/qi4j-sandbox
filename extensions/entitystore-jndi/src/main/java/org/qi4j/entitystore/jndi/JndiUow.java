@@ -110,7 +110,7 @@ public class JndiUow implements EntityStoreUnitOfWork
         }
     }
 
-    public StateCommitter apply()
+    public StateCommitter applyChanges()
         throws EntityStoreException
     {
         return new StateCommitter()
