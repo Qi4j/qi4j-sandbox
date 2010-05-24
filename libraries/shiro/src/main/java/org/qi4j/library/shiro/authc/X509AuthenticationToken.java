@@ -31,12 +31,12 @@ import org.bouncycastle.x509.NoSuchStoreException;
 import org.bouncycastle.x509.X509CertStoreSelector;
 import org.bouncycastle.x509.X509CollectionStoreParameters;
 import org.bouncycastle.x509.X509Store;
-import org.qi4j.library.shiro.crypto.CryptoException;
 
 public class X509AuthenticationToken
         implements AuthenticationToken, HostAuthenticationToken
 {
 
+    private static final long serialVersionUID = 1L;
     private final X509Certificate[] clientX509CertChain;
     private final String host;
 
@@ -67,9 +67,9 @@ public class X509AuthenticationToken
             X509CollectionStoreParameters params = new X509CollectionStoreParameters( Arrays.asList( clientX509CertChain ) );
             return X509Store.getInstance( "CERTIFICATE/COLLECTION", params, BouncyCastleProvider.PROVIDER_NAME );
         } catch ( NoSuchStoreException ex ) {
-            throw new CryptoException( "Unable to create Client BC Certificate Chain CertStore", ex );
+            return null;
         } catch ( NoSuchProviderException ex ) {
-            throw new CryptoException( "Unable to create Client BC Certificate Chain CertStore", ex );
+            return null;
         }
     }
 
@@ -82,6 +82,7 @@ public class X509AuthenticationToken
         return clientCert.getSubjectX500Principal();
     }
 
+    @SuppressWarnings( "ReturnOfCollectionOrArrayField" )
     public Object getCredentials()
     {
         return clientX509CertChain;

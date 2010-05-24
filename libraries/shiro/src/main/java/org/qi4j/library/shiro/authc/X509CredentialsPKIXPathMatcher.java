@@ -32,7 +32,6 @@ import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import org.bouncycastle.x509.CertPathReviewerException;
 import org.bouncycastle.x509.ExtendedPKIXBuilderParameters;
 import org.bouncycastle.x509.PKIXCertPathReviewer;
-import org.qi4j.library.shiro.crypto.CryptoException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,11 +43,11 @@ import org.slf4j.LoggerFactory;
  * This implementation use the BouncyCastle PKIX API as it behave much better and will make CRLs support easily
  * implemented when needed.
  */
-public class X509CredentialsMatcher
+public class X509CredentialsPKIXPathMatcher
         implements CredentialsMatcher
 {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger( X509CredentialsMatcher.class );
+    private static final Logger LOGGER = LoggerFactory.getLogger( X509CredentialsPKIXPathMatcher.class );
 
     public boolean doCredentialsMatch( AuthenticationToken token, AuthenticationInfo info )
     {
@@ -78,9 +77,11 @@ public class X509CredentialsMatcher
             return true;
 
         } catch ( GeneralSecurityException ex ) {
-            throw new CryptoException( "Unable to do credentials matching", ex );
+            LOGGER.trace( "Unable to do credentials matching", ex );
+            return false;
         } catch ( CertPathReviewerException ex ) {
-            throw new CryptoException( "Unable to do credentials matching", ex );
+            LOGGER.trace( "Unable to do credentials matching", ex );
+            return false;
         }
     }
 

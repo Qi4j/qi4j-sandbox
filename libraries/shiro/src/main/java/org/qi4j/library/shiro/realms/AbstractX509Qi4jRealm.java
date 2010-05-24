@@ -31,7 +31,7 @@ import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.library.shiro.authc.X509AuthenticationInfo;
 import org.qi4j.library.shiro.authc.X509AuthenticationToken;
-import org.qi4j.library.shiro.authc.X509CredentialsMatcher;
+import org.qi4j.library.shiro.authc.X509CredentialsPKIXPathMatcher;
 import org.qi4j.library.shiro.domain.permissions.RoleAssignee;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,7 +46,7 @@ public abstract class AbstractX509Qi4jRealm
     {
         super();
         setAuthenticationTokenClass( X509AuthenticationToken.class );
-        setCredentialsMatcher( new X509CredentialsMatcher() );
+        setCredentialsMatcher( new X509CredentialsPKIXPathMatcher() );
     }
 
     @Override
