@@ -41,6 +41,7 @@ public class StrictX509Realm
         extends AbstractX509Qi4jRealm
 {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger( StrictX509Realm.class );
     @Structure
     private QueryBuilderFactory qbf;
 
@@ -50,8 +51,6 @@ public class StrictX509Realm
         setName( StrictX509Realm.class.getSimpleName() );
         LOGGER.debug( "StringX509Realm instanciated" );
     }
-
-    private static final Logger LOGGER = LoggerFactory.getLogger( StrictX509Realm.class );
 
     @Override
     protected Set<X509Certificate> getGrantedIssuers( X509Certificate userCertificate )

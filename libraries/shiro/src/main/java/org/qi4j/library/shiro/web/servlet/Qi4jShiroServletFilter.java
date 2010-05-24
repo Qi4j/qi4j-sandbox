@@ -25,7 +25,7 @@ import java.util.Iterator;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.config.Ini.Section;
 import org.apache.shiro.realm.Realm;
-import org.apache.shiro.web.DefaultWebSecurityManager;
+import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.config.IniFilterChainResolverFactory;
 import org.apache.shiro.web.servlet.AbstractShiroFilter;
 import org.json.JSONException;

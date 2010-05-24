@@ -29,6 +29,7 @@ public class X509DomainAssembler
         implements Assembler
 {
 
+    @SuppressWarnings( "unchecked" )
     public void assemble( ModuleAssembly module )
             throws AssemblyException
     {
