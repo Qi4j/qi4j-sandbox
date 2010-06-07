@@ -4,7 +4,7 @@
   <groupId>org.qi4j.sandbox</groupId>
   <artifactId>sb-libraries-root</artifactId>
   <name>Qi4j Sandbox Libraries - Build POM</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>

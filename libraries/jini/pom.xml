@@ -4,7 +4,7 @@
   <groupId>org.qi4j.library.jini</groupId>
   <artifactId>qi4j-lib-jini</artifactId>
   <name>Qi4j Library - Jini</name>
-  <version>1.1-SNAPSHOT</version>
+  <version>1.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <modules>
