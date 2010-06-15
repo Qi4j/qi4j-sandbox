@@ -22,5 +22,6 @@
     <module>servlet</module>
     <module>shiro</module>
     <module>sql</module>
+    <module>entityproxy</module>
   </modules>
 </project>
