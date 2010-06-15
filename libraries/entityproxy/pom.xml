@@ -1,0 +1,52 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <artifactId>sb-libraries-root</artifactId>
+    <groupId>org.qi4j.sandbox</groupId>
+    <version>1.2-SNAPSHOT</version>
+  </parent>
+  <groupId>org.qi4j.sandbox</groupId>
+  <artifactId>qi4j-lib-entityproxy</artifactId>
+  <version>1.2-SNAPSHOT</version>
+  <name>Qi4j Library - Entityproxy</name>
+  <description>This library provides easy way to wrap your entities with transient composites so that qi4j-agnostic code may handle them without worrying about unit of work.</description>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.qi4j.core</groupId>
+  		<artifactId>qi4j-core-api</artifactId>
+  		<version>${version.qi4j-core}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.qi4j.library</groupId>
+  		<artifactId>qi4j-lib-constraints</artifactId>
+  		<version>${version.qi4j-core}</version>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.qi4j.core</groupId>
+  		<artifactId>qi4j-core-testsupport</artifactId>
+  		<version>${version.qi4j-core}</version>
+  		<scope>test</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.qi4j.core</groupId>
+  		<artifactId>qi4j-core-runtime</artifactId>
+  		<version>${version.qi4j-core}</version>
+  		<scope>test</scope>
+  	</dependency>
+  </dependencies>
+  <properties>
+  	<version.qi4j-core>1.2-SNAPSHOT</version.qi4j-core>
+  </properties>
+
+  <build>
+   <plugins>
+     <plugin>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.6</source>
+          <target>1.6</target>
+        </configuration>
+      </plugin>
+   </plugins>
+  </build>
+</project>
