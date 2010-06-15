@@ -19,6 +19,7 @@ import org.qi4j.api.common.Visibility;
 import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
+import org.qi4j.library.entityproxy.EntityProxyHelper.EntityProxyHelperService;
 import org.qi4j.library.entityproxy.internal.EntityProxyCacheService;
 
 /**
@@ -37,6 +38,6 @@ public class EntityProxyAssembler implements Assembler
     public void assemble( ModuleAssembly module )
         throws AssemblyException
     {
-        module.addServices( EntityProxyCacheService.class).visibleIn( Visibility.application );
+        module.addServices( EntityProxyCacheService.class, EntityProxyHelperService.class).visibleIn( Visibility.application );
     }
 }

@@ -12,22 +12,55 @@
  *
  */
 
-
 package org.qi4j.library.entityproxy;
+
+import org.qi4j.api.concern.Concerns;
+import org.qi4j.api.injection.scope.Structure;
+import org.qi4j.api.mixin.Mixins;
+import org.qi4j.api.service.ServiceComposite;
+import org.qi4j.api.unitofwork.UnitOfWorkConcern;
+import org.qi4j.api.unitofwork.UnitOfWorkFactory;
+import org.qi4j.api.unitofwork.UnitOfWorkPropagation;
+import org.qi4j.api.unitofwork.UnitOfWorkPropagation.Propagation;
 
 /**
  *
  * @author Stanislav Muhametsin
  */
-public class EntityProxyHelper
+public interface EntityProxyHelper
 {
-    public static <EType, ReturnType> ReturnType getEntity(Class<ReturnType> entityClass, EType proxyOrEntity)
+
+    public <EType, ReturnType> ReturnType getEntity( Class<ReturnType> entityClass, EType proxyOrEntity );
+
+    public <PType, ReturnType> ReturnType getProxy( Class<ReturnType> proxyClass, PType proxyOrEntity );
+
+    @Mixins({EntityProxyHelperMixin.class})
+    @Concerns({UnitOfWorkConcern.class})
+    public interface EntityProxyHelperService extends EntityProxyHelper, ServiceComposite
     {
-        return proxyOrEntity instanceof EntityProxy ? ((EntityProxy)proxyOrEntity).getEntity( entityClass ) : entityClass.cast( proxyOrEntity );
+
     }
 
-    public static <PType, ReturnType> ReturnType getProxy(Class<ReturnType> proxyClass, PType proxyOrEntity)
+    public abstract class EntityProxyHelperMixin
+        implements EntityProxyHelper
     {
-        return proxyOrEntity instanceof ProxyableEntity ? ((ProxyableEntity)proxyOrEntity).getProxy( proxyClass ) : proxyClass.cast( proxyOrEntity );
+        @Structure private UnitOfWorkFactory _uowf;
+
+
+        @Override
+        @UnitOfWorkPropagation(Propagation.REQUIRED)
+        public <EType, ReturnType> ReturnType getEntity( Class<ReturnType> entityClass, EType proxyOrEntity )
+        {
+            return proxyOrEntity instanceof EntityProxy ? ((EntityProxy) proxyOrEntity).getEntity( entityClass )
+                : entityClass.cast( this._uowf.currentUnitOfWork().get( proxyOrEntity ));
+        }
+
+        @Override
+        @UnitOfWorkPropagation(Propagation.REQUIRED)
+        public <PType, ReturnType> ReturnType getProxy( Class<ReturnType> proxyClass, PType proxyOrEntity )
+        {
+            return proxyOrEntity instanceof ProxyableEntity ? ((ProxyableEntity) this._uowf.currentUnitOfWork().get( proxyOrEntity )).getProxy( proxyClass )
+                : proxyClass.cast( proxyOrEntity );
+        }
     }
 }
