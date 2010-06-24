@@ -12,21 +12,30 @@
  *
  */
 
-package org.qi4j.library.sql.postgresql;
+
+package org.qi4j.entitystore.sql.database;
+
+import java.sql.Connection;
 
 import org.qi4j.api.common.Optional;
-import org.qi4j.api.configuration.ConfigurationComposite;
 import org.qi4j.api.property.Property;
-import org.qi4j.library.sql.common.SQLConfiguration;
-import org.qi4j.library.sql.postgresql.internal.PostgreSQLAppStartup;
 
 /**
- * This class represents a configuration to entitystore using PostgreSQL RDBMS through JDBC. Schema name defaults to Defaults to {@value PostgreSQLAppStartup#DEFAULT_SCHEMA_NAME}.
  *
  * @author Stanislav Muhametsin
  */
-public interface PostgreSQLConfiguration extends SQLConfiguration
+public interface DatabaseSQLServiceState
 {
 
+    @Optional
+    public Property<Long> nextEntityPK();
 
+    @Optional
+    public Property<Object> pkLock();
+
+    @Optional
+    public Property<Connection> connection();
+
+    @Optional
+    public Property<String> schemaName();
 }
