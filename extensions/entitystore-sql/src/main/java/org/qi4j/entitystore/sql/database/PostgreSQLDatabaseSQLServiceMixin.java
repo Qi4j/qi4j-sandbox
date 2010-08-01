@@ -11,243 +11,74 @@
  * limitations under the License.
  *
  */
-
-
 package org.qi4j.entitystore.sql.database;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
-import org.qi4j.api.configuration.Configuration;
-import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.injection.scope.This;
+import static org.qi4j.entitystore.sql.database.SQLs.*;
 import org.qi4j.library.sql.common.SQLUtil;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- *
  * @author Stanislav Muhametsin
+ * @author Paul Merlin
  */
-public class PostgreSQLDatabaseSQLServiceMixin extends AbstractDatabaseSQLService
+public abstract class PostgreSQLDatabaseSQLServiceMixin
+        implements DatabaseSQLServiceSpi, DatabaseSQLStringsBuilder, DatabaseSQLService
 {
 
-    public static final String DEFAULT_SCHEMA_NAME = "qi4j_es";
+    private static final Logger LOGGER = LoggerFactory.getLogger( PostgreSQLDatabaseSQLServiceMixin.class );
 
-    public static final String TABLE_NAME = "qi4j_entities";
+    private static final String ENTITY_PK_COLUMN_DATA_TYPE = "BIGINT";
 
-    public static final String ENTITY_PK_COLUMN_NAME = "entity_pk";
+    private static final String ENTITY_IDENTITY_COLUMN_DATA_TYPE = "TEXT";
 
-    public static final String ENTITY_IDENTITY_COLUMN_NAME = "entity_id";
+    private static final String ENTITY_STATE_COLUMN_DATA_TYPE = "TEXT";
 
-    public static final String ENTITY_STATE_COLUMN_NAME = "entity_state";
+    private static final String CREATE_TABLE_SQL = "CREATE TABLE %s." + TABLE_NAME + "(" + "\n" + //
+            ENTITY_PK_COLUMN_NAME + " " + ENTITY_PK_COLUMN_DATA_TYPE + " NOT NULL PRIMARY KEY," + "\n" + //
+            ENTITY_OPTIMISTIC_LOCK_COLUMN_NAME + " BIGINT NOT NULL, " + //
+            ENTITY_IDENTITY_COLUMN_NAME + " " + ENTITY_IDENTITY_COLUMN_DATA_TYPE + " NOT NULL UNIQUE," + "\n" + //
+            ENTITY_STATE_COLUMN_NAME + " " + ENTITY_STATE_COLUMN_DATA_TYPE + " NOT NULL)";
 
-    public static final String ENTITY_PK_COLUMN_DATA_TYPE = "BIGINT";
-
-    public static final String ENTITY_IDENTITY_COLUMN_DATA_TYPE = "TEXT";
-
-    public static final String ENTITY_STATE_COLUMN_DATA_TYPE = "TEXT";
-
-    public static final String READ_NEXT_ENTITY_PK_SQL = "SELECT COUNT(" + ENTITY_PK_COLUMN_NAME + "), MAX(" + ENTITY_PK_COLUMN_NAME + ") FROM %s." + TABLE_NAME;
-
-    public static final String INSERT_ENTITY_SQL = "INSERT INTO %s." + TABLE_NAME + " VALUES(?, ?, ?)";
-
-    public static final String REMOVE_ENTITY_SQL = "DELETE FROM %s." + TABLE_NAME + " WHERE " + ENTITY_PK_COLUMN_NAME + " = ?";
-
-    public static final String UPDATE_ENTITY_SQL = "UPDATE %s." + TABLE_NAME + " SET " + ENTITY_STATE_COLUMN_NAME + " = ? WHERE " + ENTITY_PK_COLUMN_NAME + " = ?";
-
-    public static final String SELECT_ALL_ENTITIES_SQL = "SELECT " + ENTITY_PK_COLUMN_NAME + ", " + ENTITY_STATE_COLUMN_NAME + " FROM %s." + TABLE_NAME;
-
-    public static final String SELECT_ENTITY_SQL = SELECT_ALL_ENTITIES_SQL + " WHERE " + ENTITY_IDENTITY_COLUMN_NAME + " = ?";
-
-    public static final String DROP_TABLE_SQL = "DROP TABLE IF EXISTS %s." + TABLE_NAME + " CASCADE";
-
-    public static final String CREATE_SCHEMA_SQL = "CREATE SCHEMA %s";
-
-    public static final String CREATE_TABLE_SQL = "CREATE TABLE %s." + TABLE_NAME + "(" + "\n" + //
-                                                  ENTITY_PK_COLUMN_NAME + " " + ENTITY_PK_COLUMN_DATA_TYPE + " NOT NULL PRIMARY KEY," + "\n" + //
-                                                  ENTITY_IDENTITY_COLUMN_NAME + " " + ENTITY_IDENTITY_COLUMN_DATA_TYPE + " NOT NULL UNIQUE," + "\n" + //
-                                                  ENTITY_STATE_COLUMN_NAME + " " + ENTITY_STATE_COLUMN_DATA_TYPE + " NOT NULL)";
-
-    @This private Configuration<PostgreSQLConfiguration> _configuration;
+    @This
+    protected DatabaseSQLServiceSpi spi;
 
     @Override
-    protected Connection createConnection() throws SQLException
+    public boolean tableExists( Connection connection )
+            throws SQLException
     {
-        return DriverManager.getConnection( this._configuration.configuration().connectionString().get() );
-    }
+        ResultSet rs = null;
+        try {
+            rs = connection.getMetaData().getTables( null, this.spi.getCurrentSchemaName(), SQLs.TABLE_NAME, new String[]{ "TABLE" } );
+            boolean tableExists = rs.next();
+            LOGGER.trace( "Found table {}? {}", SQLs.TABLE_NAME, tableExists );
+            return tableExists;
 
-    @Override
-    protected String getSchemaName( Connection connection )
-        throws SQLException
-    {
-        String result = this._configuration.configuration().schemaName().get();
-        if (result == null)
-        {
-            result = DEFAULT_SCHEMA_NAME;
+        } finally {
+            SQLUtil.closeQuietly( rs );
         }
-
-        return result;
     }
 
     @Override
-    protected String getSQLForInsertEntityStatement()
+    public String[] buildSQLForTableCreation()
     {
-        return String.format( INSERT_ENTITY_SQL, this.getSchemaName() );
-    }
-
-    @Override
-    protected String getSQLForRemoveEntityStatement()
-    {
-        return String.format( REMOVE_ENTITY_SQL, this.getSchemaName() );
-    }
-
-    @Override
-    protected String getSQLForSelectAllEntitiesStatement()
-    {
-        return String.format( SELECT_ALL_ENTITIES_SQL, this.getSchemaName() );
-    }
-
-    @Override
-    protected String getSQLForSelectEntityStatement()
-    {
-        return String.format( SELECT_ENTITY_SQL, this.getSchemaName() );
-    }
-
-    @Override
-    protected String getSQLForUpdateEntityStatement()
-    {
-        return String.format( UPDATE_ENTITY_SQL, this.getSchemaName() );
+        String[] sql = new String[]{ String.format( CREATE_TABLE_SQL, this.spi.getCurrentSchemaName() ) };
+        LOGGER.trace( "SQL for table creation: {}", sql );
+        return sql;
     }
 
     public EntityValueResult getEntityValue( ResultSet rs )
-        throws SQLException
+            throws SQLException
     {
-        return new EntityValueResult( rs.getCharacterStream( 2 ), rs.getLong( 1 ) );
+        return new EntityValueResult( rs.getLong( SQLs.ENTITY_PK_COLUMN_NAME ),
+                                      rs.getLong( SQLs.ENTITY_OPTIMISTIC_LOCK_COLUMN_NAME ),
+                                      rs.getCharacterStream( SQLs.ENTITY_STATE_COLUMN_NAME ) );
     }
-
-    public void populateGetAllEntitiesStatement( PreparedStatement ps )
-        throws SQLException
-    {
-        // Nothing to do.
-    }
-
-    public void populateGetEntityStatement( PreparedStatement ps, EntityReference ref )
-        throws SQLException
-    {
-        ps.setString( 1, ref.identity() );
-    }
-
-    public void populateInsertEntityStatement( PreparedStatement ps, Long entityPK, EntityReference ref, String entity )
-        throws SQLException
-    {
-        ps.setLong( 1, entityPK );
-        ps.setString( 2, ref.identity() );
-        ps.setString( 3, entity );
-    }
-
-    public void populateRemoveEntityStatement( PreparedStatement ps, Long entityPK, EntityReference ref )
-        throws SQLException
-    {
-        ps.setLong( 1, entityPK );
-    }
-
-    public void populateUpdateEntityStatement( PreparedStatement ps, Long entityPK, EntityReference ref, String entity )
-        throws SQLException
-    {
-        ps.setString(1, entity);
-        ps.setLong( 2, entityPK );
-    }
-
-    @Override
-    protected boolean schemaExists( Connection connection )
-        throws SQLException
-    {
-        ResultSet rs = null;
-
-        try
-        {
-            Boolean schemaFound = false;
-            rs = connection.getMetaData().getSchemas();
-            String schemaName = this.getSchemaName();
-
-            while (rs.next() && !schemaFound)
-            {
-                schemaFound = rs.getString(1).equals(schemaName);
-            }
-            return schemaFound;
-        }
-        finally
-        {
-           SQLUtil.closeQuietly( rs );
-        }
-
-    }
-
-    @Override
-    protected boolean tableExists( Connection connection )
-        throws SQLException
-    {
-        ResultSet rs = null;
-        try
-        {
-            rs = connection.getMetaData().getTables(null, this.getSchemaName(), TABLE_NAME, new String[] { "TABLE" });
-            return rs.next();
-        } finally
-        {
-            SQLUtil.closeQuietly( rs );
-        }
-    }
-
-    @Override
-    protected String[] getSQLForIndexCreation()
-    {
-        // TODO
-        return new String[] { };
-    }
-
-    @Override
-    protected String[] getSQLForSchemaCreation()
-    {
-        return new String[] { String.format( CREATE_SCHEMA_SQL, this.getSchemaName() ) };
-    }
-
-    @Override
-    protected String[] getSQLForTableCreation()
-    {
-        return new String[] { String.format( CREATE_TABLE_SQL, this.getSchemaName() ) };
-    }
-
-    @Override
-    protected long readNextEntityPK( Connection connection )
-        throws SQLException
-    {
-        Statement stmt = null;
-        ResultSet rs = null;
-        long result = 0L;
-        try
-        {
-            stmt = connection.createStatement();
-            rs = stmt.executeQuery( String.format( READ_NEXT_ENTITY_PK_SQL, this.getSchemaName() ) );
-            if (rs.next())
-            {
-                Long count = rs.getLong( 1 );
-                if (count > 0)
-                {
-                    result = rs.getLong( 2 ) + 1;
-                }
-            }
-        } finally
-        {
-            SQLUtil.closeQuietly( rs );
-            SQLUtil.closeQuietly( stmt );
-        }
-
-        return result;
-    }
-
-
 
 }

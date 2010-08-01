@@ -11,8 +11,6 @@
  * limitations under the License.
  *
  */
-
-
 package org.qi4j.entitystore.sql.database;
 
 import java.sql.Connection;
@@ -38,4 +36,5 @@ public interface DatabaseSQLServiceState
 
     @Optional
     public Property<String> schemaName();
+
 }

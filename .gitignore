@@ -36,6 +36,7 @@ extensions/entitystore-jndi/qi4j-entitystore-jndi.iml
 extensions/entitystore-rmi/qi4j-entitystore-rmi.iml
 extensions/entitystore-s3/qi4j-entitystore-s3.iml
 extensions/entitystore-s3-jclouds/entitystore-s3-jclouds.iml
+extensions/entitystore-jclouds/target
 extensions/entitystore-sql/target
 extensions/entitystore-sql/derby.log
 extensions/entitystore-swift/qi4j-entitystore-swift.iml

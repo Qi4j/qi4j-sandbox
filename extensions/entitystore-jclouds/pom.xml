@@ -1,0 +1,86 @@
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.qi4j</groupId>
+        <artifactId>qi4j-extensions</artifactId>
+        <version>1.2-SNAPSHOT</version>
+    </parent>
+    <groupId>org.qi4j.extension</groupId>
+    <artifactId>qi4j-entitystore-jclouds</artifactId>
+    <name>Qi4j Extension - EntityStore - JClouds</name>
+    <version>1.2-SNAPSHOT</version>
+    <packaging>bundle</packaging>
+
+    <properties>
+        <version.qi4j>${project.version}</version.qi4j>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.jclouds</groupId>
+            <artifactId>jclouds-blobstore</artifactId>
+            <version>1.0-beta-6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+
+        <!-- Qi4j Core -->
+        <dependency>
+            <groupId>org.qi4j.core</groupId>
+            <artifactId>qi4j-core-bootstrap</artifactId>
+            <version>${version.qi4j}</version>
+        </dependency>
+
+        <!-- Qi4j Libraries -->
+        <dependency>
+            <groupId>org.qi4j.library</groupId>
+            <artifactId>qi4j-lib-locking</artifactId>
+            <version>${version.qi4j}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.library</groupId>
+            <artifactId>qi4j-lib-sql-api</artifactId>
+            <version>${version.qi4j}</version>
+        </dependency>
+
+        <!-- Unit tests -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>0.9.21</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.core</groupId>
+            <artifactId>qi4j-core-runtime</artifactId>
+            <version>${version.qi4j}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.tests</groupId>
+            <artifactId>qi4j-tests-performance</artifactId>
+            <version>${version.qi4j}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.qi4j.core</groupId>
+            <artifactId>qi4j-core-testsupport</artifactId>
+            <scope>test</scope>
+            <version>${version.qi4j}</version>
+        </dependency>
+
+    </dependencies>
+    <repositories>
+        <repository>
+            <id>jclouds</id>
+            <url>http://jclouds.googlecode.com/svn/repo</url>
+        </repository>
+    </repositories>
+</project>

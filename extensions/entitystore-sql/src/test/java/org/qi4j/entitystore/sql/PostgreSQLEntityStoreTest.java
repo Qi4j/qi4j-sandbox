@@ -11,13 +11,13 @@
  * limitations under the License.
  *
  */
-
-
 package org.qi4j.entitystore.sql;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+
+import org.junit.Ignore;
 
 import org.qi4j.api.common.Visibility;
 import org.qi4j.api.unitofwork.UnitOfWork;
@@ -26,7 +26,7 @@ import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.memory.MemoryEntityStoreService;
 import org.qi4j.entitystore.sql.bootstrap.PostgreSQLEntityStoreAssembler;
 import org.qi4j.entitystore.sql.database.PostgreSQLConfiguration;
-import org.qi4j.entitystore.sql.database.PostgreSQLDatabaseSQLServiceMixin;
+import org.qi4j.entitystore.sql.database.SQLs;
 import org.qi4j.library.sql.common.SQLUtil;
 import org.qi4j.test.entity.AbstractEntityStoreTest;
 
@@ -34,12 +34,15 @@ import org.qi4j.test.entity.AbstractEntityStoreTest;
  *
  * @author Stanislav Muhametsin
  */
-public class PostgreSQLEntityStoreTest extends AbstractEntityStoreTest
+@Ignore
+public class PostgreSQLEntityStoreTest
+        extends AbstractEntityStoreTest
 {
 
     @Override
+    @SuppressWarnings( "unchecked" )
     public void assemble( ModuleAssembly module )
-        throws AssemblyException
+            throws AssemblyException
     {
         super.assemble( module );
         new PostgreSQLEntityStoreAssembler().assemble( module );
@@ -50,34 +53,30 @@ public class PostgreSQLEntityStoreTest extends AbstractEntityStoreTest
 
     @Override
     public void tearDown()
-        throws Exception
+            throws Exception
     {
 
         UnitOfWork uow = this.unitOfWorkFactory.newUnitOfWork();
-        try
-        {
+        try {
             PostgreSQLConfiguration config = uow.get( PostgreSQLConfiguration.class, PostgreSQLEntityStoreAssembler.SERVICE_NAME );
             Connection connection = DriverManager.getConnection( config.connectionString().get() );
             String schemaName = config.schemaName().get();
-            if (schemaName == null)
-            {
-                schemaName = PostgreSQLDatabaseSQLServiceMixin.DEFAULT_SCHEMA_NAME;
+            if ( schemaName == null ) {
+                schemaName = SQLs.DEFAULT_SCHEMA_NAME;
             }
 
             Statement stmt = null;
-            try
-            {
+            try {
                 stmt = connection.createStatement();
-                stmt.execute( String.format( "DELETE FROM %s." + PostgreSQLDatabaseSQLServiceMixin.TABLE_NAME, schemaName ));
+                stmt.execute( String.format( "DELETE FROM %s." + SQLs.TABLE_NAME, schemaName ) );
                 connection.commit();
-            } finally
-            {
+            } finally {
                 SQLUtil.closeQuietly( stmt );
             }
-        } finally
-        {
+        } finally {
             uow.discard();
             super.tearDown();
         }
     }
+
 }

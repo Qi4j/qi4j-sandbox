@@ -11,8 +11,6 @@
  * limitations under the License.
  *
  */
-
-
 package org.qi4j.entitystore.sql.bootstrap;
 
 import org.qi4j.api.common.Visibility;
@@ -20,16 +18,20 @@ import org.qi4j.bootstrap.Assembler;
 import org.qi4j.bootstrap.AssemblyException;
 import org.qi4j.bootstrap.ModuleAssembly;
 import org.qi4j.entitystore.sql.SQLEntityStoreService;
+import org.qi4j.entitystore.sql.database.DatabaseSQLServiceStatementsMixin;
 import org.qi4j.entitystore.sql.database.PostgreSQLDatabaseSQLServiceMixin;
 import org.qi4j.entitystore.sql.database.DatabaseSQLService.DatabaseSQLServiceComposite;
-import org.qi4j.entitystore.sql.map.database.DatabasePostgreSQLMixin;
+import org.qi4j.entitystore.sql.database.DatabaseSQLServiceCoreMixin;
+import org.qi4j.entitystore.sql.database.DatabaseSQLServiceSpi;
+import org.qi4j.entitystore.sql.database.DatabaseSQLStringsBuilder;
 import org.qi4j.spi.uuid.UuidIdentityGeneratorService;
 
 /**
- *
  * @author Stanislav Muhametsin
+ * @author Paul Merlin
  */
-public class PostgreSQLEntityStoreAssembler implements Assembler
+public class PostgreSQLEntityStoreAssembler
+        implements Assembler
 {
 
     public static final Visibility DEFAULT_VISIBILITY = Visibility.module;
@@ -40,21 +42,32 @@ public class PostgreSQLEntityStoreAssembler implements Assembler
 
     public PostgreSQLEntityStoreAssembler()
     {
-        this(DEFAULT_VISIBILITY);
+        this( DEFAULT_VISIBILITY );
     }
 
-    public PostgreSQLEntityStoreAssembler(Visibility visibility)
+    public PostgreSQLEntityStoreAssembler( Visibility visibility )
     {
         this._visibility = visibility;
     }
 
+    @SuppressWarnings( "unchecked" )
     public void assemble( ModuleAssembly module )
-        throws AssemblyException
+            throws AssemblyException
     {
-        module.addServices( SQLEntityStoreService.class ).visibleIn( this._visibility );
+        module.addServices( SQLEntityStoreService.class ).
+                visibleIn( this._visibility );
 
-        module.addServices( DatabaseSQLServiceComposite.class ).withMixins( PostgreSQLDatabaseSQLServiceMixin.class ).identifiedBy( SERVICE_NAME ).visibleIn( Visibility.module );
+        module.addServices( DatabaseSQLServiceComposite.class ).
+                withMixins( DatabaseSQLServiceCoreMixin.class,
+                            DatabaseSQLServiceSpi.CommonMixin.class,
+                            DatabaseSQLStringsBuilder.CommonMixin.class,
+                            DatabaseSQLServiceStatementsMixin.class,
+                            PostgreSQLDatabaseSQLServiceMixin.class ).
+                identifiedBy( SERVICE_NAME ).
+                visibleIn( Visibility.module );
 
-        module.addServices( UuidIdentityGeneratorService.class).visibleIn( this._visibility );
+        module.addServices( UuidIdentityGeneratorService.class ).
+                visibleIn( this._visibility );
     }
+
 }
