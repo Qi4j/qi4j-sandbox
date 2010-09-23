@@ -19,7 +19,6 @@
     <module>thread</module>
     <module>unitofwork</module>
     <module>validation</module>
-    <module>sql</module>
     <module>entityproxy</module>
   </modules>
 </project>

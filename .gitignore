@@ -37,10 +37,7 @@ extensions/entitystore-rmi/qi4j-entitystore-rmi.iml
 extensions/entitystore-s3/qi4j-entitystore-s3.iml
 extensions/entitystore-s3-jclouds/entitystore-s3-jclouds.iml
 extensions/entitystore-jclouds/target
-extensions/entitystore-sql/target
-extensions/entitystore-sql/derby.log
 extensions/entitystore-swift/qi4j-entitystore-swift.iml
-extensions/indexing-sql/qi4j-indexing-sql.iml
 extensions/sb-extensions-root.iml
 libraries/beans/qi4j-lib-beans.iml
 libraries/exception/qi4j-lib-exception.iml
