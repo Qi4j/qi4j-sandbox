@@ -50,7 +50,8 @@ public class JavaSpacesEntityStoreMixin
         return new StringReader( jsonData );
     }
 
-    public void visitMap( MapEntityStoreVisitor visitor )
+    public <ThrowableType extends Exception> void visitMap( MapEntityStoreVisitor<ThrowableType> visitor )
+        throws ThrowableType
     {
         for( String json : space )
         {

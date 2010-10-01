@@ -88,10 +88,13 @@ public class MahaloStartTest extends AbstractQi4jTest
         {
             if( !listener.added )
             {
-                wait( 15000 );
+                wait( 25000 );
             }
         }
-        assertTrue( listener.added );
+        synchronized( listener )
+        {
+            assertTrue( listener.added );
+        }
     }
 
 

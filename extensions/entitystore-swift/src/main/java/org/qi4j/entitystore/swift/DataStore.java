@@ -387,7 +387,8 @@ public class DataStore
         }
     }
 
-    public void visitMap( MapEntityStore.MapEntityStoreVisitor visitor )
+    public <ThrowableType extends Exception> void visitMap( MapEntityStore.MapEntityStoreVisitor<ThrowableType> visitor )
+        throws ThrowableType
     {
         try
         {

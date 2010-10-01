@@ -85,10 +85,13 @@ public class ReggieStartTest extends AbstractQi4jTest
         {
             if( !listener.added )
             {
-                wait( 5000 );
+                wait( 25000 );
             }
         }
-        assertTrue( listener.added );
+        synchronized( listener )
+        {
+            assertTrue( listener.added );
+        }
     }
 
 

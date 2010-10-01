@@ -72,18 +72,12 @@ public class JGroupsEntityStoreMixin
         }
     }
 
-    public void visitMap( MapEntityStoreVisitor visitor )
+    public <ThrowableType extends Exception> void visitMap( MapEntityStoreVisitor<ThrowableType> visitor )
+        throws ThrowableType
     {
-        try
+        for( Map.Entry<String, String> key : replicatedMap.entrySet() )
         {
-            for( Map.Entry<String, String> key : replicatedMap.entrySet() )
-            {
-                visitor.visitEntity( new StringReader( key.getValue() ) );
-            }
-        }
-        catch( RuntimeException e )
-        {
-            throw new EntityStoreException( e );
+            visitor.visitEntity( new StringReader( key.getValue() ) );
         }
     }
 

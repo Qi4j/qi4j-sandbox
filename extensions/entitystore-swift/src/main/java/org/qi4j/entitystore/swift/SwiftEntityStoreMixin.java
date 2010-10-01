@@ -89,7 +89,8 @@ public class SwiftEntityStoreMixin
         }
     }
 
-    public void visitMap( MapEntityStoreVisitor visitor )
+    public <ThrowableType extends Exception> void visitMap( MapEntityStoreVisitor<ThrowableType> visitor )
+        throws ThrowableType
     {
         recordManager.visitMap( visitor );
     }
