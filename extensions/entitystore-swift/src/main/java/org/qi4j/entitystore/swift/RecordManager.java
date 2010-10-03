@@ -188,7 +188,7 @@ public class RecordManager
         }
     }
 
-    public <ThrowableType extends Exception> void visitMap( MapEntityStore.MapEntityStoreVisitor<ThrowableType> visitor )
+    public <ThrowableType extends Throwable> void visitMap( MapEntityStore.MapEntityStoreVisitor<ThrowableType> visitor )
         throws ThrowableType
     {
         dataStore.visitMap( visitor );
