@@ -1,6 +1,8 @@
 target/
 qi4jtemp/
-.idea/
+.idea/*
+.idea/copyright/*
+.idea/libraries/*
 *.iws
 *.ipr
 *.iml

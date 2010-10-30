@@ -3,11 +3,10 @@
   <parent>
     <artifactId>sb-libraries-root</artifactId>
     <groupId>org.qi4j.sandbox</groupId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.3-SNAPSHOT</version>
   </parent>
   <groupId>org.qi4j.sandbox</groupId>
   <artifactId>qi4j-lib-entityproxy</artifactId>
-  <version>1.2-SNAPSHOT</version>
   <name>Qi4j Library - Entityproxy</name>
   <description>This library provides easy way to wrap your entities with transient composites so that qi4j-agnostic code may handle them without worrying about unit of work.</description>
   <dependencies>
