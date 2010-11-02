@@ -11,7 +11,7 @@
   <groupId>org.qi4j.osgi</groupId>
   <artifactId>qi4j-osgi-bootstrap</artifactId>
   <version>1.2-SNAPSHOT</version>
-  <name>Qi4j Core - OSGi Example</name>
+  <name>Qi4j Core - OSGi Bootstrap</name>
   <packaging>bundle</packaging>
 
   <dependencies>
