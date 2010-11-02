@@ -12,7 +12,7 @@
   <artifactId>qi4j-core-osgi-test-bootstrap</artifactId>
   <version>1.2-SNAPSHOT</version>
 
-  <name>Qi4j core OSGi test bootstrap</name>
+  <name>Qi4j Core - OSGi Bootstrap tests</name>
 
   <dependencies>
     <!-- bootstrap -->
