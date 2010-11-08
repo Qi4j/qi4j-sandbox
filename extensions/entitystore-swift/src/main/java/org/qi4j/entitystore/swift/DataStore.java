@@ -17,25 +17,26 @@
  */
 package org.qi4j.entitystore.swift;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.RandomAccessFile;
-import java.io.StringReader;
 import org.qi4j.api.entity.EntityReference;
-import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
+import org.qi4j.api.io.Receiver;
+import org.qi4j.api.io.Sender;
 import org.qi4j.spi.entitystore.EntityStoreException;
+
+import java.io.*;
 
 /**
  * This class handles the Heap Data file.
  * The format of the file is as follows;
- *
+ * <p/>
  * <code><pre>
  * At OFFSET = 0
  * [cleanShutDown]  1 byte
  * [formatVersion]  4 bytes
  * [noOfEntries]    4 bytes
  * [noOfIDentries]  4 bytes
- *
+ * <p/>
  * At OFFSET 256
  * [blockSize]     4 bytes
  * [usage]         1 byte    (0=Unused, 1=prime, 2=mirror, 3=primeChanged, 4=mirrorChanged)
@@ -48,7 +49,7 @@ import org.qi4j.spi.entitystore.EntityStoreException;
  * [primeData]     n bytes
  * [mirrorDataLength] 4 bytes
  * [mirrorData]    n bytes
- *
+ * <p/>
  * At OFFSET 256 + [blockSize]
  * same as above, repeat until [blockSize] == -1 marking end of DataArea.
  * </pre></code>
@@ -82,13 +83,13 @@ public class DataStore
         this.dataDir = dataDirectory.getAbsoluteFile();
         dataDir.mkdirs();
         File file = new File( dataDir, HEAP_DATA_FILENAME );
-        if( !file.exists() )
+        if (!file.exists())
         {
             file.createNewFile();
         }
         dataFile = new RandomAccessFile( file, "rw" );
         boolean cleanShutDown;
-        if( file.length() > 0 )
+        if (file.length() > 0)
         {
             dataFile.seek( 0 );
             cleanShutDown = dataFile.readBoolean();
@@ -97,8 +98,7 @@ public class DataStore
             dataFile.writeInt( CURRENT_VERSION );  // Write Version.
             entries = dataFile.readInt();
             identityMaxLength = dataFile.readInt();
-        }
-        else
+        } else
         {
             cleanShutDown = false;
             dataFile.writeBoolean( false );
@@ -116,23 +116,22 @@ public class DataStore
 
         dataFile = new RandomAccessFile( file, "rw" );
 
-        if( !cleanShutDown )
+        if (!cleanShutDown)
         {
             reIndex();
-        }
-        else
+        } else
         {
             File idDir = new File( dataDir, "idx" );
             try
             {
                 identityFile = IdentityFile.use( idDir );
             }
-            catch( MalformedIdentityDirectoryException e )
+            catch (MalformedIdentityDirectoryException e)
             {
                 reIndex();
             }
         }
-        if( identityFile.entries() < entries * 2 )
+        if (identityFile.entries() < entries * 2)
         {
             reIndex();
         }
@@ -152,7 +151,7 @@ public class DataStore
         throws IOException
     {
         long pos = identityFile.find( reference );
-        if( pos < 0 )
+        if (pos < 0)
         {
             return null;
         }
@@ -165,11 +164,10 @@ public class DataStore
         throws IOException
     {
         long pos = identityFile.find( data.reference );
-        if( pos < 0 )
+        if (pos < 0)
         {
             putNewData( data );
-        }
-        else
+        } else
         {
             dataFile.seek( pos );
             int blockSize = dataFile.readInt();
@@ -177,12 +175,11 @@ public class DataStore
             byte usage = dataFile.readByte();
             dataFile.skipBytes( -1 );
             dataFile.writeByte( usage == USAGE_PRIME ? USAGE_PRIMECHANGE : USAGE_MIRRORCHANGE );
-            int dataAreaSize = ( blockSize - BLOCK_OVERHEAD ) / 2 - 4;
-            if( dataAreaSize < data.data.length )
+            int dataAreaSize = (blockSize - BLOCK_OVERHEAD) / 2 - 4;
+            if (dataAreaSize < data.data.length)
             {
                 putTooLarge( data, pos, usagePointer, usage );
-            }
-            else
+            } else
             {
                 putOver( data, pos, usagePointer, usage );
             }
@@ -190,18 +187,19 @@ public class DataStore
     }
 
     /* In this case we need to write the new data to the opposite of the current active block. */
+
     private void putOver( DataBlock data, long pos, long usagePointer, byte usage )
         throws IOException
     {
         dataFile.seek( usagePointer ); // Point to "usage"
         dataFile.skipBytes( 13 ); // Skip usage, instanceVersion and schemaVersion
         EntityReference existingReference = readReference();
-        if( !existingReference.equals( data.reference ) )
+        if (!existingReference.equals( data.reference ))
         {
             throw new EntityStoreException( "Inconsistent Data Heap: was " + existingReference + ", expected " + data.reference );
         }
         long mirror = dataFile.readLong();
-        if( usage == USAGE_PRIME )
+        if (usage == USAGE_PRIME)
         {
             dataFile.seek( mirror );
         }
@@ -217,6 +215,7 @@ public class DataStore
     /* This case is when the data doesn't fit in the pre-allocated extra space. Write it to the end, and mark the
        previous block unused.
      */
+
     private void putTooLarge( DataBlock data, long pos, long usagePointer, byte usage )
         throws IOException
     {
@@ -244,7 +243,7 @@ public class DataStore
         throws IOException
     {
         long pos = identityFile.find( reference );
-        if( pos < 0 )
+        if (pos < 0)
         {
             // Doesn't exist.
             return;
@@ -252,7 +251,7 @@ public class DataStore
         dataFile.seek( pos );
         dataFile.skipBytes( 4 ); // Skip BlockSize
         byte usage = dataFile.readByte();
-        if( usage == USAGE_UNUSED )
+        if (usage == USAGE_UNUSED)
         {
             // Not used?? Why is the IdentityFile pointing to it then?? Should the following line actually be
             // executed here.
@@ -293,7 +292,7 @@ public class DataStore
         long blockStart = dataFile.getFilePointer();
 
         // Allow each datablock to grow to twice its size, and provide a primary and mirror allocation.
-        int dataAreaSize = ( block.data.length * 2 + 4 ) * 2;
+        int dataAreaSize = (block.data.length * 2 + 4) * 2;
         UndoExtendCommand undoExtendCommand = new UndoExtendCommand( blockStart );
         undoManager.saveUndoCommand( undoExtendCommand );
 
@@ -319,8 +318,8 @@ public class DataStore
     private void writeIdentity( EntityReference reference )
         throws IOException
     {
-        byte[] idBytes = reference.identity().getBytes("UTF-8");
-        if( idBytes.length > identityMaxLength )
+        byte[] idBytes = reference.identity().getBytes( "UTF-8" );
+        if (idBytes.length > identityMaxLength)
         {
             throw new EntityStoreException( "Identity is too long. Only " + identityMaxLength + " characters are allowed in this EntityStore." );
         }
@@ -368,18 +367,18 @@ public class DataStore
         identityFile = IdentityFile.create( new File( dataDir, "idx" ), identityMaxLength + 16, entries < 5000 ? 10000 : entries * 2 );
 
         dataFile.seek( DATA_AREA_OFFSET );
-        while( dataFile.getFilePointer() < dataFile.length() )
+        while (dataFile.getFilePointer() < dataFile.length())
         {
             long blockStart = dataFile.getFilePointer();
             int blockSize = dataFile.readInt();
-            if( blockSize == -1 )
+            if (blockSize == -1)
             {
                 break;
             }
             byte usage = dataFile.readByte();
             dataFile.skipBytes( 12 ); // Skip instanceVersion and schemaVersion
             EntityReference reference = readReference();
-            if( usage != USAGE_UNUSED )
+            if (usage != USAGE_UNUSED)
             {
                 identityFile.remember( reference, blockStart );
             }
@@ -387,69 +386,79 @@ public class DataStore
         }
     }
 
-    public <ThrowableType extends Throwable> void visitMap( MapEntityStore.MapEntityStoreVisitor<ThrowableType> visitor )
-        throws ThrowableType
+    public Input<Reader, IOException> data()
     {
-        try
+        return new Input<Reader, IOException>()
         {
-            long position = DATA_AREA_OFFSET;
-            while( position < dataFile.length() )
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<Reader, ReceiverThrowableType> output ) throws IOException, ReceiverThrowableType
             {
-                dataFile.seek( position );
-                int blockSize = dataFile.readInt();
-                if( blockSize == -1 ) // EOF marker
+                output.receiveFrom( new Sender<Reader, IOException>()
                 {
-                    return;
-                }
-                if( blockSize == 0 )
-                {
-                    // TODO This is a bug. Why does it occur??
-                    throw new InternalError();
-                }
-                position = position + blockSize;  // position for next round...
-                DataBlock block = readDataBlock( null );
-                if( block != null )
-                {
-                    visitor.visitEntity( new StringReader( new String( block.data, "UTF-8" ) ) );
-                }
+                    public <ReceiverThrowableType extends Throwable> void sendTo( Receiver<Reader, ReceiverThrowableType> receiver ) throws ReceiverThrowableType, IOException
+                    {
+                        try
+                        {
+                            long position = DATA_AREA_OFFSET;
+                            while (position < dataFile.length())
+                            {
+                                dataFile.seek( position );
+                                int blockSize = dataFile.readInt();
+                                if (blockSize == -1) // EOF marker
+                                {
+                                    return;
+                                }
+                                if (blockSize == 0)
+                                {
+                                    // TODO This is a bug. Why does it occur??
+                                    throw new InternalError();
+                                }
+                                position = position + blockSize;  // position for next round...
+                                DataBlock block = readDataBlock( null );
+                                if (block != null)
+                                {
+                                    receiver.receive( new StringReader( new String( block.data, "UTF-8" ) ) );
+                                }
+                            }
+                        }
+                        catch (IOException e)
+                        {
+                            throw new EntityStoreException( e );
+                        }
+                    }
+                });
             }
-        }
-        catch( IOException e )
-        {
-            throw new EntityStoreException(e);
-        }
+        };
     }
 
     private DataBlock readDataBlock( EntityReference reference )
         throws IOException
     {
         byte usage = dataFile.readByte();
-        if( usage == USAGE_UNUSED )
+        if (usage == USAGE_UNUSED)
         {
             return null;
         }
         long instanceVersion = dataFile.readLong();
         int schemaVersion = dataFile.readInt();
         EntityReference existingReference = readReference();
-        if( reference == null )
+        if (reference == null)
         {
             reference = existingReference;
         }
-        if( !existingReference.equals( reference ) )
+        if (!existingReference.equals( reference ))
         {
             throw new EntityStoreException( "Inconsistent Data Heap." );
         }
-        if( usage == USAGE_MIRROR )
+        if (usage == USAGE_MIRROR)
         {
             long mirror = dataFile.readLong();
             dataFile.seek( mirror );
-        }
-        else
+        } else
         {
             dataFile.skipBytes( 8 ); // skip the MirrorPointer
         }
         int dataSize = dataFile.readInt();
-        if( dataSize < 0 )
+        if (dataSize < 0)
         {
             throw new InternalError();
         }
@@ -462,7 +471,7 @@ public class DataStore
         throws IOException
     {
         int idSize = dataFile.readByte();
-        if( idSize < 0 )
+        if (idSize < 0)
         {
             idSize = idSize + 256;  // Fix 2's-complement negative values of bytes into unsigned 8 bit.
         }

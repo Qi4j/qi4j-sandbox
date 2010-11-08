@@ -16,14 +16,17 @@
  */
 package org.qi4j.entitystore.rmi;
 
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
+import org.qi4j.api.service.Activatable;
+import org.qi4j.entitystore.map.MapEntityStore;
+import org.qi4j.spi.entitystore.EntityStoreException;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
-import org.qi4j.api.entity.EntityReference;
-import org.qi4j.api.service.Activatable;
-import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entitystore.EntityStoreException;
 
 /**
  * RMI client implementation of Entity
@@ -53,9 +56,15 @@ public class ClientRmiEntityStoreMixin
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void visitMap( MapEntityStoreVisitor visitor )
+    public Input<Reader, IOException> entityStates()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return new Input<Reader, IOException>()
+        {
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<Reader, ReceiverThrowableType> readerReceiverThrowableTypeOutput ) throws IOException, ReceiverThrowableType
+            {
+                // TODO Implement this
+            }
+        };
     }
 
     public void applyChanges( MapChanges changes )

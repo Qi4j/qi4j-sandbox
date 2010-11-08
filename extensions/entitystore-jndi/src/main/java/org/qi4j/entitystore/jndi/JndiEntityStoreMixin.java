@@ -17,19 +17,23 @@
  */
 package org.qi4j.entitystore.jndi;
 
-import java.util.Hashtable;
-import javax.naming.Context;
-import javax.naming.NamingException;
-import javax.naming.directory.InitialDirContext;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
 import org.qi4j.api.property.Property;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.api.usecase.Usecase;
-import org.qi4j.api.structure.Module;
+import org.qi4j.spi.entity.EntityState;
 import org.qi4j.spi.entitystore.EntityStore;
+import org.qi4j.spi.entitystore.EntityStoreException;
 import org.qi4j.spi.entitystore.EntityStoreUnitOfWork;
 import org.qi4j.spi.structure.ModuleSPI;
+
+import javax.naming.Context;
+import javax.naming.NamingException;
+import javax.naming.directory.InitialDirContext;
+import java.util.Hashtable;
 
 public class JndiEntityStoreMixin
     implements Activatable, EntityStore
@@ -110,10 +114,14 @@ public class JndiEntityStoreMixin
       return new JndiUow( setup, usecase, module );
    }
 
-   public EntityStoreUnitOfWork visitEntityStates( EntityStateVisitor visitor, ModuleSPI module )
-   {
-      JndiUow uow = new JndiUow(setup, Usecase.DEFAULT, module);
-      // TODO Actual iteration
-      return uow;
-   }
+    public Input<EntityState, EntityStoreException> entityStates( ModuleSPI module )
+    {
+        return new Input<EntityState, EntityStoreException>()
+        {
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<EntityState, ReceiverThrowableType> entityStateReceiverThrowableTypeOutput ) throws EntityStoreException, ReceiverThrowableType
+            {
+                // TODO Actual iteration
+            }
+        };
+    }
 }

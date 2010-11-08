@@ -17,13 +17,15 @@
  */
 package org.qi4j.entitystore.swift;
 
+import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.io.Input;
+import org.qi4j.spi.entitystore.EntityStoreException;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.io.Reader;
 import java.util.ArrayList;
-import org.qi4j.api.entity.EntityReference;
-import org.qi4j.entitystore.map.MapEntityStore;
-import org.qi4j.spi.entitystore.EntityStoreException;
 
 public class RecordManager
     implements UndoManager
@@ -188,9 +190,8 @@ public class RecordManager
         }
     }
 
-    public <ThrowableType extends Throwable> void visitMap( MapEntityStore.MapEntityStoreVisitor<ThrowableType> visitor )
-        throws ThrowableType
+    public Input<Reader, IOException> data()
     {
-        dataStore.visitMap( visitor );
+        return dataStore.data();
     }
 }

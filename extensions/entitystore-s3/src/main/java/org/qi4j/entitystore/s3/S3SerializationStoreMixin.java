@@ -16,8 +16,6 @@
  */
 package org.qi4j.entitystore.s3;
 
-import java.io.IOException;
-import java.io.Reader;
 import org.jets3t.service.S3Service;
 import org.jets3t.service.impl.rest.httpclient.RestS3Service;
 import org.jets3t.service.model.S3Bucket;
@@ -25,9 +23,14 @@ import org.jets3t.service.security.AWSCredentials;
 import org.qi4j.api.configuration.Configuration;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.injection.scope.This;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
 import org.qi4j.spi.entitystore.EntityStoreException;
+
+import java.io.IOException;
+import java.io.Reader;
 
 /**
  * Amazon S3 implementation of SerializationStore.
@@ -85,9 +88,15 @@ public class S3SerializationStoreMixin
         return null;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public void visitMap( MapEntityStoreVisitor visitor )
+    public Input<Reader, IOException> entityStates()
     {
-        //To change body of implemented methods use File | Settings | File Templates.
+        return new Input<Reader, IOException>()
+        {
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<Reader, ReceiverThrowableType> readerReceiverThrowableTypeOutput ) throws IOException, ReceiverThrowableType
+            {
+                // TODO Implement this
+            }
+        };
     }
 
     public void applyChanges( MapChanges changes )

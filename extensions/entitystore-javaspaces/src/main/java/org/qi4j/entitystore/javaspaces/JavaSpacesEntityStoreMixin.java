@@ -16,18 +16,19 @@
  */
 package org.qi4j.entitystore.javaspaces;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
 import org.qi4j.api.entity.EntityReference;
 import org.qi4j.api.injection.scope.Service;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
+import org.qi4j.api.io.Receiver;
+import org.qi4j.api.io.Sender;
 import org.qi4j.entitystore.map.MapEntityStore;
 import org.qi4j.library.spaces.Space;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entitystore.EntityNotFoundException;
 import org.qi4j.spi.entitystore.EntityStoreException;
+
+import java.io.*;
 
 /**
  * Java Spaces implementation of EntityStore.
@@ -50,16 +51,26 @@ public class JavaSpacesEntityStoreMixin
         return new StringReader( jsonData );
     }
 
-    public <ThrowableType extends Throwable> void visitMap( MapEntityStoreVisitor<ThrowableType> visitor )
-        throws ThrowableType
+    public Input<Reader, IOException> entityStates()
     {
-        for( String json : space )
+        return new Input<Reader, IOException>()
         {
-            Reader state = new StringReader( json );
-            visitor.visitEntity( state );
-        }
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<Reader, ReceiverThrowableType> output ) throws IOException, ReceiverThrowableType
+            {
+                output.receiveFrom( new Sender<Reader, IOException>()
+                {
+                    public <ReceiverThrowableType extends Throwable> void sendTo( Receiver<Reader, ReceiverThrowableType> receiver ) throws ReceiverThrowableType, IOException
+                    {
+                        for (String json : space)
+                        {
+                            Reader state = new StringReader( json );
+                            receiver.receive( state );
+                        }
+                    }
+                });
+            }
+        };
     }
-
     public void applyChanges( MapChanges changes )
         throws IOException
     {

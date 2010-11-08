@@ -17,26 +17,26 @@
 
 package org.qi4j.entitystore.jgroups;
 
-import java.io.IOException;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.StringWriter;
-import java.io.Writer;
-import java.util.Map;
 import org.jgroups.JChannel;
 import org.jgroups.blocks.ReplicatedHashMap;
 import org.qi4j.api.entity.EntityReference;
+import org.qi4j.api.io.Input;
+import org.qi4j.api.io.Output;
+import org.qi4j.api.io.Receiver;
+import org.qi4j.api.io.Sender;
 import org.qi4j.api.service.Activatable;
 import org.qi4j.entitystore.map.MapEntityStore;
 import org.qi4j.spi.entity.EntityType;
 import org.qi4j.spi.entitystore.EntityNotFoundException;
 import org.qi4j.spi.entitystore.EntityStoreException;
 
+import java.io.*;
+
 /**
  * JGroups implementation of EntityStore
  */
 public class JGroupsEntityStoreMixin
-    implements Activatable, MapEntityStore
+        implements Activatable, MapEntityStore
 {
     private JChannel channel;
     private ReplicatedHashMap<String, String> replicatedMap;
@@ -55,30 +55,41 @@ public class JGroupsEntityStoreMixin
     }
 
     public Reader get( EntityReference entityReference )
-        throws EntityStoreException
+            throws EntityStoreException
     {
         try
         {
             String data = replicatedMap.get( entityReference.identity() );
-            if( data == null )
+            if (data == null)
             {
                 throw new EntityNotFoundException( entityReference );
             }
             return new StringReader( data );
         }
-        catch( RuntimeException e )
+        catch (RuntimeException e)
         {
             throw new EntityStoreException( e );
         }
     }
 
-    public <ThrowableType extends Throwable> void visitMap( MapEntityStoreVisitor<ThrowableType> visitor )
-        throws ThrowableType
+    public Input<Reader, IOException> entityStates()
     {
-        for( Map.Entry<String, String> key : replicatedMap.entrySet() )
+        return new Input<Reader, IOException>()
         {
-            visitor.visitEntity( new StringReader( key.getValue() ) );
-        }
+            public <ReceiverThrowableType extends Throwable> void transferTo( Output<Reader, ReceiverThrowableType> output ) throws IOException, ReceiverThrowableType
+            {
+                output.receiveFrom( new Sender<Reader, IOException>()
+                {
+                    public <ReceiverThrowableType extends Throwable> void sendTo( Receiver<Reader, ReceiverThrowableType> receiver ) throws ReceiverThrowableType, IOException
+                    {
+                        for (String json : replicatedMap.values())
+                        {
+                            receiver.receive( new StringReader(json) );
+                        }
+                    }
+                } );
+            }
+        };
     }
 
     public void applyChanges( MapChanges changes ) throws IOException
@@ -91,7 +102,8 @@ public class JGroupsEntityStoreMixin
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close() throws IOException
+                        @Override
+                        public void close() throws IOException
                         {
                             super.close();
                             String value = toString();
@@ -105,7 +117,8 @@ public class JGroupsEntityStoreMixin
                 {
                     return new StringWriter( 1000 )
                     {
-                        @Override public void close() throws IOException
+                        @Override
+                        public void close() throws IOException
                         {
                             super.close();
                             String value = toString();
@@ -121,7 +134,7 @@ public class JGroupsEntityStoreMixin
                 }
             } );
         }
-        catch( RuntimeException e )
+        catch (RuntimeException e)
         {
             IOException exception = new IOException();
             exception.initCause( e );

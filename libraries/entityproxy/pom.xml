@@ -34,7 +34,7 @@
   	</dependency>
   </dependencies>
   <properties>
-  	<version.qi4j-core>1.2-SNAPSHOT</version.qi4j-core>
+  	<version.qi4j-core>1.3-SNAPSHOT</version.qi4j-core>
   </properties>
 
   <build>
