@@ -11,6 +11,15 @@
     <name>Qi4j Extension - Entity Store - Cassandra</name>
     <packaging>bundle</packaging>
 
+    <repositories>
+        <repository>
+            <id>riptano</id>
+            <name>riptano</name>
+            <url>http://mvn.riptano.com/content/repositories/public/</url>
+        </repository>
+    </repositories>
+
+
     <dependencies>
         <dependency>
             <groupId>org.qi4j.core</groupId>
@@ -35,19 +44,30 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>org.apache.thrift</groupId>
+            <groupId>libthrift</groupId>
             <artifactId>libthrift</artifactId>
             <version>917130</version>
         </dependency>
         <dependency>
-            <groupId>org.apache</groupId>
-            <artifactId>cassandra</artifactId>
-            <version>0.6.5</version>
+            <groupId>org.apache.cassandra</groupId>
+            <artifactId>apache-cassandra</artifactId>
+            <version>0.6.6</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-compress</artifactId>
             <version>1.1</version>
         </dependency>
+        <!-- <dependency>
+            <groupId>me.prettyprint</groupId>
+            <artifactId>hector</artifactId>
+            <version>0.7.0-18</version>
+             <exclusions>
+                 <exclusion>
+                     <artifactId>properties-maven-plugin</artifactId>
+                     <groupId>org.codehaus.mojo</groupId>
+                 </exclusion>
+             </exclusions>
+         </dependency>-->
     </dependencies>
 </project>
