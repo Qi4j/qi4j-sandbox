@@ -1,7 +1,6 @@
 package org.qi4j.entitystore.cassandra;
 
 import org.apache.cassandra.thrift.*;
-import org.apache.commons.lang.NotImplementedException;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.transport.TSocket;
 import org.apache.thrift.transport.TTransport;
@@ -115,7 +114,7 @@ public class CassandraMapEntityStoreMixin implements MapEntityStore, Activatable
     }
 
     public Input<Reader, IOException> entityStates() {
-          throw new NotImplementedException();
+          throw new UnsupportedOperationException("Not implemented yet");
     }
 
 
