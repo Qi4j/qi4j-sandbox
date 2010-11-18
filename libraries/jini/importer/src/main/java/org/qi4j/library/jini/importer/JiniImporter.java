@@ -61,4 +61,10 @@ public class JiniImporter
         JiniProxyHandler jiniHandler = (JiniProxyHandler) Proxy.getInvocationHandler( instance );
         return jiniHandler.isActive();
     }
+
+    public boolean isAvailable( Object instance )
+    {
+        JiniProxyHandler jiniHandler = (JiniProxyHandler) Proxy.getInvocationHandler( instance );
+        return jiniHandler.isActive();
+    }
 }
