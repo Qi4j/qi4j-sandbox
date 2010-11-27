@@ -11,17 +11,19 @@
   <packaging>pom</packaging>
 
   <modules>
-    <module>beans</module>
-    <module>exception</module>
-    <module>executor</module>
-    <module>jini</module>
-    <module>ldap</module>
-    <module>observations</module>
-    <module>registry</module>
-    <module>rmi</module>
-    <module>thread</module>
-    <module>unitofwork</module>
-    <module>validation</module>
-    <module>entityproxy</module>
+      <module>beans</module>
+      <module>entityproxy</module>
+      <module>exception</module>
+      <module>executor</module>
+      <module>jini</module>
+      <module>ldap</module>
+      <module>observations</module>
+      <module>osgi</module>
+      <module>registry</module>
+      <module>rmi</module>
+      <module>thread</module>
+      <module>unitofwork</module>
+      <module>validation</module>
+      <module>webservices</module>
   </modules>
 </project>
