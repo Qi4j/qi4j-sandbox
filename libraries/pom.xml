@@ -18,12 +18,10 @@
       <module>jini</module>
       <module>ldap</module>
       <module>observations</module>
-      <module>osgi</module>
       <module>registry</module>
       <module>rmi</module>
       <module>thread</module>
       <module>unitofwork</module>
       <module>validation</module>
-      <module>webservices</module>
   </modules>
 </project>
