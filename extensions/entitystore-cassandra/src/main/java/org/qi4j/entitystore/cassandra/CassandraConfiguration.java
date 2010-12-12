@@ -2,20 +2,22 @@ package org.qi4j.entitystore.cassandra;
 
 
 public interface CassandraConfiguration {
-    boolean gzipCompress();
+   boolean gzipCompress();
 
-    boolean checkAbsentBeforeCreate();
+   boolean checkAbsentBeforeCreate();
 
-    boolean checkPresentBeforeDelete();
+   boolean checkPresentBeforeDelete();
 
-    boolean checkPresentBeforeUpdate();
+   boolean checkPresentBeforeUpdate();
 
-    boolean readOnly();
+   boolean readOnly();
 
 
-    String getHost();
+   String getHost();
 
-    String getLogin();
+   String getLogin();
 
-    String getPassword();
+   String getPassword();
+
+   int getPort();
 }
