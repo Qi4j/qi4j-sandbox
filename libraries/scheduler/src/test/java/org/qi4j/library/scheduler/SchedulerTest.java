@@ -49,8 +49,9 @@ public class SchedulerTest
 {
 
     private static final Logger LOGGER = LoggerFactory.getLogger( SchedulerTest.class );
-    private static final Integer PULSE_RYTHM_SECS = Integer.valueOf( 5 );
-    private static final Integer PULSE_RYTHM_MILLIS = Integer.valueOf( PULSE_RYTHM_SECS * 1000 );
+    private static final Integer PULSE_RHYTHM_SECS = Integer.valueOf( 5 );
+    private static final Integer PULSE_RHYTHM_MILLIS = Integer.valueOf( PULSE_RHYTHM_SECS * 1000 );
+    private static final Integer GC_RHYTHM_SECS = Integer.valueOf( 30 );
 
     public void assemble( ModuleAssembly testAssembly )
             throws AssemblyException
@@ -58,8 +59,8 @@ public class SchedulerTest
         new SchedulerAssembler().assemble( testAssembly );
         testAssembly.addEntities( SchedulerConfiguration.class );
         SchedulerConfiguration config = testAssembly.forMixin( SchedulerConfiguration.class ).declareDefaults();
-        config.pulseRhythmSeconds().set( PULSE_RYTHM_SECS );
-        config.garbageCollectorRhythmSeconds().set( PULSE_RYTHM_SECS * 2 );
+        config.pulseRhythmSeconds().set( PULSE_RHYTHM_SECS );
+        config.garbageCollectorRhythmSeconds().set( GC_RHYTHM_SECS );
 
         new TimelineAssembler().assemble( testAssembly );
 
