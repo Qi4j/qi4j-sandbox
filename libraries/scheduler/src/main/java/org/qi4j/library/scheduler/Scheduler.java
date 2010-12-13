@@ -15,6 +15,7 @@ package org.qi4j.library.scheduler;
 
 import java.util.Date;
 
+import org.qi4j.library.scheduler.constraints.CronExpression;
 import org.qi4j.library.scheduler.schedule.Schedule;
 import org.qi4j.library.scheduler.task.Task;
 
@@ -26,10 +27,10 @@ import org.qi4j.library.scheduler.task.Task;
 public interface Scheduler
 {
 
-    Schedule shedule( Task task, String cronExpression );
+    Schedule shedule( Task task, @CronExpression String cronExpression );
 
-    Schedule shedule( Task task, String cronExpression, long initialDelay );
+    Schedule shedule( Task task, @CronExpression String cronExpression, long initialDelay );
 
-    Schedule shedule( Task task, String cronExpression, Date start );
+    Schedule shedule( Task task, @CronExpression String cronExpression, Date start );
 
 }
