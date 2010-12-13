@@ -45,7 +45,7 @@ public interface TimelineService
         {
             QueryBuilder<TimelineRecord> builder = qbf.newQueryBuilder( TimelineRecord.class );
             return builder.newQuery( uowf.currentUnitOfWork() ).
-                    orderBy( orderBy( templateFor( TimelineRecord.class ).recordTime(), Order.ASCENDING ) ).
+                    orderBy( orderBy( templateFor( TimelineRecord.class ).timestamp(), Order.ASCENDING ) ).
                     maxResults( maxResults );
         }
 

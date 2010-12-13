@@ -15,6 +15,11 @@ package org.qi4j.library.scheduler;
 
 import java.util.Date;
 
+import org.qi4j.api.concern.Concerns;
+import org.qi4j.api.unitofwork.UnitOfWorkConcern;
+import org.qi4j.api.unitofwork.UnitOfWorkPropagation;
+import org.qi4j.api.unitofwork.UnitOfWorkPropagation.Propagation;
+
 import org.qi4j.library.scheduler.constraints.CronExpression;
 import org.qi4j.library.scheduler.schedule.Schedule;
 import org.qi4j.library.scheduler.task.Task;
@@ -24,13 +29,17 @@ import org.qi4j.library.scheduler.task.Task;
  *
  * @author Paul Merlin
  */
+@Concerns( UnitOfWorkConcern.class )
 public interface Scheduler
 {
 
+    @UnitOfWorkPropagation( Propagation.MANDATORY )
     Schedule shedule( Task task, @CronExpression String cronExpression );
 
+    @UnitOfWorkPropagation( Propagation.MANDATORY )
     Schedule shedule( Task task, @CronExpression String cronExpression, long initialDelay );
 
+    @UnitOfWorkPropagation( Propagation.MANDATORY )
     Schedule shedule( Task task, @CronExpression String cronExpression, Date start );
 
 }

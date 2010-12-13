@@ -13,17 +13,16 @@
  */
 package org.qi4j.library.scheduler.schedule;
 
-import java.util.logging.Level;
 import org.qi4j.api.common.Optional;
 import org.qi4j.api.injection.scope.Service;
 import org.qi4j.api.injection.scope.Structure;
 import org.qi4j.api.injection.scope.Uses;
-import org.qi4j.api.unitofwork.ConcurrentEntityModificationException;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.api.unitofwork.UnitOfWorkFactory;
 
 import org.qi4j.library.scheduler.Scheduler;
+import org.qi4j.library.scheduler.task.Task;
 import org.qi4j.library.scheduler.timeline.TimelineRecorderService;
 
 import org.slf4j.Logger;
@@ -49,7 +48,82 @@ public class ScheduleRunner
         this.scheduleIdentity = scheduleIdentity;
     }
 
+    // TODO Watch this code, see if we can do better, maybe leverage @UnitOfWorkRetry when it will be done
     public void run()
+    {
+        boolean taskRan = false;
+        try {
+
+            UnitOfWork uow = uowf.newUnitOfWork();
+
+            ScheduleEntity schedule = uow.get( ScheduleEntity.class, scheduleIdentity );
+            Task task = schedule.task().get();
+
+            try {
+
+                task.run();
+                recordSuccess( task );
+
+                taskRan = true;
+
+            } catch ( Throwable ex ) {
+
+                recordFailure( task, ex );
+
+            }
+
+            schedule.running().set( false );
+
+            uow.complete();
+
+        } catch ( UnitOfWorkCompletionException ex ) {
+
+            if ( taskRan ) {
+
+                LOGGER.warn( "Task ran but UoW did not complete, setting the Schedule as not running: {}", ex.getMessage(), ex );
+                UnitOfWork uow = uowf.newUnitOfWork();
+                ScheduleEntity schedule = uow.get( ScheduleEntity.class, scheduleIdentity );
+                schedule.running().set( false );
+                recordSuccess( schedule.task().get() );
+                try {
+                    uow.complete();
+                } catch ( UnitOfWorkCompletionException fault ) {
+                    LOGGER.error( "Task ran but UoW did not complete, was unable to set the Schedule as not running, this must be serious", fault );
+                }
+
+            } else {
+
+                LOGGER.warn( "Task raised an exception and UoW did not complete, setting the Schedule as not running: {}", ex.getMessage(), ex );
+                UnitOfWork uow = uowf.newUnitOfWork();
+                ScheduleEntity schedule = uow.get( ScheduleEntity.class, scheduleIdentity );
+                schedule.running().set( false );
+                recordFailure( schedule.task().get(), ex );
+                try {
+                    uow.complete();
+                } catch ( UnitOfWorkCompletionException fault ) {
+                    LOGGER.error( "Task raised an exception and UoW did not complete, was unable to set the Schedule as not running, this must be serious", fault );
+                }
+
+            }
+
+        }
+    }
+
+    private void recordSuccess( Task task )
+    {
+        if ( timelineRecorder != null ) {
+            timelineRecorder.recordSuccess( task );
+        }
+    }
+
+    private void recordFailure( Task task, Throwable cause )
+    {
+        if ( timelineRecorder != null ) {
+            timelineRecorder.recordFailure( task, cause );
+        }
+    }
+
+    public void oldrun()
     {
         try {
 

@@ -14,8 +14,8 @@
 package org.qi4j.library.scheduler.timeline;
 
 import java.util.List;
-import org.qi4j.api.common.UseDefaults;
 
+import org.qi4j.api.common.UseDefaults;
 import org.qi4j.api.entity.Queryable;
 import org.qi4j.api.property.Property;
 
@@ -25,12 +25,13 @@ import org.qi4j.api.property.Property;
 public interface TimelineRecord
 {
 
-    Property<Long> recordTime();
+    Property<Long> timestamp();
 
     Property<SchedulerEvent> event();
 
     Property<String> taskName();
 
+    @UseDefaults
     Property<List<String>> taskTags();
 
     @Queryable( false )

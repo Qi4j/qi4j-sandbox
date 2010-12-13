@@ -34,11 +34,18 @@ public interface TimelineRecorderService
         extends ServiceComposite
 {
 
+    /**
+     * @param task  Successful Task
+     * @return      TimelineRecord
+     */
     TimelineRecord recordSuccess( Task task );
 
-    TimelineRecord recordFailure( Task task, String details );
-
-    TimelineRecord recordFailure( Task task, Throwable ex );
+    /**
+     * @param task  Failed Task
+     * @param cause Failure cause
+     * @return      TimelineRecord
+     */
+    TimelineRecord recordFailure( Task task, Throwable cause );
 
     abstract class Mixin
             implements TimelineRecorderService
@@ -50,33 +57,33 @@ public interface TimelineRecorderService
         public TimelineRecord recordSuccess( Task task )
         {
             UnitOfWork uow = uowf.currentUnitOfWork();
-            EntityBuilder<TimelineRecord> builder = uow.newEntityBuilder( TimelineRecord.class );
-            TimelineRecord record = builder.instance();
-            record.recordTime().set( System.currentTimeMillis() );
+            EntityBuilder<TimelineRecordEntity> builder = uow.newEntityBuilder( TimelineRecordEntity.class );
+            TimelineRecordEntity record = builder.instance();
+            record.timestamp().set( System.currentTimeMillis() );
             record.event().set( SchedulerEvent.TASK_RUN_SUCCESS );
             record.taskName().set( task.name().get() );
             record.taskTags().set( task.tags().get() );
             return builder.newInstance();
         }
 
-        public TimelineRecord recordFailure( Task task, String details )
+        public TimelineRecord recordFailure( Task task, Throwable cause )
+        {
+            Writer result = new StringWriter();
+            cause.printStackTrace( new PrintWriter( result ) );
+            return recordFailure( task, result.toString() );
+        }
+
+        private TimelineRecord recordFailure( Task task, String details )
         {
             UnitOfWork uow = uowf.currentUnitOfWork();
-            EntityBuilder<TimelineRecord> builder = uow.newEntityBuilder( TimelineRecord.class );
-            TimelineRecord record = builder.instance();
-            record.recordTime().set( System.currentTimeMillis() );
+            EntityBuilder<TimelineRecordEntity> builder = uow.newEntityBuilder( TimelineRecordEntity.class );
+            TimelineRecordEntity record = builder.instance();
+            record.timestamp().set( System.currentTimeMillis() );
             record.event().set( SchedulerEvent.TASK_RUN_FAILURE );
             record.taskName().set( task.name().get() );
             record.taskTags().set( task.tags().get() );
             record.details().set( details );
             return builder.newInstance();
-        }
-
-        public TimelineRecord recordFailure( Task task, Throwable ex )
-        {
-            Writer result = new StringWriter();
-            ex.printStackTrace( new PrintWriter( result ) );
-            return recordFailure( task, result.toString() );
         }
 
     }

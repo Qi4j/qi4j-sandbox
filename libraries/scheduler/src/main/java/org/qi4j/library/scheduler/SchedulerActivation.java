@@ -23,9 +23,6 @@ import org.qi4j.api.service.Activatable;
 import org.qi4j.api.unitofwork.UnitOfWork;
 import org.qi4j.api.unitofwork.UnitOfWorkCompletionException;
 import org.qi4j.api.unitofwork.UnitOfWorkFactory;
-import org.qi4j.library.scheduler.Scheduler;
-import org.qi4j.library.scheduler.SchedulerConfiguration;
-import org.qi4j.library.scheduler.SchedulerService;
 
 import org.qi4j.library.scheduler.schedule.ScheduleEntity;
 import org.qi4j.library.scheduler.schedule.ScheduleRepository;
@@ -92,7 +89,7 @@ public class SchedulerActivation
         }
 
         removeNonDurableSchedules();
-        handlePreviouslyRunningSchedules();
+        setAllSchedulesAsNotRunning();
 
         startGarbageCollector( gcRhythmSeconds );
         startPulse( workersCount, workQueueSize, pulseRhythmSeconds );
@@ -133,7 +130,7 @@ public class SchedulerActivation
         uow.complete();
     }
 
-    private void handlePreviouslyRunningSchedules()
+    private void setAllSchedulesAsNotRunning()
             throws UnitOfWorkCompletionException
     {
         // Handling schedules that were running when last activated
