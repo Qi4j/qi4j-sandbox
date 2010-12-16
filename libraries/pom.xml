@@ -20,7 +20,6 @@
       <module>observations</module>
       <module>registry</module>
       <module>rmi</module>
-      <module>scheduler</module>
       <module>thread</module>
       <module>unitofwork</module>
       <module>validation</module>
