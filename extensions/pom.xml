@@ -13,6 +13,7 @@
 
   <modules>
     <!--module>entitystore-coherence</module-->
+    <module>entitystore-gigaspaces</module>
     <module>entitystore-jndi</module>
     <module>entitystore-javaspaces</module>
     <module>entitystore-jgroups</module>
